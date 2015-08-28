@@ -6,12 +6,12 @@ Demo [here](http://codepen.io/bianchimro/pen/EVYgym?editors=101)
 
 
 ## Usage
-
+<!--
 Get the files from github or install from bower:
 ```
 bower install ionic-modal-select
 ```
-
+-->
 
 Include `ionic-modal-select.js` or its minified version in your index.html:
 
@@ -59,7 +59,7 @@ option|meaning|accepted values|default
 `short-list-break`|The maximum number of item in list to be rendered with `ng-repeat`. If the list has a number of colors greater than this attribute it will be rendered with ionic `collection-repeat` directive instead. (see also `load-list-message` option)|integer|10
 `load-list-message`|Message to be shown when loading a long list of color in the modal|string|'Loading'
 
-
+<!--
 ### Examples
 
 
@@ -76,3 +76,4 @@ See this [codepen](http://codepen.io/bianchimro/pen/EVYgym?editors=101) for now.
 
 This software package is available for free with a MIT license, but
 if you find it useful and want support its development consider buying a copy on the [Ionic Marketplace](http://market.ionic.io/plugins/ionic-modal-select) for just a few bucks.
+-->
