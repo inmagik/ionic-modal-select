@@ -5,6 +5,13 @@ Modal select for Ionic Framework based on [$ionicModal](http://ionicframework.co
 Demo [here](http://codepen.io/bianchimro/pen/EVYgym?editors=101)
 
 
+## Features
+
+* supports long list of object via collection-repeat
+* supports unsetting the chosen value (optional)
+* customizable modal classes, modal header and footer classes
+* customizable buttons text
+
 ## Usage
 <!--
 Get the files from github or install from bower:
@@ -45,11 +52,20 @@ This directive will transform the element into a modal select: when clicking the
 * The element you use this directive must be clickable.
 * The directive requires ngModel to be set on the element
 
+The final value bound to your model will be determined as follow:
+
+* if you set the attribute `option-getter` will be set as `getterFunction(selectedItem)`
+* if you set the attribute `option-property` will be set as `selectedItem[propertyName]`
+* otherwise it will be set as the full object
+
 
 #### Options
 
 option|meaning|accepted values|default
 ---|---|---|---
+`options`|List of options to choose from|Array||
+`option-getter`|Optional method to get the value from the chosen item|function|not set|
+`option-property`|Optional property name to get as model value from the chosen item|string|not set|
 `modal-class`|The class for the modal (set on `<ion-modal-view>`|string|''
 `modal-title`|The title shown on the modal header|string|'Pick a color'
 `header-footer-class`|The class for header and footer of the modal|string|'bar-stable'
