@@ -1,38 +1,30 @@
-/*!
- * Copyright 2015 Inmagik SRL.
- * http://www.inmagik.com/
- *
- * ionic-color-picjer, v1.0.0
- * Flexible color picker directives for Ionic framework.
- * 
- * By @bianchimro
- *
- * Licensed under the MIT license. Please see LICENSE for more information.
- *
- */
-
 (function(){
 
 angular.module('ionic-modal-select', [])
 
 
 .directive('compile', ['$compile', function ($compile) {
-    return function(scope, element, attrs) {
-        scope.$watch(
+    return function(scope, iElement, iAttrs) {
+        var x = scope.$watch(
             function(scope) {
                 // watch the 'compile' expression for changes
-                return scope.$eval(attrs.compile);
+                return scope.$eval(iAttrs.compile);
             },
             function(value) {
                 // when the 'compile' expression changes
                 // assign it into the current DOM
-                element.html(value);
+                iElement.html(value);
 
                 // compile the new DOM and link it to the current
                 // scope.
                 // NOTE: we only compile .childNodes so that
                 // we don't get into infinite loop compiling ourselves
-                $compile(element.contents())(scope);
+                $compile(iElement.contents())(scope);
+                
+                //deactivate watch if "compile-once" is set to "true"
+                if(iAttrs.compileOnce === 'true'){
+                    x();
+                }
             }
         );
     };
@@ -43,11 +35,12 @@ angular.module('ionic-modal-select', [])
     return {
         restrict: 'A',
         require : 'ngModel',
-        //transclude : true,
         scope: { options:"=", optionGetter:"&"},
         link: function (scope, iElement, iAttrs, ngModelController, transclude) {
             
+            var shortList;
             var shortListBreak = iAttrs.shortListBreak ? parseInt(iAttrs.shortListBreak) : 10;
+
             
             scope.ui = {
                 modalTitle : iAttrs.modalTitle || 'Pick a color',
@@ -62,14 +55,28 @@ angular.module('ionic-modal-select', [])
                 selectedClass : iAttrs.selectedClass || 'option-selected'
             };
 
-            //console.log(100, transclude)
-            //var linkedClone = transclude();
-            //console.log(angular.element(linkedClone[0]).html())
             var opt = iElement[0].querySelector('.option');
+            if(!opt){
+                throw new Error({
+                    name:'modalSelectError:noOptionTemplate',
+                    message:'When using modalSelect directive you must include an element with class "option" to provide a template for your select options.', 
+                    toString:function(){
+                        return this.name + " " + this.message;
+                    }
+                });
+            }
             scope.inner = angular.element(opt).html();
             opt.remove();
             
-            var shortList = scope.options.length < shortListBreak;
+            
+            //shortList controls wether using ng-repeat instead of collection-repeat
+            if(iAttrs.useCollectionRepeat === "true"){
+                shortList = false;
+            } else if(iAttrs.useCollectionRepeat === "false") {
+                shortList = true;
+            } else {
+                shortList = scope.options.length < shortListBreak;
+            };
             
             ngModelController.$render = function(){
                 scope.ui.value = ngModelController.$viewValue;
@@ -93,7 +100,7 @@ angular.module('ionic-modal-select', [])
                 }
                 return val;
 
-            }
+            };
 
             scope.setOption = function(option){
                 var val = getSelectedValue(option);
@@ -111,16 +118,13 @@ angular.module('ionic-modal-select', [])
                 });
             };
 
-
             scope.closeModal = function(){
                 scope.modal.hide().then(function(){
                     scope.showList = false;    
                 });
             };
             
-            
             //loading the modal
-            
             scope.modal = $ionicModal.fromTemplate(
                 modalSelectTemplates['modal-template.html'],
                     { scope: scope });

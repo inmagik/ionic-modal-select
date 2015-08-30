@@ -17,8 +17,9 @@ gulp.task('modal-select', function() {
     .pipe(jsifyTemplates())
     .pipe(replace("htmlTemplates", 'modalSelectTemplates'))
     .pipe(concat('templates.js'))
-    .pipe(addsrc( './src/ionic-modal-select.js'))
-    .pipe(order(['templates.js', 'src/ionic-modal-select.js.js']))
+    .pipe(addsrc('src/banner.js'))
+    .pipe(addsrc('src/ionic-modal-select.js'))
+    .pipe(order(['src/banner.js', 'templates.js', 'src/ionic-modal-select.js']))
     .pipe(concat('ionic-modal-select.js'))
     .pipe(gulp.dest('./dist/'))
     .pipe(uglify({mangle:false}))
@@ -42,9 +43,9 @@ gulp.task('css-modal-select', function() {
 
 
 gulp.task('watch', function() {
-  gulp.watch(['./src/*.*'], ['modal-select', 'css-modal-select']);
+  gulp.watch(['./src/*.*'], ['modal-select']);
 
 });
 
-gulp.task('default', ['modal-select', 'css-modal-select']);
+gulp.task('default', ['modal-select']);
 
