@@ -4,6 +4,8 @@ Modal select for Ionic Framework based on [$ionicModal](http://ionicframework.co
 
 Demo [here](http://codepen.io/bianchimro/pen/epYYQO?editors=101)
 
+![animated example](https://dl.dropboxusercontent.com/u/6178230/screenshots/ionic-modal-picker.gif)
+
 
 ## Features
 
