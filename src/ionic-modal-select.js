@@ -42,7 +42,7 @@ angular.module('ionic-modal-select', [])
             var onOptionSelect = iAttrs.optionGetter;
             
             scope.ui = {
-                modalTitle : iAttrs.modalTitle || 'Pick a color',
+                modalTitle : iAttrs.modalTitle || 'Select an option',
                 okButton : iAttrs.okButton || 'OK',
                 hideReset : iAttrs.hideReset  !== "true" ? false : true,
                 resetButton : iAttrs.okButton || 'Reset',
