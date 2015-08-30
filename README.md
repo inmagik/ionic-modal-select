@@ -2,7 +2,7 @@
 
 Modal select for Ionic Framework based on [$ionicModal](http://ionicframework.com/docs/api/service/$ionicModal/)
 
-Demo [here](http://codepen.io/bianchimro/pen/EVYgym?editors=101)
+Demo [here](http://codepen.io/bianchimro/pen/epYYQO?editors=101)
 
 
 ## Features
