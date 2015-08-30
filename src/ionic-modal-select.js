@@ -2,7 +2,6 @@
 
 angular.module('ionic-modal-select', [])
 
-
 .directive('compile', ['$compile', function ($compile) {
     return function(scope, iElement, iAttrs) {
         var x = scope.$watch(
@@ -30,7 +29,6 @@ angular.module('ionic-modal-select', [])
     };
 }])
 
-
 .directive('modalSelect', ['$ionicModal','$timeout' ,function ($ionicModal, $timeout) {
     return {
         restrict: 'A',
@@ -40,7 +38,8 @@ angular.module('ionic-modal-select', [])
             
             var shortList;
             var shortListBreak = iAttrs.shortListBreak ? parseInt(iAttrs.shortListBreak) : 10;
-
+            var setFromProperty= iAttrs.optionProperty;
+            var onOptionSelect = iAttrs.optionGetter;
             
             scope.ui = {
                 modalTitle : iAttrs.modalTitle || 'Pick a color',
@@ -55,6 +54,7 @@ angular.module('ionic-modal-select', [])
                 selectedClass : iAttrs.selectedClass || 'option-selected'
             };
 
+            // getting options template
             var opt = iElement[0].querySelector('.option');
             if(!opt){
                 throw new Error({
@@ -68,7 +68,6 @@ angular.module('ionic-modal-select', [])
             scope.inner = angular.element(opt).html();
             opt.remove();
             
-            
             //shortList controls wether using ng-repeat instead of collection-repeat
             if(iAttrs.useCollectionRepeat === "true"){
                 shortList = false;
@@ -81,9 +80,6 @@ angular.module('ionic-modal-select', [])
             ngModelController.$render = function(){
                 scope.ui.value = ngModelController.$viewValue;
             };
-
-            var setFromProperty= iAttrs.optionProperty;
-            var onOptionSelect = iAttrs.optionGetter;
 
             var getSelectedValue = scope.getSelectedValue = function(option){
                 if(!option){
@@ -99,7 +95,6 @@ angular.module('ionic-modal-select', [])
                     val = option;    
                 }
                 return val;
-
             };
 
             scope.setOption = function(option){
@@ -127,7 +122,8 @@ angular.module('ionic-modal-select', [])
             //loading the modal
             scope.modal = $ionicModal.fromTemplate(
                 modalSelectTemplates['modal-template.html'],
-                    { scope: scope });
+                { scope: scope }
+            );
 
             scope.$on('$destroy', function(){
                 scope.modal.remove();  
@@ -138,17 +134,17 @@ angular.module('ionic-modal-select', [])
                     scope.showList = true;    
                     scope.modal.show()
                 } else {
-                    scope.modal.show().then(function(){
-                     scope.showList = true;    
+                    scope.modal.show()
+                    .then(function(){
+                        scope.showList = true;    
                     });    
                 }
             });
 
-
+            ngModelController.$render();
 
         }
     };
 }])
-
 
 })();
