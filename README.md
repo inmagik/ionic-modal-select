@@ -96,7 +96,7 @@ For example:
 
 Will be rendered in the modal as :
 
-```
+```html
 <div class="item item-text-wrap">
     {{option}}
 </div>
@@ -189,9 +189,7 @@ We get back the phrase "Mauro:navigator", "Silvia:chef" or "Merlino:canaglia" if
 
 See this [codepen](http://codepen.io/bianchimro/pen/epYYQO?editors=101) for now.
 
-<!--
 ## Support this project
 
 This software package is available for free with a MIT license, but
 if you find it useful and want support its development consider buying a copy on the [Ionic Marketplace](http://market.ionic.io/plugins/ionic-modal-select) for just a few bucks.
--->
