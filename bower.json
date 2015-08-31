@@ -6,6 +6,10 @@
     "Mauro Bianchi <bianchimro@gmail.com>"
   ],
   "description": "Modal select for ionic framework",
+  "main": [
+    "js/ionic-modal-select.js",
+    "js/ionic-modal-select.min.js",
+  ],
   "keywords": [
     "ionic",
     "modal",
