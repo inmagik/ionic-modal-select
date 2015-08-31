@@ -7,8 +7,8 @@
   ],
   "description": "Modal select for ionic framework",
   "main": [
-    "js/ionic-modal-select.js",
-    "js/ionic-modal-select.min.js",
+    "dist/ionic-modal-select.js",
+    "dist/ionic-modal-select.min.js"
   ],
   "keywords": [
     "ionic",
