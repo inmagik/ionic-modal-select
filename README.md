@@ -15,12 +15,12 @@ Demo [here](http://codepen.io/bianchimro/pen/epYYQO?editors=101)
 * customizable buttons text
 
 ## Usage
-<!--
+
 Get the files from github or install from bower:
 ```
 bower install ionic-modal-select
 ```
--->
+
 
 Include `ionic-modal-select.js` or its minified version in your index.html:
 
