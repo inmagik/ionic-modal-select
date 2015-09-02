@@ -153,7 +153,7 @@ If we do not set `option-getter` or `option-property` attributes, the model is a
 </button>
 ```
 
-##### 2. Setting and a property
+##### 2. Setting a property
 If `option-property` attribute is set to a string, the bound model assigned that  property of the option object when an option is selected. For example if we set `option-getter="name"`, we get back the 'name' property of our options.
 
 ```html
