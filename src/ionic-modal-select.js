@@ -33,7 +33,7 @@ angular.module('ionic-modal-select', [])
     return {
         restrict: 'A',
         require : 'ngModel',
-        scope: { options:"=", optionGetter:"&"},
+        scope: { options:"=", optionGetter:"&", onSelect:"&" },
         link: function (scope, iElement, iAttrs, ngModelController, transclude) {
             
             var shortList;
@@ -98,10 +98,14 @@ angular.module('ionic-modal-select', [])
             };
 
             scope.setOption = function(option){
+                var oldValue = ngModelController.$viewValue;
                 var val = getSelectedValue(option);
                 ngModelController.$setViewValue(val);    
                 ngModelController.$render();
                 scope.closeModal();
+                if(scope.onSelect){
+                    scope.onSelect({ newValue: val, oldValue: oldValue });
+                }
             };
 
             scope.unsetValue = function(){
