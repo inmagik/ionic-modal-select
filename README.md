@@ -77,8 +77,8 @@ option|meaning|accepted values|default
 `reset-button`|Text of the button for unsetting value in the modal dialog|string|'Reset'
 `hide-reset`|Hides the button for unsetting value in the modal dialog|string. Set to 'true' for hiding the button|false
 `use-collection-repeat`|Forces use of collection-repeat or ng-repeat for rendering options in the modal.| string "true", "false" | not set (automatically set according to number of options and `short-list-break` attribute)
-`short-list-break`|The maximum number of item in list to be rendered with `ng-repeat`.(if `use-collection-repeat` is not set) If the list has a number of colors greater than this attribute it will be rendered with ionic `collection-repeat` directive instead. (see also `load-list-message` option)|integer|10
-`load-list-message`|Message to be shown when loading a long list of color in the modal|string|'Loading'
+`short-list-break`|The maximum number of item in list to be rendered with `ng-repeat`.(if `use-collection-repeat` is not set) If the list has a number of options greater than this attribute it will be rendered with ionic `collection-repeat` directive instead. (see also `load-list-message` option)|integer|10
+`load-list-message`|Message to be shown when loading a long list of options in the modal|string|'Loading'
 
 
 ### Options templates
