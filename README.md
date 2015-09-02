@@ -73,7 +73,7 @@ option|meaning|accepted values|default
 `on-select`|Callback triggered on object select. Takes two arguments, `newValue` and `oldValue` with obvious meaning.|function call with arguments `newValue` and `oldValue`|not set
 `modal-title`|The title shown on the modal header|string|'Select an option'
 `header-footer-class`|The class for header and footer of the modal|string|'bar-stable'
-`cancel-button`|Text of the button for closing the modal without changing the color|string|'Cancel'
+`cancel-button`|Text of the button for closing the modal without changing the value|string|'Cancel'
 `reset-button`|Text of the button for unsetting value in the modal dialog|string|'Reset'
 `hide-reset`|Hides the button for unsetting value in the modal dialog|string. Set to 'true' for hiding the button|false
 `use-collection-repeat`|Forces use of collection-repeat or ng-repeat for rendering options in the modal.| string "true", "false" | not set (automatically set according to number of options and `short-list-break` attribute)
