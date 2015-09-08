@@ -76,6 +76,8 @@ angular.module('ionic-modal-select', [])
             } else {
                 shortList = scope.options.length < shortListBreak;
             };
+
+            scope.shortList = shortList;
             
             ngModelController.$render = function(){
                 scope.ui.value = ngModelController.$viewValue;

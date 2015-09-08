@@ -4,7 +4,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '    </ion-header-bar>\n' +
     '    <ion-content>\n' +
     '\n' +
-    '    <div ng-if="!ui.shortColorList">\n' +
+    '    <div ng-if="!ui.shortList">\n' +
     '        <div class="text-center" ng-if="!showList" style="padding-top:40px;">\n' +
     '            <h4 class="muted">{{::ui.loadListMessage}}</h4>\n' +
     '            <p>\n' +
@@ -17,7 +17,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
-    '    <div ng-if="ui.shortColorList">\n' +
+    '    <div ng-if="ui.shortList">\n' +
     '        <div class="list">\n' +
     '            <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': getSelectedValue(option) == ui.value}">\n' +
     '                <div compile="inner" compile-once="true"></div>\n' +
@@ -127,6 +127,8 @@ angular.module('ionic-modal-select', [])
             } else {
                 shortList = scope.options.length < shortListBreak;
             };
+
+            scope.shortList = shortList;
             
             ngModelController.$render = function(){
                 scope.ui.value = ngModelController.$viewValue;
@@ -149,13 +151,13 @@ angular.module('ionic-modal-select', [])
             };
 
             scope.setOption = function(option){
-                var oldValue = ngModelController.$viewValue;    
+                var oldValue = ngModelController.$viewValue;
                 var val = getSelectedValue(option);
                 ngModelController.$setViewValue(val);    
                 ngModelController.$render();
                 scope.closeModal();
                 if(scope.onSelect){
-                    scope.onSelect({newValue : val, oldValue: oldValue });
+                    scope.onSelect({ newValue: val, oldValue: oldValue });
                 }
             };
 

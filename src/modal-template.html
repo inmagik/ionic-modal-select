@@ -4,7 +4,7 @@
     </ion-header-bar>
     <ion-content>
 
-    <div ng-if="!ui.shortColorList">
+    <div ng-if="!ui.shortList">
         <div class="text-center" ng-if="!showList" style="padding-top:40px;">
             <h4 class="muted">{{::ui.loadListMessage}}</h4>
             <p>
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div ng-if="ui.shortColorList">
+    <div ng-if="ui.shortList">
         <div class="list">
             <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{'{{::ui.selectedClass}}': getSelectedValue(option) == ui.value}">
                 <div compile="inner" compile-once="true"></div>
