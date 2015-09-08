@@ -1,6 +1,6 @@
  <ion-modal-view class="ionic-select-modal" ng-class="::ui.modalClass">
     <ion-header-bar ng-class="::ui.headerFooterClass">
-      <h1 class="title">{{::ui.modalTitle}}</h1>
+      <h1 class="title">{{::ui.modalTitle}} MULTIPLE</h1>
     </ion-header-bar>
     <ion-content>
 
@@ -19,9 +19,18 @@
     </div>
     <div ng-if="ui.shortList">
         <div class="list">
+            <div class="item item-checkbox" ng-repeat="option in options track by $index">
+                <label class="checkbox">
+                <input type="checkbox" ng-model="isChecked[$index]">
+                </label>
+            <div compile="inner" compile-once="true"></div>
+            </div>
+           
+            <!--
             <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{'{{::ui.selectedClass}}': getSelectedValue(option) == ui.value}">
                 <div compile="inner" compile-once="true"></div>
             </div>
+        -->
         </div>
     </div>
     </ion-content>
@@ -29,5 +38,4 @@
         <button class="button button-stable" ng-click="closeModal()">{{ui.cancelButton}}</button>
         <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>
     </ion-footer-bar>
-
 </ion-modal-view>

@@ -1,3 +1,46 @@
+var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['modal-template-multiple.html'] = ' <ion-modal-view class="ionic-select-modal" ng-class="::ui.modalClass">\n' +
+    '    <ion-header-bar ng-class="::ui.headerFooterClass">\n' +
+    '      <h1 class="title">{{::ui.modalTitle}} MULTIPLE</h1>\n' +
+    '    </ion-header-bar>\n' +
+    '    <ion-content>\n' +
+    '\n' +
+    '    <div ng-if="!ui.shortList">\n' +
+    '        <div class="text-center" ng-if="!showList" style="padding-top:40px;">\n' +
+    '            <h4 class="muted">{{::ui.loadListMessage}}</h4>\n' +
+    '            <p>\n' +
+    '                <ion-spinner></ion-spinner>\n' +
+    '            </p>\n' +
+    '        </div>\n' +
+    '        <div class="list" ng-if="showList" class="animate-if">\n' +
+    '            <div class="item item-text-wrap" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': getSelectedValue(option) == ui.value}"> \n' +
+    '                <div compile="inner" compile-once="true"></div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '    <div ng-if="ui.shortList">\n' +
+    '        <div class="list">\n' +
+    '            <div class="item item-checkbox" ng-repeat="option in options track by $index">\n' +
+    '                <label class="checkbox">\n' +
+    '                <input type="checkbox" ng-model="isChecked[$index]">\n' +
+    '                </label>\n' +
+    '            <div compile="inner" compile-once="true"></div>\n' +
+    '            </div>\n' +
+    '           \n' +
+    '            <!--\n' +
+    '            <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': getSelectedValue(option) == ui.value}">\n' +
+    '                <div compile="inner" compile-once="true"></div>\n' +
+    '            </div>\n' +
+    '        -->\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '    </ion-content>\n' +
+    '    <ion-footer-bar ng-class="::ui.headerFooterClass">\n' +
+    '        <button class="button button-stable" ng-click="closeModal()">{{ui.cancelButton}}</button>\n' +
+    '        <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>\n' +
+    '    </ion-footer-bar>\n' +
+    '</ion-modal-view>\n' +
+    '';
+
 var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['modal-template.html'] = ' <ion-modal-view class="ionic-select-modal" ng-class="::ui.modalClass">\n' +
     '    <ion-header-bar ng-class="::ui.headerFooterClass">\n' +
     '      <h1 class="title">{{::ui.modalTitle}}</h1>\n' +
@@ -24,7 +67,6 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
-    '      \n' +
     '    </ion-content>\n' +
     '    <ion-footer-bar ng-class="::ui.headerFooterClass">\n' +
     '        <button class="button button-stable" ng-click="closeModal()">{{ui.cancelButton}}</button>\n' +
@@ -91,6 +133,7 @@ angular.module('ionic-modal-select', [])
             var shortListBreak = iAttrs.shortListBreak ? parseInt(iAttrs.shortListBreak) : 10;
             var setFromProperty= iAttrs.optionProperty;
             var onOptionSelect = iAttrs.optionGetter;
+            var multiple = iAttrs.multiple  ? true : false;
             
             scope.ui = {
                 modalTitle : iAttrs.modalTitle || 'Select an option',
@@ -128,7 +171,7 @@ angular.module('ionic-modal-select', [])
                 shortList = scope.options.length < shortListBreak;
             };
 
-            scope.shortList = shortList;
+            scope.ui.shortList = shortList;
             
             ngModelController.$render = function(){
                 scope.ui.value = ngModelController.$viewValue;
@@ -177,8 +220,9 @@ angular.module('ionic-modal-select', [])
             };
             
             //loading the modal
+            var modalTpl = multiple ? 'modal-template-multiple.html' : 'modal-template.html';
             scope.modal = $ionicModal.fromTemplate(
-                modalSelectTemplates['modal-template.html'],
+                modalSelectTemplates[modalTpl],
                 { scope: scope }
             );
 

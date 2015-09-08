@@ -40,6 +40,7 @@ angular.module('ionic-modal-select', [])
             var shortListBreak = iAttrs.shortListBreak ? parseInt(iAttrs.shortListBreak) : 10;
             var setFromProperty= iAttrs.optionProperty;
             var onOptionSelect = iAttrs.optionGetter;
+            var multiple = iAttrs.multiple  ? true : false;
             
             scope.ui = {
                 modalTitle : iAttrs.modalTitle || 'Select an option',
@@ -77,7 +78,7 @@ angular.module('ionic-modal-select', [])
                 shortList = scope.options.length < shortListBreak;
             };
 
-            scope.shortList = shortList;
+            scope.ui.shortList = shortList;
             
             ngModelController.$render = function(){
                 scope.ui.value = ngModelController.$viewValue;
@@ -126,8 +127,9 @@ angular.module('ionic-modal-select', [])
             };
             
             //loading the modal
+            var modalTpl = multiple ? 'modal-template-multiple.html' : 'modal-template.html';
             scope.modal = $ionicModal.fromTemplate(
-                modalSelectTemplates['modal-template.html'],
+                modalSelectTemplates[modalTpl],
                 { scope: scope }
             );
 
