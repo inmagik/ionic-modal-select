@@ -40,7 +40,12 @@ angular.module('ionic-modal-select', [])
             var shortListBreak = iAttrs.shortListBreak ? parseInt(iAttrs.shortListBreak) : 10;
             var setFromProperty= iAttrs.optionProperty;
             var onOptionSelect = iAttrs.optionGetter;
+            
+            //#todo: multiple is not working right now
             var multiple = iAttrs.multiple  ? true : false;
+            if(multiple){
+                scope.checkedItems = [];
+            }
             
             scope.ui = {
                 modalTitle : iAttrs.modalTitle || 'Select an option',

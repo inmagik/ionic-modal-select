@@ -21,21 +21,16 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '        <div class="list">\n' +
     '            <div class="item item-checkbox" ng-repeat="option in options track by $index">\n' +
     '                <label class="checkbox">\n' +
-    '                <input type="checkbox" ng-model="isChecked[$index]">\n' +
+    '                    <input type="checkbox" ng-model="isChecked[$index]">\n' +
     '                </label>\n' +
-    '            <div compile="inner" compile-once="true"></div>\n' +
-    '            </div>\n' +
-    '           \n' +
-    '            <!--\n' +
-    '            <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': getSelectedValue(option) == ui.value}">\n' +
     '                <div compile="inner" compile-once="true"></div>\n' +
     '            </div>\n' +
-    '        -->\n' +
     '        </div>\n' +
     '    </div>\n' +
     '    </ion-content>\n' +
     '    <ion-footer-bar ng-class="::ui.headerFooterClass">\n' +
     '        <button class="button button-stable" ng-click="closeModal()">{{ui.cancelButton}}</button>\n' +
+    '        <h2 class="title"><button class="button">OK</button></h2>\n' +
     '        <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>\n' +
     '    </ion-footer-bar>\n' +
     '</ion-modal-view>\n' +
@@ -133,7 +128,12 @@ angular.module('ionic-modal-select', [])
             var shortListBreak = iAttrs.shortListBreak ? parseInt(iAttrs.shortListBreak) : 10;
             var setFromProperty= iAttrs.optionProperty;
             var onOptionSelect = iAttrs.optionGetter;
+            
+            //#todo: multiple is not working right now
             var multiple = iAttrs.multiple  ? true : false;
+            if(multiple){
+                scope.checkedItems = [];
+            }
             
             scope.ui = {
                 modalTitle : iAttrs.modalTitle || 'Select an option',
