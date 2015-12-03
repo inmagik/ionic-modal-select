@@ -64,7 +64,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '    </div>\n' +
     '    </ion-content>\n' +
     '    <ion-footer-bar ng-class="::ui.headerFooterClass">\n' +
-    '        <button class="button button-stable" ng-click="closeModal()">{{ui.cancelButton}}</button>\n' +
+    '        <button class="button button-stable modal-select-close-button" ng-click="closeModal()">{{ui.cancelButton}}</button>\n' +
     '        <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>\n' +
     '    </ion-footer-bar>\n' +
     '\n' +
@@ -160,7 +160,7 @@ angular.module('ionic-modal-select', [])
                 });
             }
             scope.inner = angular.element(opt).html();
-            opt.remove();
+            angular.element(opt).remove();
             
             //shortList controls wether using ng-repeat instead of collection-repeat
             if(iAttrs.useCollectionRepeat === "true"){

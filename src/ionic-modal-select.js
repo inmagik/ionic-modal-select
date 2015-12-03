@@ -72,7 +72,7 @@ angular.module('ionic-modal-select', [])
                 });
             }
             scope.inner = angular.element(opt).html();
-            opt.remove();
+            angular.element(opt).remove();
             
             //shortList controls wether using ng-repeat instead of collection-repeat
             if(iAttrs.useCollectionRepeat === "true"){

@@ -15,6 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+        '../bower_components/ionic/release/js/ionic.bundle.js',
+        '../dist/ionic-modal-select.js',
+        '../bower_components/angular-mocks/angular-mocks.js',
+        '**/*tests.js'
     ],
 
 

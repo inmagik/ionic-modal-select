@@ -20,8 +20,6 @@ describe('compile directive', function(){
 
     }));
 
-
-    // tests start here
     it('should compile inner content', function(){
         var a = elm.find('a');
         
@@ -30,7 +28,6 @@ describe('compile directive', function(){
     });
 
     it('should compile inner content again if something changes', function(){
-        
         var a;
         scope.inner = "<a>{{b}}</a>";
         scope.$digest();
@@ -41,7 +38,6 @@ describe('compile directive', function(){
     });
 
     it('should not compile inner content again if something changes but compile-once attr is set to "true"', function(){
-        
         var a, a2;
         scope.inner = "<a>{{a}}</a>";
         scope.$digest();

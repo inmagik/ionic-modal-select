@@ -8,6 +8,22 @@ var jsifyTemplates = require('gulp-jsify-html-templates');
 var uglify = require('gulp-uglify');
 var order = require("gulp-order");
 
+// Import at the top of the file
+var karma = require('karma').Server;
+
+
+/**
+* Test task, run test once and exit
+*/
+gulp.task('test', function(done) {
+    var config = {
+        configFile: __dirname + '/tests/my.conf.js',
+        singleRun: true
+    };
+    var server = new karma(config)
+    server.start()
+});
+
 
 gulp.task('modal-select', function() {
     return  gulp.src( [
