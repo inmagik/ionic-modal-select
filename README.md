@@ -10,6 +10,7 @@ Demo [here](http://codepen.io/bianchimro/pen/epYYQO?editors=101)
 ## Features
 
 * supports long list of object via collection-repeat
+* optional search bar
 * supports unsetting the chosen value (optional)
 * customizable modal classes, modal header and footer classes
 * customizable buttons text
@@ -79,6 +80,10 @@ option|meaning|accepted values|default
 `use-collection-repeat`|Forces use of collection-repeat or ng-repeat for rendering options in the modal.| string "true", "false" | not set (automatically set according to number of options and `short-list-break` attribute)
 `short-list-break`|The maximum number of item in list to be rendered with `ng-repeat`.(if `use-collection-repeat` is not set) If the list has a number of options greater than this attribute it will be rendered with ionic `collection-repeat` directive instead. (see also `load-list-message` option)|integer|10
 `load-list-message`|Message to be shown when loading a long list of options in the modal|string|'Loading'
+`has-search`|Whether to show a search bar to filter options.|set to "true" for showing the search bar|undefined
+`sub-header-class`|Class to be applied to the subheader containing the search bar (makes sense only if `has-search="true`) |string|'bar-stable'
+`cancel-search-button`|Text for the button for clearing search text (makes sense only if `has-search="true`) |string|'Cancel'
+
 
 
 ### Options templates
@@ -104,6 +109,12 @@ Will be rendered in the modal as :
 ```
 
 
+## Search bar
+From version 1.1.0 you can include a search bar into the modal for filtering options by simply adding the attribute `has-search="true"` to your `modal-select` element.
+
+Filtering is implemented with the angular `filter` filter, which searches recursively in all properties of the objects passed in as options. This means that you cannot search on "computed properties" right now. For example if you are using a custom setter you will be only able to search the original properties of the options. 
+
+
 ### Examples
 #### Simplest one.
 This example shows a modal for choosing a number between 1 and 5.
@@ -123,6 +134,20 @@ In your template:
     </div>
 </button>
 ```
+
+#### Including a search bar
+To include a search bar in the previous example, just add `has-search="true"`:
+
+```html
+<button class="button button-positive" modal-select ng-model="someModel" options="selectables" modal-title="Select a number" has-search="true">
+    Select it
+    <div class="option">
+        {{option}}
+    </div>
+</button>
+```
+
+
 
 #### Objects as options
 In the following example we use some objects as options.
@@ -152,6 +177,9 @@ If we do not set `option-getter` or `option-property` attributes, the model is a
     </div>
 </button>
 ```
+
+
+
 
 ##### 2. Setting a property
 If `option-property` attribute is set to a string, the bound model assigned that  property of the option object when an option is selected. For example if we set `option-getter="name"`, we get back the 'name' property of our options.
