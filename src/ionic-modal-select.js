@@ -29,7 +29,7 @@ angular.module('ionic-modal-select', [])
     };
 }])
 
-.directive('modalSelect', ['$ionicModal','$timeout' ,function ($ionicModal, $timeout) {
+.directive('modalSelect', ['$ionicModal','$timeout', '$filter', function ($ionicModal, $timeout, $filter) {
     return {
         restrict: 'A',
         require : 'ngModel',
@@ -57,7 +57,13 @@ angular.module('ionic-modal-select', [])
                 modalClass : iAttrs.modalClass || '',
                 headerFooterClass : iAttrs.headerFooterClass || 'bar-stable',
                 value  : null,
-                selectedClass : iAttrs.selectedClass || 'option-selected'
+                selectedClass : iAttrs.selectedClass || 'option-selected',
+                //search stuff
+                hasSearch : iAttrs.hasSearch  !== "true" ? false : true,
+                searchValue : '',
+                subHeaderClass : iAttrs.subHeaderClass || 'bar-stable',
+                cancelSearchButton : iAttrs.cancelSearchButton || 'Cancel',
+
             };
 
             // getting options template
@@ -153,6 +159,19 @@ angular.module('ionic-modal-select', [])
                     });    
                 }
             });
+
+            //filter function
+            if(scope.ui.hasSearch){
+                var allOptions = angular.copy(scope.options);
+                scope.$watch('ui.searchValue', function(nv){
+                    scope.options = $filter('filter')(allOptions, nv);
+                });
+                scope.clearSearch = function(){
+                    scope.ui.searchValue = '';
+                }
+            }
+            
+            
 
             ngModelController.$render();
 

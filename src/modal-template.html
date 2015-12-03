@@ -2,7 +2,18 @@
     <ion-header-bar ng-class="::ui.headerFooterClass">
       <h1 class="title">{{::ui.modalTitle}}</h1>
     </ion-header-bar>
-    <ion-content>
+
+    <div class="bar bar-subheader item-input-inset" ng-class="::ui.subHeaderClass" ng-if="ui.hasSearch">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search" ng-model="ui.searchValue">
+      </label>
+      <button class="button button-clear" ng-click="clearSearch()">
+        {{ ui.cancelSearchButton }}
+      </button>
+    </div>
+
+    <ion-content class="has-header" ng-class="{'has-subheader':ui.hasSearch}">
 
     <div ng-if="!ui.shortList">
         <div class="text-center" ng-if="!showList" style="padding-top:40px;">
