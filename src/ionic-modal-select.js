@@ -33,7 +33,7 @@ angular.module('ionic-modal-select', [])
     return {
         restrict: 'A',
         require : 'ngModel',
-        scope: { options:"=", optionGetter:"&", onSelect:"&" },
+        scope: { initialOptions:"=options", optionGetter:"&", onSelect:"&" },
         link: function (scope, iElement, iAttrs, ngModelController, transclude) {
             
             var shortList;
@@ -65,6 +65,9 @@ angular.module('ionic-modal-select', [])
                 cancelSearchButton : iAttrs.cancelSearchButton || 'Cancel',
 
             };
+
+            var allOptions = angular.copy(scope.initialOptions);
+            scope.options = allOptions;
 
             // getting options template
             var opt = iElement[0].querySelector('.option');
@@ -162,7 +165,6 @@ angular.module('ionic-modal-select', [])
 
             //filter function
             if(scope.ui.hasSearch){
-                var allOptions = angular.copy(scope.options);
                 scope.$watch('ui.searchValue', function(nv){
                     scope.options = $filter('filter')(allOptions, nv);
                 });
@@ -171,8 +173,7 @@ angular.module('ionic-modal-select', [])
                 }
             }
             
-            
-
+            //#TODO ?: WRAP INTO $timeout?
             ngModelController.$render();
 
         }
