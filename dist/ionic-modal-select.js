@@ -168,6 +168,11 @@ angular.module('ionic-modal-select', [])
             var allOptions = angular.copy(scope.initialOptions);
             scope.options = allOptions;
 
+            scope.$watch('initialOptions', function(nv){
+                allOptions = angular.copy(scope.initialOptions);
+                scope.options = angular.copy(nv);                
+            });
+
             // getting options template
             var opt = iElement[0].querySelector('.option');
             if(!opt){
