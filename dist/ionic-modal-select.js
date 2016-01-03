@@ -185,6 +185,16 @@ angular.module('ionic-modal-select', [])
                 });
             }
             scope.inner = angular.element(opt).html();
+
+            //--------------------------------------------------------------
+            //add support for .remove for older devices
+            if (!('remove' in Element.prototype)) {
+                Element.prototype.remove = function() {
+                    this.parentNode.removeChild(this);
+                };
+            }
+            //--------------------------------------------------------------
+
             angular.element(opt).remove();
             
             //shortList controls wether using ng-repeat instead of collection-repeat
