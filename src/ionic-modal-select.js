@@ -144,6 +144,10 @@ angular.module('ionic-modal-select', [])
                     scope.showList = false;    
                 });
             };
+
+            scope.compareValues = function(a, b){
+                return angular.equals(a, b);
+            };
             
             //loading the modal
             var modalTpl = multiple ? 'modal-template-multiple.html' : 'modal-template.html';

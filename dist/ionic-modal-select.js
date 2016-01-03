@@ -61,14 +61,14 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '            </p>\n' +
     '        </div>\n' +
     '        <div class="list" ng-if="showList" class="animate-if">\n' +
-    '            <div class="item item-text-wrap" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': getSelectedValue(option) == ui.value}"> \n' +
+    '            <div class="item item-text-wrap" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }"> \n' +
     '                <div compile="inner" compile-once="true"></div>\n' +
     '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
     '    <div ng-if="ui.shortList">\n' +
     '        <div class="list">\n' +
-    '            <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': getSelectedValue(option) == ui.value}">\n' +
+    '            <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }">\n' +
     '                <div compile="inner" compile-once="true"></div>\n' +
     '            </div>\n' +
     '        </div>\n' +
@@ -242,6 +242,10 @@ angular.module('ionic-modal-select', [])
                 scope.modal.hide().then(function(){
                     scope.showList = false;    
                 });
+            };
+
+            scope.compareValues = function(a, b){
+                return angular.equals(a, b);
             };
             
             //loading the modal
