@@ -1,4 +1,5 @@
  <ion-modal-view class="ionic-select-modal" ng-class="::ui.modalClass">
+    
     <ion-header-bar ng-class="::ui.headerFooterClass">
       <h1 class="title">{{::ui.modalTitle}}</h1>
     </ion-header-bar>
@@ -14,28 +15,28 @@
     </div>
 
     <ion-content class="has-header" ng-class="{'has-subheader':ui.hasSearch}">
-
-    <div ng-if="!ui.shortList">
-        <div class="text-center" ng-if="!showList" style="padding-top:40px;">
-            <h4 class="muted">{{::ui.loadListMessage}}</h4>
-            <p>
-                <ion-spinner></ion-spinner>
-            </p>
-        </div>
-        <div class="list" ng-if="showList" class="animate-if">
-            <div class="item item-text-wrap" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{'{{::ui.selectedClass}}': compareValues(getSelectedValue(option), ui.value) }"> 
-                <div compile="inner" compile-once="true"></div>
+        <div ng-if="!ui.shortList">
+            <div class="text-center" ng-if="!showList" style="padding-top:40px;">
+                <h4 class="muted">{{::ui.loadListMessage}}</h4>
+                <p>
+                    <ion-spinner></ion-spinner>
+                </p>
+            </div>
+            <div class="list" ng-if="showList" class="animate-if">
+                <div class="item item-text-wrap" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{'{{::ui.selectedClass}}': compareValues(getSelectedValue(option), ui.value) }"> 
+                    <div compile="inner" compile-once="true"></div>
+                </div>
             </div>
         </div>
-    </div>
-    <div ng-if="ui.shortList">
-        <div class="list">
-            <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{'{{::ui.selectedClass}}': compareValues(getSelectedValue(option), ui.value) }">
-                <div compile="inner" compile-once="true"></div>
+        <div ng-if="ui.shortList">
+            <div class="list">
+                <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{'{{::ui.selectedClass}}': compareValues(getSelectedValue(option), ui.value) }">
+                    <div compile="inner" compile-once="true"></div>
+                </div>
             </div>
         </div>
-    </div>
     </ion-content>
+
     <ion-footer-bar ng-class="::ui.headerFooterClass">
         <button class="button button-stable modal-select-close-button" ng-click="closeModal()">{{ui.cancelButton}}</button>
         <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>

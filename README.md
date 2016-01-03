@@ -67,6 +67,7 @@ The final value bound to your model will be determined as follow:
 option|meaning|accepted values|default
 ---|---|---|---
 `options`|List of options to choose from|Array||
+`options-expression`|The expression indicating how to enumerate a the options collection, of the format `variable in expression` – where variable is the user defined loop variable and expression is a scope expression giving the collection to enumerate. For example: `album in artist.albums or album in artist.albums | orderBy:'name'`.|expression||
 `option-getter`|Optional method to get the value from the chosen item|function|not set|
 `option-property`|Optional property name to get as model value from the chosen item|string|not set|
 `modal-class`|The class for the modal (set on `<ion-modal-view>`|string|''
@@ -85,6 +86,15 @@ option|meaning|accepted values|default
 `sub-header-class`|Class to be applied to the subheader containing the search bar (makes sense only if `has-search="true`) |string|'bar-stable'
 `cancel-search-button`|Text for the button for clearing search text (makes sense only if `has-search="true`) |string|'Cancel'
 
+
+### Passing in options
+
+The `modal-select` directive must be provided with a set of options to choose from
+
+This can be done in two ways:
+
+* via the `options` attribute, that accepts an array of values or objects. The directive will watch for changes in this array and modify its options accordingly.
+* via the `options-expression` attribute, that accepts an expression similar to what you would use with ionic `collection-repeat` directive, of the format `variable in expression` – where variable is the user defined loop variable and expression is a scope expression giving the collection to enumerate. For example: `album in artist.albums or album in artist.albums | orderBy:'name'`. This allows you to apply ordering or filtering without acting on the original array.
 
 
 ### Options templates

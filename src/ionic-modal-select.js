@@ -21,7 +21,7 @@ angular.module('ionic-modal-select', [])
                 $compile(iElement.contents())(scope);
                 
                 //deactivate watch if "compile-once" is set to "true"
-                if(iAttrs.compileOnce === 'true'){
+                if (iAttrs.compileOnce === 'true') {
                     x();
                 }
             }
@@ -29,7 +29,7 @@ angular.module('ionic-modal-select', [])
     };
 }])
 
-.directive('modalSelect', ['$ionicModal','$timeout', '$filter', function ($ionicModal, $timeout, $filter) {
+.directive('modalSelect', ['$ionicModal','$timeout', '$filter', '$parse', function ($ionicModal, $timeout, $filter, $parse) {
     return {
         restrict: 'A',
         require : 'ngModel',
@@ -43,7 +43,7 @@ angular.module('ionic-modal-select', [])
             
             //#todo: multiple is not working right now
             var multiple = iAttrs.multiple  ? true : false;
-            if(multiple){
+            if (multiple) {
                 scope.checkedItems = [];
             }
             
@@ -66,17 +66,44 @@ angular.module('ionic-modal-select', [])
 
             };
 
-            var allOptions = angular.copy(scope.initialOptions);
-            scope.options = allOptions;
+            var allOptions = [];
+            scope.options = [];
 
-            scope.$watch('initialOptions', function(nv){
-                allOptions = angular.copy(scope.initialOptions);
-                scope.options = angular.copy(nv);                
-            });
+            if (iAttrs.optionsExpression) {
+                var optionsExpression = iAttrs.optionsExpression;
+                var match = optionsExpression.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
+                if (!match) {
+                    throw new Error("collection-repeat expected expression in form of '_item_ in " +
+                                      "_collection_[ track by _id_]' but got '" + iAttrs.optionsExpression + "'.");
+                }
+                var keyExpr = match[1];
+                var listExpr = match[2];
+                var listGetter = $parse(listExpr);
+                var s = iElement.scope();
+                
+                scope.$watch(
+                    function(){
+                        return listGetter(s);    
+                    }, 
+                    function(nv, ov){
+                        allOptions = angular.copy(nv);
+                        scope.options = angular.copy(nv);
+                        updateListMode();   
+                    }, 
+                    true
+                );
+
+            } else {
+                scope.$watch('initialOptions', function(nv){
+                    allOptions = angular.copy(nv);
+                    scope.options = angular.copy(nv);
+                    updateListMode();
+                });
+            }
 
             // getting options template
             var opt = iElement[0].querySelector('.option');
-            if(!opt){
+            if (!opt) {
                 throw new Error({
                     name:'modalSelectError:noOptionTemplate',
                     message:'When using modalSelect directive you must include an element with class "option" to provide a template for your select options.', 
@@ -96,30 +123,32 @@ angular.module('ionic-modal-select', [])
 
             angular.element(opt).remove();
             
-            //shortList controls wether using ng-repeat instead of collection-repeat
-            if(iAttrs.useCollectionRepeat === "true"){
-                shortList = false;
-            } else if(iAttrs.useCollectionRepeat === "false") {
-                shortList = true;
-            } else {
-                shortList = scope.options.length < shortListBreak;
-            };
+            function updateListMode(){
+                //shortList controls wether using ng-repeat instead of collection-repeat
+                if (iAttrs.useCollectionRepeat === "true") {
+                    shortList = false;
+                } else if (iAttrs.useCollectionRepeat === "false") {
+                    shortList = true;
+                } else {
+                    shortList = scope.options.length < shortListBreak;
+                };
 
-            scope.ui.shortList = shortList;
+                scope.ui.shortList = shortList;
+            }
             
             ngModelController.$render = function(){
                 scope.ui.value = ngModelController.$viewValue;
             };
 
             var getSelectedValue = scope.getSelectedValue = function(option){
-                if(!option){
+                if (!option) {
                     return null;
                 }
-                if(onOptionSelect){
+                if (onOptionSelect) {
                     var out = scope.optionGetter({option:option});
                     return out;
                 }
-                if(setFromProperty){
+                if (setFromProperty) {
                     val = option[setFromProperty]
                 } else {
                     val = option;    
@@ -133,7 +162,7 @@ angular.module('ionic-modal-select', [])
                 ngModelController.$setViewValue(val);    
                 ngModelController.$render();
                 scope.closeModal();
-                if(scope.onSelect){
+                if (scope.onSelect) {
                     scope.onSelect({ newValue: val, oldValue: oldValue });
                 }
             };
@@ -172,7 +201,7 @@ angular.module('ionic-modal-select', [])
             });
 
             iElement.on('click', function(){
-                if(shortList){
+                if (shortList) {
                     scope.showList = true;    
                     scope.modal.show()
                 } else {
@@ -184,13 +213,13 @@ angular.module('ionic-modal-select', [])
             });
 
             //filter function
-            if(scope.ui.hasSearch){
+            if (scope.ui.hasSearch) {
                 scope.$watch('ui.searchValue', function(nv){
                     scope.options = $filter('filter')(allOptions, nv);
                 });
                 scope.clearSearch = function(){
                     scope.ui.searchValue = '';
-                }
+                };
             }
             
             //#TODO ?: WRAP INTO $timeout?
