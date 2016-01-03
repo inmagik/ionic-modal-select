@@ -132,7 +132,7 @@ angular.module('ionic-modal-select', [])
     return {
         restrict: 'A',
         require : 'ngModel',
-        scope: { initialOptions:"=options", optionGetter:"&", onSelect:"&" },
+        scope: { initialOptions:"=options", optionGetter:"&", onSelect:"&", onReset:"&" },
         link: function (scope, iElement, iAttrs, ngModelController, transclude) {
             
             var shortList;
@@ -186,14 +186,12 @@ angular.module('ionic-modal-select', [])
             }
             scope.inner = angular.element(opt).html();
 
-            //--------------------------------------------------------------
             //add support for .remove for older devices
             if (!('remove' in Element.prototype)) {
                 Element.prototype.remove = function() {
                     this.parentNode.removeChild(this);
                 };
             }
-            //--------------------------------------------------------------
 
             angular.element(opt).remove();
             
@@ -245,6 +243,9 @@ angular.module('ionic-modal-select', [])
                     ngModelController.$render();
                     scope.modal.hide();
                     scope.showList = false;
+                    if (scope.onReset && angular.isFunction(scope.onReset)) {
+                        scope.onReset();
+                    }
                 });
             };
 

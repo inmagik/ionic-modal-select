@@ -72,6 +72,7 @@ option|meaning|accepted values|default
 `modal-class`|The class for the modal (set on `<ion-modal-view>`|string|''
 `selected-class`|The class applied to the currently selected option (if any) in the modal list|string|'option-selected'
 `on-select`|Callback triggered on object select. Takes two arguments, `newValue` and `oldValue` with obvious meaning.|function call with arguments `newValue` and `oldValue`|not set
+`on-reset`|Callback triggered when value is resetted using the relevant ui interface. Takes no arguments.|function call|not set
 `modal-title`|The title shown on the modal header|string|'Select an option'
 `header-footer-class`|The class for header and footer of the modal|string|'bar-stable'
 `cancel-button`|Text of the button for closing the modal without changing the value|string|'Cancel'
