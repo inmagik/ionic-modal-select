@@ -53,23 +53,25 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '    </div>\n' +
     '\n' +
     '    <ion-content class="has-header" ng-class="{\'has-subheader\':ui.hasSearch}">\n' +
-    '        <div ng-if="!ui.shortList">\n' +
-    '            <div class="text-center" ng-if="!showList" style="padding-top:40px;">\n' +
-    '                <h4 class="muted">{{::ui.loadListMessage}}</h4>\n' +
-    '                <p>\n' +
-    '                    <ion-spinner></ion-spinner>\n' +
-    '                </p>\n' +
-    '            </div>\n' +
-    '            <div class="list" ng-if="showList" class="animate-if">\n' +
-    '                <div class="item item-text-wrap" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }"> \n' +
-    '                    <div compile="inner" compile-once="true"></div>\n' +
+    '        <div class="text-center" ng-if="!ui.shortList && !showList" style="padding-top:40px;">\n' +
+    '            <h4 class="muted">{{::ui.loadListMessage}}</h4>\n' +
+    '            <p>\n' +
+    '                <ion-spinner></ion-spinner>\n' +
+    '            </p>\n' +
+    '        </div>\n' +
+    '        <div ng-if="showList">\n' +
+    '            <div ng-if="!ui.shortList">\n' +
+    '                <div class="list" ng-if="showList" class="animate-if">\n' +
+    '                    <div class="item item-text-wrap" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }"> \n' +
+    '                        <div compile="inner" compile-once="true"></div>\n' +
+    '                    </div>\n' +
     '                </div>\n' +
     '            </div>\n' +
-    '        </div>\n' +
-    '        <div ng-if="ui.shortList">\n' +
-    '            <div class="list">\n' +
-    '                <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }">\n' +
-    '                    <div compile="inner" compile-once="true"></div>\n' +
+    '            <div ng-if="ui.shortList">\n' +
+    '                <div class="list">\n' +
+    '                    <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }">\n' +
+    '                        <div compile="inner" compile-once="true"></div>\n' +
+    '                    </div>\n' +
     '                </div>\n' +
     '            </div>\n' +
     '        </div>\n' +
@@ -189,6 +191,7 @@ angular.module('ionic-modal-select', [])
                         allOptions = angular.copy(nv);
                         scope.options = angular.copy(nv);
                         updateListMode();   
+                        
                     }, 
                     true
                 );
@@ -230,10 +233,10 @@ angular.module('ionic-modal-select', [])
                 } else if (iAttrs.useCollectionRepeat === "false") {
                     shortList = true;
                 } else {
-                    shortList = scope.options.length < shortListBreak;
+                    shortList = !!(scope.options.length < shortListBreak);
                 };
-
-                scope.ui.shortList = shortList;
+                
+                scope.ui.shortList = shortList;   
             }
             
             ngModelController.$render = function(){
@@ -301,13 +304,14 @@ angular.module('ionic-modal-select', [])
             });
 
             iElement.on('click', function(){
-                if (shortList) {
+                if (shortList && false) {
                     scope.showList = true;    
-                    scope.modal.show()
+                    scope.modal.show();
                 } else {
                     scope.modal.show()
                     .then(function(){
-                        scope.showList = true;    
+                        scope.showList = true;  
+                        scope.ui.shortList = shortList;  
                     });    
                 }
             });
