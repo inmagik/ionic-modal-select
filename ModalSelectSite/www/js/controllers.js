@@ -59,8 +59,7 @@ angular.module('starter.controllers', [])
     } else {
       $scope.changingOptions = [1,2,3];    
     }
-  }
-
+  };
 
   $scope.shoutLoud = function(newValuea, oldValue){
     alert("changed from " + JSON.stringify(oldValue) + " to " + JSON.stringify(newValuea));

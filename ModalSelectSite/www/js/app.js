@@ -64,6 +64,16 @@ angular.module('starter',
         controller: 'ExamplesCtrl'
       }
     }
+  })
+
+  .state('app.examples-styling', {
+    url: '/examples-styling',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/examples-styling.html',
+        controller: 'ExamplesCtrl'
+      }
+    }
   });
 
   

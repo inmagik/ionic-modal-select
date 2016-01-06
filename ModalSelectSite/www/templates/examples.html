@@ -1,7 +1,7 @@
 <ion-view view-title="Examples">
   <ion-content>
   <div class="card">
-  <div class="item item-divider calm-bg ">
+  <div class="item item-divider calm-bg" id="setting-getting">
           <h2 class="white-text">Setting and getting options</h2>
       </div>
   </div>
@@ -32,9 +32,6 @@ $scope.selectables = [1, 2, 3];
   someModel value: {{someModel}} 
 </h3>
         </div>
-      
-      </div>
-      <div class="item item-body">
         <h3>Result:</h3>
         <button class="button button-positive" modal-select="" ng-model="someModel" options="selectables" modal-title="Select a number">
           Select it
@@ -154,11 +151,7 @@ $scope.getOpt = function(option){
         <h3>
           Selected value: {{model4}} 
         </h3>
-
-        <hr>
-
       </div>
-
       
       <div class="item item-divider">
           Options can change over time
@@ -167,7 +160,29 @@ $scope.getOpt = function(option){
         <p>If options are passed in via <span class="positive">options</span> attribute, the directive will watch the options array for changes and update the list presented to the user accordingly. <br>
         In this example we change the set of options with a button, but you can use this feature to get options from a server, a json file or an asyncronous function in general.</p>
         <h3>Controller:</h3>
-
+        <div example-render mode="javascript">
+$scope.changingOptions = [1,2,3];
+$scope.toggleChanging = function(){
+  if ($scope.changingOptions.length == 3){
+    $scope.changingOptions = [1,2,3,4,5,6,7,8,9,10];
+  } else {
+    $scope.changingOptions = [1,2,3];    
+  }
+};
+        </div>
+        <h3>Template:</h3>
+        <div example-render>  
+<button class="button button-positive" modal-select="" ng-model="model5"  options="changingOptions">
+  Select it
+  <div class="option">
+    <h2 class="title">{{option}}</h2>
+  </div>
+</button>
+<button class="button" ng-click="toggleChanging()">Toggle option set</button>
+<h3>
+  Selected value: {{model5}} 
+</h3>
+        </div>
         <h3>Result:</h3>
         <button class="button button-positive" modal-select="" ng-model="model5"  options="changingOptions">
           Select it
@@ -180,19 +195,65 @@ $scope.getOpt = function(option){
           Selected value: {{model5}} 
         </h3>
 
-        <hr>
-
       </div>
-  
-
 
       <div class="item item-divider">
           Options via <b>options-expression</b>
       </div>
       <div class="item item-body">
-        <h3>Getting whole object</h3>
-        <p>You can also pass in an array of objects to be used as options. In this case you can decide which fields you want to render in your option template. If nothing else is specified, the directive will set the whole object on your model</p>
+        <p>Anoter way of passing the list of options to the directive is via the <span class="positive">options-expression</span> attribute, that accepts an expression similar to what you would use with ionic <code>collection-repeat</code> directive, of the format <code>variable in expression</code> – where variable is the user defined loop variable and expression is a scope expression giving the collection to enumerate. For example: <code>album in artist.albums</code> or <code>album in artist.albums | orderBy:'name'</code>. This allows you to apply ordering or filtering without acting on the original array.</p>
+        <p>
+          This example that follows filters options with a text input and orders them via <code>orderBy</code> angular filter.
+          (Note that whis has nothing to do with the "search bar" feature of this directive).
+        </p>
         <h3>Controller:</h3>
+        <div example-render mode="javascript">
+$scope.selectableNames =  [
+  { name : "Mauro", role : "juggler"}, 
+  { name : "Silvia", role : "chef"},
+  { name : "Merlino", role : "little canaglia"},
+];          
+        </div>
+        <h3>Template</h3>
+        <div example-render>
+<label class="item item-input">
+  <span class="input-label">Filter</span>
+  <input type="text" ng-model="externalFilter">
+</label>
+<div class="item">
+  <button class="button button-dark" modal-select ng-model="someSixthModel" options-expression="person in selectableNames | orderBy:'role' | filter : externalFilter" modal-title="Select">
+    Select it
+    <div class="option">
+      <h2>{{option}}</h2>
+    </div>
+  </button>
+</div>
+<div class="item">
+  <h3>
+    Selected value: {{someSixthModel}} 
+  </h3>
+</div>
+        </div>
+
+        <h3>Result:</h3>
+        <label class="item item-input">
+          <span class="input-label">Filter</span>
+          <input type="text" ng-model="externalFilter">
+        </label>
+        <div class="item">
+          <button class="button button-dark" modal-select ng-model="someSixthModel" options-expression="person in selectableNames | orderBy:'role' | filter : externalFilter" modal-title="Select">
+            Select it
+            <div class="option">
+              <h2>{{option}}</h2>
+            </div>
+          </button>
+        </div>
+        <div class="item">
+          <h3>
+          Selected value: {{someSixthModel}} 
+          </h3>
+        </div>
+      
       </div>
   
 
