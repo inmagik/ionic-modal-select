@@ -5,10 +5,15 @@
     <meta charset="utf-8">
 
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <title>Ionic Modal Select</title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <style>
+    .option-selected{
+        background-color: #ccc !important;
+      }
+    </style>
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -17,8 +22,12 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/showdown/compressed/Showdown.js"></script>
+    <script src="lib/showdown/compressed/extensions/github.min.js"></script>
     <script src="lib/angular-markdown-directive/markdown.js"></script>
     <script src="../../dist/ionic-modal-select.js"></script>
+
+    <script type="text/javascript" src="lib/ace-builds/src-min-noconflict/ace.js"></script>
+    <script type="text/javascript" src="lib/angular-ui-ace/ui-ace.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <!--<script src="cordova.js"></script>-->
@@ -26,9 +35,12 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
+    <script src="js/attribute-doc.js"></script>
+    <script src="js/example-render.js"></script>
   </head>
 
   <body ng-app="starter">
+    <a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:100000" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
     <ion-nav-view></ion-nav-view>
   </body>
 </html>

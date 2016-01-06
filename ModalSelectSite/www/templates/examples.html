@@ -1,5 +1,204 @@
 <ion-view view-title="Examples">
   <ion-content>
+  <div class="card">
+  <div class="item item-divider calm-bg ">
+          <h2 class="white-text">Setting and getting options</h2>
+      </div>
+  </div>
+  <div class="card list">
+      
+      <!--- array of values -->
+      <div class="item item-divider">
+          Array of values
+      </div>
+      <div class="item item-text-wrap">
+        <p>The simplest way of using the directive is passing in an <b>array of values</b> as options. The select is bound to a model in your controller.</p>
+      </div>
+      <div class="item item-body">
+        <h3>Controller:</h3>
+        <div example-render mode="javascript" class="">
+$scope.someModel = null;
+$scope.selectables = [1, 2, 3];
+        </div>
+        <h3>Template</h3>
+        <div example-render>  
+<button class="button button-positive" modal-select="" ng-model="someModel" options="selectables" modal-title="Select a number">
+  Select it
+  <div class="option">
+    {{option}}
+  </div>
+</button>
+<h3>
+  someModel value: {{someModel}} 
+</h3>
+        </div>
+      
+      </div>
+      <div class="item item-body">
+        <h3>Result:</h3>
+        <button class="button button-positive" modal-select="" ng-model="someModel" options="selectables" modal-title="Select a number">
+          Select it
+          <div class="option">
+            {{option}}
+          </div>
+        </button>
+        <h3>
+          someModel value: {{someModel}} 
+        </h3>
+
+      </div>
+
+    </div>
+    <div class="card list">
+      <!--- array of objects -->
+      <div class="item item-divider">
+          Array of objects
+      </div>
+      <div class="item item-body">
+        <h3>Getting whole object</h3>
+        <p>You can also pass in an array of objects to be used as options. In this case you can decide which fields you want to render in your option template. If nothing else is specified, the directive will set the whole object on your model</p>
+        <h3>Controller:</h3>
+        <div example-render mode="javascript">
+$scope.secondModel = null;
+$scope.selectableNames =  [
+  { name : "Mauro", role : "juggler"}, 
+  { name : "Silvia", role : "chef"},
+  { name : "Merlino", role : "little canaglia"},
+];
+        </div>
+        <h3>Template</h3>
+        <div example-render>  
+<button class="button button-positive" modal-select="" ng-model="someModel" options="selectables" modal-title="Select a person">
+  Select it
+  <div class="option">
+    {{option}}
+  </div>
+</button>
+<h3>
+  Selected value: {{secondModel}} 
+</h3>
+        </div>
+
+        <h3>Result:</h3>
+        <button class="button button-positive" modal-select="" ng-model="secondModel" options="selectableNames" modal-title="Select a person">
+          Select it
+          <div class="option">
+            <h2 class="title">{{option.name}}</h2>
+            <p>{{option.role}}</p>
+          </div>
+        </button>
+        <h3>
+          Selected value: {{secondModel}} 
+        </h3>
+      <hr>
+      <h3>Getting a single property</h3>
+      <p>
+        If you want to pick only a property of your object as result of selection, you can do it by using the <span class="positive">option-property</span> attribute. <br>
+        In our previous example, let's pick only the value of the "name" property of our options. Note that you can still use all the properties of your objects in option template.
+      </p>
+      <h3>Template</h3>
+        <div example-render>  
+<button class="button button-positive" modal-select="" ng-model="model3" options="selectables" option-property="name" modal-title="Select a person">
+  Select it
+  <div class="option">
+    {{option}}
+  </div>
+</button>
+<h3>
+  Selected value: {{secondModel}} 
+</h3>
+        </div>
+        <h3>Result:</h3>
+        <button class="button button-positive" modal-select="" ng-model="model3" option-property="name" options="selectableNames" modal-title="Select an person">
+          Select it
+          <div class="option">
+            <h2 class="title">{{option.name}}</h2>
+            <p>{{option.role}}</p>
+          </div>
+        </button>
+        <h3>
+          Selected value: {{model3}} 
+        </h3>
+
+        <hr>
+        <h3>Getting a custom value with <b>option-getter</b></h3>
+        <p>
+          You can also pick up a value computed from the selected option in a custom way. This can be done using the <span class="positive">option-getter</span> attribute and specifying a function call to obtain the selected value from the original option. The function call must use a parameter called <b>option</b> as argument.
+        </p>
+        <h3>Controller:</h3>
+        <div example-render mode="javascript">
+$scope.getOpt = function(option){
+    return option.name + ":" + option.role;
+};
+        </div>
+        <h3>Template</h3>
+        <div example-render>  
+<button class="button button-positive" modal-select="" ng-model="model4" options="selectables" option-getter="getOpt(option)"  modal-title="Select a person">
+  Select it
+  <div class="option">
+    {{option}}
+  </div>
+</button>
+<h3>
+  Selected value: {{model4}} 
+</h3>
+        </div>
+        <h3>Result:</h3>
+        <button class="button button-positive" modal-select="" ng-model="model4" option-getter="getOpt(option)" options="selectableNames" modal-title="Select a person">
+          Select it
+          <div class="option">
+            <h2 class="title">{{option.name}}</h2>
+            <p>{{option.role}}</p>
+          </div>
+        </button>
+        <h3>
+          Selected value: {{model4}} 
+        </h3>
+
+        <hr>
+
+      </div>
+
+      
+      <div class="item item-divider">
+          Options can change over time
+      </div>
+      <div class="item item-body">
+        <p>If options are passed in via <span class="positive">options</span> attribute, the directive will watch the options array for changes and update the list presented to the user accordingly. <br>
+        In this example we change the set of options with a button, but you can use this feature to get options from a server, a json file or an asyncronous function in general.</p>
+        <h3>Controller:</h3>
+
+        <h3>Result:</h3>
+        <button class="button button-positive" modal-select="" ng-model="model5"  options="changingOptions">
+          Select it
+          <div class="option">
+            <h2 class="title">{{option}}</h2>
+          </div>
+        </button>
+        <button class="button" ng-click="toggleChanging()">Toggle option set</button>
+        <h3>
+          Selected value: {{model5}} 
+        </h3>
+
+        <hr>
+
+      </div>
+  
+
+
+      <div class="item item-divider">
+          Options via <b>options-expression</b>
+      </div>
+      <div class="item item-body">
+        <h3>Getting whole object</h3>
+        <p>You can also pass in an array of objects to be used as options. In this case you can decide which fields you want to render in your option template. If nothing else is specified, the directive will set the whole object on your model</p>
+        <h3>Controller:</h3>
+      </div>
+  
+
+  
+  </div> <!-- end of card -->
+  <!--
     <div class="item item-divider"></div>
         <div class="item item-text-wrap">
           List of numbers.
@@ -22,7 +221,7 @@
 
         </div>
         <div class="item">
-          someModel: {{someModel}} 
+          
         </div>
 
         <div class="item item-divider"></div>
@@ -181,5 +380,6 @@
         <div class="item">
           someSixthModel: {{someSixthModel}}
         </div>
+    -->
   </ion-content>
 </ion-view>

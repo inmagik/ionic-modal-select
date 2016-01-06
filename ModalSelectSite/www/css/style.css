@@ -1,1 +1,36 @@
 /* Empty. Add your own CSS if you like */
+.docs-list {
+    margin-left:1.3em;
+    margin-top:0.4em;
+    list-style-type: disc;
+    list-style-position: outside;
+}
+
+.docs-list .docs-list {
+    list-style-type: circle;
+}
+
+.docs-list > span {
+    display: block;
+}
+
+
+.light-text *{
+    color:#eee !important;
+}
+
+.white-text {
+    color:#fff !important;
+    font-weight: bold;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.subtitle{
+    font-size: 70%;
+}
+
+.ace_editor { display:block;  min-height:30px }
+}

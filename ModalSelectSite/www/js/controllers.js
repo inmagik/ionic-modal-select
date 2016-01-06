@@ -1,6 +1,11 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $location, $ionicScrollDelegate) {
+
+  $scope.toAnchor  =   function(anchor) {
+    $location.hash(anchor);
+    $ionicScrollDelegate.anchorScroll(true);
+  };
 
   
 })
@@ -18,6 +23,8 @@ angular.module('starter.controllers', [])
 
 .controller('ExamplesCtrl', function($scope, $timeout) {
 
+  $scope.someModel = null;
+  $scope.secondModel = null;
   $scope.selectables = [
     1, 2, 3
   ];
@@ -28,7 +35,7 @@ angular.module('starter.controllers', [])
   }
 
   $scope.selectableNames =  [
-    { name : "Mauro", role : "navigator"}, 
+    { name : "Mauro", role : "juggler"}, 
     { name : "Silvia", role : "chef"},
     { name : "Merlino", role : "little canaglia"},
   ];
@@ -43,6 +50,17 @@ angular.module('starter.controllers', [])
   $scope.getOpt = function(option){
     return option.name + ":" + option.role;
   };
+
+  //later options settings example
+  $scope.changingOptions = [1,2,3];
+  $scope.toggleChanging = function(){
+    if ($scope.changingOptions.length == 3){
+      $scope.changingOptions = [1,2,3,4,5,6,7,8,9,10];
+    } else {
+      $scope.changingOptions = [1,2,3];    
+    }
+  }
+
 
   $scope.shoutLoud = function(newValuea, oldValue){
     alert("changed from " + JSON.stringify(oldValue) + " to " + JSON.stringify(newValuea));

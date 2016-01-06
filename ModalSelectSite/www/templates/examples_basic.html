@@ -1,0 +1,185 @@
+<ion-view view-title="Basic examples">
+  <ion-content>
+    <div class="item item-divider"></div>
+        <div class="item item-text-wrap">
+          List of numbers.
+        </div>
+        <div class="item item-body">
+          <button class="button button-positive" modal-select="" ng-model="someModel" options="selectables" modal-title="Select a number">
+            Select it
+            <div class="option">
+              {{option}}
+            </div>
+          </button>
+
+          <button class="button button-positive" modal-select="" ng-model="someModel" options="selectables" modal-title="Select a number" has-search="true">
+            Select it (with search)
+            <div class="option">
+              {{option}}
+            </div>
+          </button>
+
+
+        </div>
+        <div class="item">
+          someModel: {{someModel}} 
+        </div>
+
+        <div class="item item-divider"></div>
+        <div class="item item-text-wrap">
+          Long list of numbers rendered with collection-repeat and custom header and footer set.
+        </div>
+        <div class="item item-body">
+          <button class="button button-energized" modal-select="" ng-model="someOtherModel" options="longList" modal-title="Select a number" header-footer-class="bar-positive">
+            Select it
+            <div class="option">
+              {{option}}
+            </div>
+          </button>
+
+          <button class="button button-energized" modal-select="" ng-model="someOtherModel" options="longList" modal-title="Select a number" header-footer-class="bar-positive" has-search="true" sub-header-class="bar-positive">
+            Select it (with search)
+            <div class="option">
+              {{option}}
+            </div>
+          </button>
+        </div>
+        <div class="item">
+          someOtherModel: {{someOtherModel}}
+        </div>
+
+
+        <div class="item item-divider"></div>
+        <div class="item item-text-wrap">
+          List of objects with model bound to the option object
+        </div>
+        <div class="item item-body">
+          <button class="button button-royal" modal-select="" ng-model="someObjModel" options="selectableNames">
+            Select it
+            <div class="option">
+              <h2>{{option.name}}</h2>
+              <p>{{option.role}}</p>
+            </div>
+          </button>
+          <button class="button button-royal" modal-select="" ng-model="someObjModel" options="selectableNames" has-search="true">
+            Select it (with search)
+            <div class="option">
+              <h2>{{option.name}}</h2>
+              <p>{{option.role}}</p>
+            </div>
+          </button>
+        </div>
+        <div class="item">
+          someUnSetModel: {{someObjModel}}
+        </div>
+
+        <div class="item item-divider"></div>
+        <div class="item item-text-wrap">
+          List of objects and model bound via `option-property` attribute. The initial value for this model is already set in the controller.
+        </div>
+        <div class="item item-body">
+          <button class="button button-assertive" modal-select="" ng-model="someSetModel" options="selectableNames" option-property="name">
+            {{ someSetModel || &apos;Select it&apos;}}
+            <div class="option">
+              <h2>{{option.name}}</h2>
+              <p>{{option.role}}</p>
+            </div>
+          </button>
+          <button class="button button-assertive" modal-select="" ng-model="someSetModel" options="selectableNames" option-property="name" has-search="true">
+            {{ someSetModel || &apos;Select it&apos;}} (searchable!)
+            <div class="option">
+              <h2>{{option.name}}</h2>
+              <p>{{option.role}}</p>
+            </div>
+          </button>
+        </div>
+        <div class="item">
+          someSetModel: {{someSetModel}}
+        </div>
+
+        <div class="item item-divider"></div>
+        <div class="item item-text-wrap">
+          List of objects and custom getter function.
+        </div>
+        <div class="item item-body">
+          <button class="button button-dark" modal-select="" ng-model="someThirdModel" options="selectableNames" option-getter="getOpt(option)" modal-title="Select">
+            Select it
+            <div class="option">
+              <h2>{{option.name}}</h2>
+              <p>{{option.role}}</p>
+            </div>
+          </button>
+          <button class="button button-dark" modal-select="" ng-model="someThirdModel" options="selectableNames" option-getter="getOpt(option)" modal-title="Select" has-search="true">
+            Select it - with search
+            <div class="option">
+              <h2>{{option.name}}</h2>
+              <p>{{option.role}}</p>
+            </div>
+          </button>
+        </div>
+        <div class="item">
+          someThirdModel: {{someThirdModel}}
+        </div>
+
+        <div class="item item-divider"></div>
+        <div class="item item-text-wrap">
+          Selection and reset callbacks
+        </div>
+        <div class="item item-body">
+          <button class="button button-dark" modal-select="" ng-model="someFourthModel" options="selectableNames" on-select="shoutLoud(newValue, oldValue)" on-reset="shoutReset()" modal-title="Select">
+            Select it
+            <div class="option">
+              <h2>{{option.name}}</h2>
+              <p>{{option.role}}</p>
+            </div>
+          </button>
+        </div>
+        <div class="item">
+          someFourthModel: {{someFourthModel}}
+        </div>
+
+
+        <div class="item item-body">
+          <p>
+            Late change of options.
+          </p>
+          <button class="button button-dark" modal-select="" ng-model="someFifthModel" options="laterSelectables" modal-title="Select">
+            Select it
+            <div class="option">
+              <h2>{{option}}</h2>
+            </div>
+          </button>
+        </div>
+        <div class="item">
+          someFifthModel: {{someFifthModel}}
+        </div>
+
+
+        <div class="item item-body">
+          <p>
+            Repeat expression with filter
+          </p>
+        </div>
+        <label class="item item-input">
+          <span class="input-label">Filter</span>
+          <input type="text" ng-model="externalFilter">
+        </label>
+        <div class="item item-body">
+          <button class="button button-dark" modal-select="" ng-model="someSixthModel" options-expression="person in selectableNames | orderBy:'role' | filter : externalFilter" modal-title="Select">
+            Select it
+            <div class="option">
+              <h2>{{option}}</h2>
+            </div>
+          </button>
+          <button class="button button-dark" modal-select="" ng-model="someSixthModel" options-expression="person in selectableNames | orderBy:'role' | filter : externalFilter" modal-title="Select" has-search="true">
+            Select it
+            <div class="option">
+              <h2>{{option}}</h2>
+            </div>
+          </button>
+        </div>
+        <div class="item">
+          someSixthModel: {{someSixthModel}}
+        </div>
+  </ion-content>
+</ion-view>

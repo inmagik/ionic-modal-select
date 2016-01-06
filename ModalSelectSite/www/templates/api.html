@@ -1,6 +1,202 @@
 <ion-view view-title="API">
   <ion-content class="padding">
 
+  <div class="card">
+      <div class="item item-divider item-text-wrap">
+          <h1 class="title"><span class="positive">directive:</span> modal-select</h1>
+      </div>
+      <div class="item item-body">
+            <div><span class="calm">Restrict:</span> A</div>
+            <p>
+                The directive is applied by adding the <code class="positive">modal-select</code> attribute to a (clickable) element.
+            </p>
+      </div>
+      <div class="item-body">
+        <h3 class="">Basic concepts and model binding</h3>
+        <p>
+        This directive will transform the element into a modal select: when clicking the element a select dialog will be open, with options presented in a clickable list. <br>
+        Once the user clicks on an option, it will be set on the bound model.
+        </p>
+        <p>
+            For this to work the following conditions must apply:
+            <ul class="docs-list">
+                <li>The element you use this directive with must be clickable.</li>
+                <li>The directive requires <code>ng-model</code> to be set on the element</li>
+                <li>The directive expects an inner element of class "option" to define the options template</li>
+                <li>The final value bound to your model will be determined as follow:
+                  <ul class="docs-list">
+                      <li>if you set the attribute option-getter will be set as getterFunction(selectedItem)</li>
+                      <li>if you set the attribute option-property will be set as selectedItem[propertyName]</li>
+                      <li>otherwise it will be set as the full object</li>
+                  </ul>
+                </li>
+            </ul>
+        </p>
+
+        <h3 class="">Options template</h3>
+        <p>
+          This directive expects to find a single inner element of class "option" that is used to define the template of the options that can be selected. Options will be rendered as items into a list in the modal (The content of each option, rendered with your template, is wrapped in an element of class 'item item-text wrap' and the original ".option" element is removed).
+        </p>
+        <p>For example:</p>
+        <div class="item-divider">
+          <div example-render mode="html">
+<button class="button button-positive" modal-select ng-model="someModel" options="selectables" modal-title="Select a number">
+    Select it
+    <div class="option">
+        {{option}}
+    </div>
+</button>            
+          </div>
+        </div>
+
+        <p>Will be rendered in the modal as :</p>
+        <div class="item-divider">
+          <div example-render mode="html">
+<div class="item item-text-wrap">
+    {{option}}
+</div>
+          </div>
+        </div>
+
+        <h3 class="">Rendering</h3>
+        <p>
+          For rendering very long lists of options, the directive may use Ionic <code>collection-repeat</code>. <br>
+          See <a class="positive pointer" ng-click="toAnchor('rendering-options')">rendering options</a> below and related examples for how to control this behavior.
+        </p>
+          
+      </div>
+      
+      <div class="item item-body">
+          <h1 class="">Directive options</h1>
+          <p>
+              The <b>modal-select</b> directive comes with a set of options to modify its style and behavior. Here's the comprehensive list of them.
+          </p>
+          <div>
+              <div class="item calm-bg white-text">
+                Options related
+              </div>
+              <div attribute-doc="options" attribute-type="Array" attribute-default="undefined">
+                The list of options to choose from.
+              </div>
+              <div attribute-doc="options-expression"
+              attribute-type="expression" attribute-default="undefined">
+              The expression indicating how to enumerate a the options collection, of the format variable in expression – where variable is the user defined loop variable and expression is a scope expression giving the collection to enumerate. For example: <code>album in artist.albums</code> or <code>album in artist.albums | orderBy:'name'</code>.
+               </div>
+              
+            <div class="card">
+            <div class="item item-text-wrap energized-bg">
+                <b class=""><i class="icon ion-alert-circled"></i> Please note</b>
+                <p>Either <code>options</code> or <code>options-expression</code> must be set in order to do something useful with this directive!</p>
+            </div>
+            </div>
+
+            <div attribute-doc="option-getter"
+              attribute-type="function call with argument 'option'" attribute-default="undefined">
+              Optional method to get the value from the chosen item.
+            </div>
+
+            <div attribute-doc="option-property"
+              attribute-type="string" attribute-default="undefined">
+              Optional property name to get as model value from the chosen item.
+            </div>
+            
+            <div class="item calm-bg white-text">
+                UI and modal
+            </div>
+            <div attribute-doc="modal-class"
+              attribute-type="string" attribute-default="''">
+              The class for the modal (set on <code>ion-modal-view</code>).
+            </div>
+
+            <div attribute-doc="modal-title"
+              attribute-type="string" attribute-default="'Select an option'">
+              The title shown on the modal header.
+            </div>
+
+            <div attribute-doc="selected-class"
+              attribute-type="string" attribute-default="'option-selected'">
+              The class applied to the currently selected option (if any) in the modal list.
+            </div>
+
+            <div attribute-doc="header-footer-class"
+              attribute-type="string" attribute-default="'bar-stable'">
+              The class for header and footer of the modal
+            </div>
+
+            <div attribute-doc="cancel-button"
+              attribute-type="string" attribute-default="'Cancel'">
+              Text of the button for closing the modal without changing the value.
+            </div>
+
+            <div attribute-doc="reset-button"
+              attribute-type="string" attribute-default="'Reset'">
+              Text of the button for unsetting value in the modal dialog.
+            </div>
+
+            <div attribute-doc="hide-reset"
+              attribute-type="string. Set to 'true' for hiding the button." attribute-default="false">
+              Text of the button for unsetting value in the modal dialog.
+            </div>
+
+            <div class="item calm-bg white-text">
+                Callbacks
+            </div>
+
+            <div attribute-doc="on-select"
+              attribute-type="function call with arguments 'newValue' and 'oldValue'" attribute-default="undefined">
+              Callback triggered on object select. Takes two arguments, <code>newValue</code> and <code>oldValue</code> with obvious meaning.
+            </div>
+
+            <div attribute-doc="on-reset"
+              attribute-type="function call" attribute-default="undefined">
+              Callback triggered when value is resetted using the relevant ui interface. Takes no arguments.
+            </div>
+
+            <div class="item calm-bg white-text" id="rendering-options">
+                Rendering
+            </div>
+
+            <div attribute-doc="use-collection-repeat"
+              attribute-type="string: 'true' or 'false'." attribute-default="false">
+              Forces use of collection-repeat or ng-repeat for rendering options in the modal.
+            </div>
+
+            <div attribute-doc="short-list-break" attribute-type="integer" attribute-default="10">
+              The maximum number of item in list to be rendered with ng-repeat.(if <code>use-collection-repeat</code> is not set) If the list has a number of options greater than this attribute it will be rendered with ionic collection-repeat directive instead. (see also <code>load-list-message</code> option).
+            </div>
+
+            <div attribute-doc="load-list-message" attribute-type="string" attribute-default="'Loading'">
+              Message to be shown when loading a long list of options in the modal.
+            </div>
+
+            <div class="item calm-bg white-text">
+                Search bar
+            </div>
+
+            <div attribute-doc="has-search" attribute-type="set to 'true' for showing the search bar" attribute-default="undefined">
+              Whether to show a search bar to filter options.
+            </div>
+
+            <div attribute-doc="sub-header-class" attribute-type="string" attribute-default="'bar-stable'">
+              Class to be applied to the subheader containing the search bar (makes sense only if <code>has-search="true"</code> ).
+            </div>
+
+            <div attribute-doc="cancel-search-button" attribute-type="string" attribute-default="'Cancel'">
+              Text for the button for clearing search text ( makes sense only if <code>has-search="true"</code> ).
+            </div>
+            
+
+          </div>
+      </div>
+  </div>
+
+  
+  
+
+  <p>
+      
+  </p>
+
     
   </ion-content>
 </ion-view>
