@@ -51,7 +51,7 @@ angular.module('ionic-modal-select', [])
                 modalTitle : iAttrs.modalTitle || 'Select an option',
                 okButton : iAttrs.okButton || 'OK',
                 hideReset : iAttrs.hideReset  !== "true" ? false : true,
-                resetButton : iAttrs.okButton || 'Reset',
+                resetButton : iAttrs.resetButton || 'Reset',
                 cancelButton : iAttrs.cancelButton || 'Cancel',
                 loadListMessage : iAttrs.loadListMessage || 'Loading',
                 modalClass : iAttrs.modalClass || '',
