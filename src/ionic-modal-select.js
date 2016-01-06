@@ -89,6 +89,7 @@ angular.module('ionic-modal-select', [])
                         allOptions = angular.copy(nv);
                         scope.options = angular.copy(nv);
                         updateListMode();   
+                        
                     }, 
                     true
                 );
@@ -130,10 +131,10 @@ angular.module('ionic-modal-select', [])
                 } else if (iAttrs.useCollectionRepeat === "false") {
                     shortList = true;
                 } else {
-                    shortList = scope.options.length < shortListBreak;
+                    shortList = !!(scope.options.length < shortListBreak);
                 };
-
-                scope.ui.shortList = shortList;
+                
+                scope.ui.shortList = shortList;   
             }
             
             ngModelController.$render = function(){
@@ -201,13 +202,14 @@ angular.module('ionic-modal-select', [])
             });
 
             iElement.on('click', function(){
-                if (shortList) {
+                if (shortList && false) {
                     scope.showList = true;    
-                    scope.modal.show()
+                    scope.modal.show();
                 } else {
                     scope.modal.show()
                     .then(function(){
-                        scope.showList = true;    
+                        scope.showList = true;  
+                        scope.ui.shortList = shortList;  
                     });    
                 }
             });
