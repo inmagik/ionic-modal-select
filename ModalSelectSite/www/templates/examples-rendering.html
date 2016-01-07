@@ -129,26 +129,26 @@ $scope.numbers = [1,2,3,4,5,6,7,8];
         </div>
         <h3>Template</h3>
         <div example-render>  
-<button class="button button-positive" modal-select ng-model="someModel" options="numbers" load-list-message="loading dude">
+<button class="button button-positive" modal-select ng-model="loadListModel" options="numbers" load-list-message="loading dude">
   Select it
   <div class="option">
     {{option}}
   </div>
 </button>
 <h3>
-  Selected value: {{someModel}} 
+  Selected value: {{loadListModel}} 
 </h3>
         </div>
       
         <h3>Result:</h3>
-        <button class="button button-positive" modal-select ng-model="someModel" options="numbers" load-list-message="loading dude">
+        <button class="button button-positive" modal-select ng-model="loadListModel" options="numbers" load-list-message="loading dude" use-collection-repeat="true">
           Select it
           <div class="option">
             {{option}}
           </div>
         </button>
         <h3>
-          Selected value: {{someModel}} 
+          Selected value: {{loadListModel}} 
         </h3>
 
       </div>

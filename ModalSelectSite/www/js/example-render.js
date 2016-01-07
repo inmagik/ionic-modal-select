@@ -12,6 +12,7 @@ angular.module('starter')
                 _editor.setOption("highlightActiveLine", false);
                 _editor.$blockScrolling = Infinity;
                 _editor.getSession().setUseWorker(false);
+                _editor.setBehavioursEnabled(false);
                 _editor.renderer.setScrollMargin(10, 10)
                 _editor.setValue(data, -1);
             };
