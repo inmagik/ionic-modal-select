@@ -164,7 +164,7 @@ angular.module('ionic-modal-select', [])
                 hasSearch : iAttrs.hasSearch  !== "true" ? false : true,
                 searchValue : '',
                 subHeaderClass : iAttrs.subHeaderClass || 'bar-stable',
-                cancelSearchButton : iAttrs.cancelSearchButton || 'Cancel',
+                cancelSearchButton : iAttrs.cancelSearchButton || 'Clear',
 
             };
 
