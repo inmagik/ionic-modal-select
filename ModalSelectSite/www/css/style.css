@@ -32,5 +32,9 @@
     font-size: 70%;
 }
 
-.ace_editor { display:block;  min-height:30px }
+.ace_editor { min-height:30px }
+
+.docs, .docs *{
+    -webkit-user-select: all !important;
+    user-select: all !important;
 }
