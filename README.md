@@ -2,10 +2,11 @@
 
 Modal select for Ionic Framework based on [$ionicModal](http://ionicframework.com/docs/api/service/$ionicModal/)
 
-Demo [here](http://codepen.io/bianchimro/pen/epYYQO?editors=101)
+See all docs and examples on the [project site](http://inmagik.github.io/ionic-modal-select).
+
+We also have a simple [Codepen demo](http://codepen.io/bianchimro/pen/epYYQO?editors=101).
 
 ![animated example](https://dl.dropboxusercontent.com/u/6178230/screenshots/ionic-modal-picker.gif)
-
 
 ## Features
 
@@ -225,9 +226,7 @@ $scope.getOption = function(option){
 We get back the phrase "Mauro:navigator", "Silvia:chef" or "Merlino:canaglia" if we click the previous defined options.
 
 
-##### More examples to come.
-
-See this [codepen](http://codepen.io/bianchimro/pen/epYYQO?editors=101) for now.
+##### More examples [on the project site](http://inmagik.github.io/ionic-modal-select).
 
 ## Support this project
 
