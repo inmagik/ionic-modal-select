@@ -1,0 +1,162 @@
+<ion-view view-title="Examples">
+  <ion-content>
+  <div class="card">
+  <div class="item item-divider calm-bg" id="setting-getting">
+          <h2 class="white-text">Rendering</h2>
+      </div>
+  </div>
+  <div class="card list">
+      
+      <!--- array of values -->
+      <div class="item item-divider">
+          Automatic rendering mode
+      </div>
+      <div class="item item-text-wrap">
+        <p><span class="positive">modal-select</span> directive has two rendering modes: one based on <code>ng-repeat</code> that renders all the items and a smarter one based on ionic <code>collection-repeat</code> that is useful if you need to render long lists of options.</p>
+        <p>The directive chooses automatically a rendering mode based on the number of available options. When the nummber of options is equal or greater than the value set by the <span class="positive">short-list-break</span> attribute (which defaults to <b>10</b>) <code>collection-repeat</code>  will be used.</p>
+        <p>In this example we show two selects on the same options and model, with two different breakpoints: 10 (default) and 5</p>
+      </div>
+      <div class="item item-body">
+      
+        <h3>Controller:</h3>
+        <div example-render mode="javascript" class="">
+$scope.numbers = [1,2,3,4,5,6,7,8];
+        </div>
+        <h3>Template:</h3>
+        <div example-render>  
+<button class="button button-positive" modal-select ng-model="autoRenderingModel" options="numbers">
+  Select it
+  <div class="option">
+    {{option}}
+  </div>
+</button>
+<button class="button button-positive" modal-select ng-model="autoRenderingModel" options="numbers" short-list-break="5">
+  Select it
+  <div class="option">
+    {{option}}
+  </div>
+</button>
+<h3>
+  Selected value: {{autoRenderingModel}} 
+</h3>
+        </div>
+      
+        <h3>Result:</h3>
+        <button class="button button-positive" modal-select ng-model="autoRenderingModel" options="numbers">
+          Select it
+          <div class="option">
+            {{option}}
+          </div>
+        </button>
+        <button class="button button-positive" modal-select ng-model="autoRenderingModel" options="numbers" short-list-break="5">
+          Select it
+          <div class="option">
+            {{option}}
+          </div>
+        </button>
+        <h3>
+          Selected value: {{autoRenderingModel}} 
+        </h3>
+
+      </div>
+      <!-- end of example 1 -->
+      
+      <div class="item item-divider">
+          Explicit rendering mode
+      </div>
+      <div class="item item-text-wrap">
+        <p>Rendering mode can be selected explicitly with the <span class="positive">use-collection-repeat</span> attribute</p>
+        <p>Here's an example of two modal selects based on the same options with a different setting of this attribute.</p>
+      </div>
+      <div class="item item-body">
+        <h3>Controller:</h3>
+        <div example-render mode="javascript" class="">
+$scope.numbers = [1,2,3,4,5,6,7,8];
+        </div>
+        <h3>Template:</h3>
+        <div example-render>  
+<button class="button button-positive" modal-select ng-model="useCollRepeatModel" options="numbers" use-collection-repeat="true">
+  Select it
+  <div class="option">
+    {{option}}
+  </div>
+</button>
+<button class="button button-positive" modal-select ng-model="useCollRepeatModel" options="numbers" use-collection-repeat="false">
+  Select it
+  <div class="option">
+    {{option}}
+  </div>
+</button>
+<h3>
+  Selected value: {{useCollRepeatModel}} 
+</h3>
+        </div>
+      
+        <h3>Result:</h3>
+        <button class="button button-positive" modal-select ng-model="useCollRepeatModel" options="numbers" use-collection-repeat="true">
+          Select it
+          <div class="option">
+            {{option}}
+          </div>
+        </button>
+        <button class="button button-positive" modal-select ng-model="useCollRepeatModel" options="numbers" use-collection-repeat="false">
+          Select it
+          <div class="option">
+            {{option}}
+          </div>
+        </button>
+        <h3>
+          Selected value: {{useCollRepeatModel}} 
+        </h3>
+
+      </div>
+      <!-- end of example 1 -->
+
+      <!-- end of example 2 -->
+      
+      <!-- example 3 -->
+      <div class="item item-divider">
+          Setting the loading message
+      </div>
+      <div class="item item-text-wrap">
+        <p>When using <code>collection-repeat</code> rendering mode, you can set the message on the loader with the <span class="positive">load-list-message</span> attribute.</p>
+
+      </div>
+      <div class="item item-body">
+        <h3>Controller:</h3>
+        <div example-render mode="javascript" class="">
+$scope.numbers = [1,2,3,4,5,6,7,8];
+        </div>
+        <h3>Template</h3>
+        <div example-render>  
+<button class="button button-positive" modal-select ng-model="someModel" options="numbers" load-list-message="loading dude">
+  Select it
+  <div class="option">
+    {{option}}
+  </div>
+</button>
+<h3>
+  Selected value: {{someModel}} 
+</h3>
+        </div>
+      
+        <h3>Result:</h3>
+        <button class="button button-positive" modal-select ng-model="someModel" options="numbers" load-list-message="loading dude">
+          Select it
+          <div class="option">
+            {{option}}
+          </div>
+        </button>
+        <h3>
+          Selected value: {{someModel}} 
+        </h3>
+
+      </div>
+      <!-- end of example 3 -->
+
+
+    </div><!--end of card -->
+  
+  
+  </ion-content>
+</ion-view>

@@ -13,16 +13,15 @@
       </div>
       <div class="item item-text-wrap">
         <p>The simplest way of using the directive is passing in an <b>array of values</b> as options. The select is bound to a model in your controller.</p>
-      </div>
-      <div class="item item-body">
+      
         <h3>Controller:</h3>
         <div example-render mode="javascript" class="">
 $scope.someModel = null;
 $scope.selectables = [1, 2, 3];
         </div>
-        <h3>Template</h3>
+        <h3>Template:</h3>
         <div example-render>  
-<button class="button button-positive" modal-select="" ng-model="someModel" options="selectables" modal-title="Select a number">
+<button class="button button-positive" modal-select ng-model="someModel" options="selectables" modal-title="Select a number">
   Select it
   <div class="option">
     {{option}}
@@ -33,7 +32,7 @@ $scope.selectables = [1, 2, 3];
 </h3>
         </div>
         <h3>Result:</h3>
-        <button class="button button-positive" modal-select="" ng-model="someModel" options="selectables" modal-title="Select a number">
+        <button class="button button-positive" modal-select ng-model="someModel" options="selectables" modal-title="Select a number">
           Select it
           <div class="option">
             {{option}}
@@ -63,9 +62,9 @@ $scope.selectableNames =  [
   { name : "Merlino", role : "little canaglia"},
 ];
         </div>
-        <h3>Template</h3>
+        <h3>Template:</h3>
         <div example-render>  
-<button class="button button-positive" modal-select="" ng-model="someModel" options="selectables" modal-title="Select a person">
+<button class="button button-positive" modal-select ng-model="someModel" options="selectables" modal-title="Select a person">
   Select it
   <div class="option">
     {{option}}
@@ -77,7 +76,7 @@ $scope.selectableNames =  [
         </div>
 
         <h3>Result:</h3>
-        <button class="button button-positive" modal-select="" ng-model="secondModel" options="selectableNames" modal-title="Select a person">
+        <button class="button button-positive" modal-select ng-model="secondModel" options="selectableNames" modal-title="Select a person">
           Select it
           <div class="option">
             <h2 class="title">{{option.name}}</h2>
@@ -93,9 +92,9 @@ $scope.selectableNames =  [
         If you want to pick only a property of your object as result of selection, you can do it by using the <span class="positive">option-property</span> attribute. <br>
         In our previous example, let's pick only the value of the "name" property of our options. Note that you can still use all the properties of your objects in option template.
       </p>
-      <h3>Template</h3>
+      <h3>Template:</h3>
         <div example-render>  
-<button class="button button-positive" modal-select="" ng-model="model3" options="selectables" option-property="name" modal-title="Select a person">
+<button class="button button-positive" modal-select ng-model="model3" options="selectables" option-property="name" modal-title="Select a person">
   Select it
   <div class="option">
     {{option}}
@@ -106,7 +105,7 @@ $scope.selectableNames =  [
 </h3>
         </div>
         <h3>Result:</h3>
-        <button class="button button-positive" modal-select="" ng-model="model3" option-property="name" options="selectableNames" modal-title="Select an person">
+        <button class="button button-positive" modal-select ng-model="model3" option-property="name" options="selectableNames" modal-title="Select an person">
           Select it
           <div class="option">
             <h2 class="title">{{option.name}}</h2>
@@ -128,9 +127,9 @@ $scope.getOpt = function(option){
     return option.name + ":" + option.role;
 };
         </div>
-        <h3>Template</h3>
+        <h3>Template:</h3>
         <div example-render>  
-<button class="button button-positive" modal-select="" ng-model="model4" options="selectables" option-getter="getOpt(option)"  modal-title="Select a person">
+<button class="button button-positive" modal-select ng-model="model4" options="selectables" option-getter="getOpt(option)"  modal-title="Select a person">
   Select it
   <div class="option">
     {{option}}
@@ -141,7 +140,7 @@ $scope.getOpt = function(option){
 </h3>
         </div>
         <h3>Result:</h3>
-        <button class="button button-positive" modal-select="" ng-model="model4" option-getter="getOpt(option)" options="selectableNames" modal-title="Select a person">
+        <button class="button button-positive" modal-select ng-model="model4" option-getter="getOpt(option)" options="selectableNames" modal-title="Select a person">
           Select it
           <div class="option">
             <h2 class="title">{{option.name}}</h2>
@@ -172,25 +171,25 @@ $scope.toggleChanging = function(){
         </div>
         <h3>Template:</h3>
         <div example-render>  
-<button class="button button-positive" modal-select="" ng-model="model5"  options="changingOptions">
+<button class="button button-positive" modal-select ng-model="model5"  options="changingOptions">
   Select it
   <div class="option">
     <h2 class="title">{{option}}</h2>
   </div>
 </button>
-<button class="button" ng-click="toggleChanging()">Toggle option set</button>
+<button class="button button-energized" ng-click="toggleChanging()">Toggle option set</button>
 <h3>
   Selected value: {{model5}} 
 </h3>
         </div>
         <h3>Result:</h3>
-        <button class="button button-positive" modal-select="" ng-model="model5"  options="changingOptions">
+        <button class="button button-positive" modal-select ng-model="model5"  options="changingOptions">
           Select it
           <div class="option">
             <h2 class="title">{{option}}</h2>
           </div>
         </button>
-        <button class="button" ng-click="toggleChanging()">Toggle option set</button>
+        <button class="button button-energized" ng-click="toggleChanging()">Switch options set</button>
         <h3>
           Selected value: {{model5}} 
         </h3>
@@ -265,7 +264,7 @@ $scope.selectableNames =  [
           List of numbers.
         </div>
         <div class="item item-body">
-          <button class="button button-positive" modal-select="" ng-model="someModel" options="selectables" modal-title="Select a number">
+          <button class="button button-positive" modal-select ng-model="someModel" options="selectables" modal-title="Select a number">
             Select it
             <div class="option">
               {{option}}

@@ -58,6 +58,7 @@ angular.module('starter',
     })
   .state('app.examples', {
     url: '/examples',
+    cache : false,
     views: {
       'menuContent': {
         templateUrl: 'templates/examples.html',
@@ -66,8 +67,44 @@ angular.module('starter',
     }
   })
 
+  .state('app.examples-rendering', {
+    url: '/examples-rendering',
+    cache : false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/examples-rendering.html',
+        controller: 'ExamplesCtrl'
+      }
+    }
+  })
+
+  .state('app.examples-search', {
+    url: '/examples-search',
+    cache : false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/examples-search.html',
+        controller: 'ExamplesCtrl'
+      }
+    }
+  })
+
+  .state('app.examples-callbacks', {
+    url: '/examples-callbacks',
+    cache : false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/examples-callbacks.html',
+        controller: 'ExamplesCtrl'
+      }
+    }
+  })
+
+
+
   .state('app.examples-styling', {
     url: '/examples-styling',
+    cache : false,
     views: {
       'menuContent': {
         templateUrl: 'templates/examples-styling.html',

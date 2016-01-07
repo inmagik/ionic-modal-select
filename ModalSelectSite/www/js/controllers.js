@@ -21,7 +21,7 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('ExamplesCtrl', function($scope, $timeout) {
+.controller('ExamplesCtrl', function($scope, $timeout, $ionicScrollDelegate) {
 
   $scope.someModel = null;
   $scope.secondModel = null;
@@ -61,6 +61,8 @@ angular.module('starter.controllers', [])
     }
   };
 
+  $scope.numbers = [1,2,3,4,5,6,7,8];
+
   $scope.shoutLoud = function(newValuea, oldValue){
     alert("changed from " + JSON.stringify(oldValue) + " to " + JSON.stringify(newValuea));
   };
@@ -69,6 +71,8 @@ angular.module('starter.controllers', [])
     alert("value was reset!");
   };
 
+
+  $ionicScrollDelegate.scrollTop();
 
 
 });
