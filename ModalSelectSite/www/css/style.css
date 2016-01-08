@@ -34,7 +34,9 @@
 
 .ace_editor { min-height:30px }
 
+/*
 .docs, .docs *{
     -webkit-user-select: text !important;
     user-select: text !important;
 }
+*/
