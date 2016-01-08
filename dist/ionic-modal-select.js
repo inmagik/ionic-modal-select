@@ -142,6 +142,8 @@ angular.module('ionic-modal-select', [])
             var shortListBreak = iAttrs.shortListBreak ? parseInt(iAttrs.shortListBreak) : 10;
             var setFromProperty= iAttrs.optionProperty;
             var onOptionSelect = iAttrs.optionGetter;
+            var clearSearchOnSelect = iAttrs.clearSearchOnSelect !== "false" ? true : false;
+
             
             //#todo: multiple is not working right now
             var multiple = iAttrs.multiple  ? true : false;
@@ -264,10 +266,19 @@ angular.module('ionic-modal-select', [])
                 var val = getSelectedValue(option);
                 ngModelController.$setViewValue(val);    
                 ngModelController.$render();
-                scope.closeModal();
+                
                 if (scope.onSelect) {
                     scope.onSelect({ newValue: val, oldValue: oldValue });
                 }
+                scope.modal.hide().then(function(){
+                    scope.showList = false;    
+                    if (scope.ui.hasSearch) {
+                       if(clearSearchOnSelect){
+                            scope.ui.searchValue = '';
+                        }
+                    }
+                });
+                
             };
 
             scope.unsetValue = function(){

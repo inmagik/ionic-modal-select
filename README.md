@@ -86,6 +86,7 @@ option|meaning|accepted values|default
 `has-search`|Whether to show a search bar to filter options.|set to "true" for showing the search bar|undefined
 `sub-header-class`|Class to be applied to the subheader containing the search bar (makes sense only if `has-search="true`) |string|'bar-stable'
 `cancel-search-button`|Text for the button for clearing search text (makes sense only if `has-search="true`) |string|'Clear'
+`clear-search-on-select`|Tells the directive to not clear the search bar content after user selection. Set to `false` to prevent clearing the search text.|boolean|true
 
 
 ### Passing in options
