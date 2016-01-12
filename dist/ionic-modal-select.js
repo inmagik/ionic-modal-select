@@ -315,7 +315,7 @@ angular.module('ionic-modal-select', [])
             });
 
             iElement.on('click', function(){
-                if (shortList && false) {
+                if (shortList) {
                     scope.showList = true;    
                     scope.modal.show();
                 } else {
