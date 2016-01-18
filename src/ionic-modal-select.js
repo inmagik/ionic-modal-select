@@ -133,7 +133,9 @@ angular.module('ionic-modal-select', [])
                 } else if (iAttrs.useCollectionRepeat === "false") {
                     shortList = true;
                 } else {
-                    shortList = !!(scope.options.length < shortListBreak);
+                    if (typeof(scope.options) !=="undefined"){
+                      shortList = !!(scope.options.length < shortListBreak);
+                    }
                 };
                 
                 scope.ui.shortList = shortList;   
