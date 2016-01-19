@@ -63,6 +63,7 @@ angular.module('ionic-modal-select', [])
                 //search stuff
                 hasSearch : iAttrs.hasSearch  !== "true" ? false : true,
                 searchValue : '',
+                searchPlaceholder : iAttrs.searchPlaceholder || 'Search',
                 subHeaderClass : iAttrs.subHeaderClass || 'bar-stable',
                 cancelSearchButton : iAttrs.cancelSearchButton || 'Clear',
 

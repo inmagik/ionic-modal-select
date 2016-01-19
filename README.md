@@ -84,6 +84,7 @@ option|meaning|accepted values|default
 `short-list-break`|The maximum number of item in list to be rendered with `ng-repeat`.(if `use-collection-repeat` is not set) If the list has a number of options greater than this attribute it will be rendered with ionic `collection-repeat` directive instead. (see also `load-list-message` option)|integer|10
 `load-list-message`|Message to be shown when loading a long list of options in the modal|string|'Loading'
 `has-search`|Whether to show a search bar to filter options.|set to "true" for showing the search bar|undefined
+`search-placeholder`|String placeholder in search bar.|string|'Search'
 `sub-header-class`|Class to be applied to the subheader containing the search bar (makes sense only if `has-search="true`) |string|'bar-stable'
 `cancel-search-button`|Text for the button for clearing search text (makes sense only if `has-search="true`) |string|'Clear'
 `clear-search-on-select`|Tells the directive to not clear the search bar content after user selection. Set to `false` to prevent clearing the search text.|boolean|true

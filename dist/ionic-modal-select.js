@@ -45,7 +45,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '    <div class="bar bar-subheader item-input-inset" ng-class="::ui.subHeaderClass" ng-if="ui.hasSearch">\n' +
     '      <label class="item-input-wrapper">\n' +
     '        <i class="icon ion-ios-search placeholder-icon"></i>\n' +
-    '        <input type="search" placeholder="Search" ng-model="ui.searchValue">\n' +
+    '        <input type="search" placeholder="{{::ui.searchPlaceholder}}" ng-model="ui.searchValue">\n' +
     '      </label>\n' +
     '      <button class="button button-clear" ng-click="clearSearch()">\n' +
     '        {{ ui.cancelSearchButton }}\n' +
@@ -138,7 +138,7 @@ angular.module('ionic-modal-select', [])
         scope: { initialOptions:"=options", optionGetter:"&", onSelect:"&", onReset:"&" },
         link: function (scope, iElement, iAttrs, ngModelController, transclude) {
             
-            var shortList;
+            var shortList = true;
             var shortListBreak = iAttrs.shortListBreak ? parseInt(iAttrs.shortListBreak) : 10;
             var setFromProperty= iAttrs.optionProperty;
             var onOptionSelect = iAttrs.optionGetter;
@@ -165,6 +165,7 @@ angular.module('ionic-modal-select', [])
                 //search stuff
                 hasSearch : iAttrs.hasSearch  !== "true" ? false : true,
                 searchValue : '',
+                searchPlaceholder : iAttrs.searchPlaceholder || 'Search',
                 subHeaderClass : iAttrs.subHeaderClass || 'bar-stable',
                 cancelSearchButton : iAttrs.cancelSearchButton || 'Clear',
 
@@ -235,7 +236,9 @@ angular.module('ionic-modal-select', [])
                 } else if (iAttrs.useCollectionRepeat === "false") {
                     shortList = true;
                 } else {
-                    shortList = !!(scope.options.length < shortListBreak);
+                    if (typeof(scope.options) !=="undefined"){
+                      shortList = !!(scope.options.length < shortListBreak);
+                    }
                 };
                 
                 scope.ui.shortList = shortList;   
