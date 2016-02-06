@@ -1,6 +1,6 @@
 var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['modal-template-multiple.html'] = ' <ion-modal-view class="ionic-select-modal" ng-class="::ui.modalClass">\n' +
     '    <ion-header-bar ng-class="::ui.headerFooterClass">\n' +
-    '      <h1 class="title">{{::ui.modalTitle}} MULTIPLE</h1>\n' +
+    '      <h1 class="title">{{::ui.modalTitle}}</h1>\n' +
     '    </ion-header-bar>\n' +
     '    <ion-content>\n' +
     '\n' +
@@ -12,14 +12,14 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '            </p>\n' +
     '        </div>\n' +
     '        <div class="list" ng-if="showList" class="animate-if">\n' +
-    '            <div class="item item-text-wrap" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': getSelectedValue(option) == ui.value}"> \n' +
+    '            <div class="item item-text-wrap" collection-repeat="option in options track by $index"  ng-class="{\'{{::ui.selectedClass}}\': getSelectedValue(option) == ui.value}"> \n' +
     '                <div compile="inner" compile-once="true"></div>\n' +
     '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
     '    <div ng-if="ui.shortList">\n' +
     '        <div class="list">\n' +
-    '            <div class="item item-checkbox" ng-repeat="option in options track by $index">\n' +
+    '            <div class="item item-checkbox" ng-repeat="option in options track by $index" ng-click="setOptions(option)">\n' +
     '                <label class="checkbox">\n' +
     '                    <input type="checkbox" ng-model="isChecked[$index]">\n' +
     '                </label>\n' +
@@ -30,7 +30,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '    </ion-content>\n' +
     '    <ion-footer-bar ng-class="::ui.headerFooterClass">\n' +
     '        <button class="button button-stable" ng-click="closeModal()">{{ui.cancelButton}}</button>\n' +
-    '        <h2 class="title"><button class="button">OK</button></h2>\n' +
+    '        <h2 class="title" style="text-align: center;"><button class="button" ng-click="returnSelectedList()">OK</button></h2>\n' +
     '        <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>\n' +
     '    </ion-footer-bar>\n' +
     '</ion-modal-view>\n' +
@@ -135,7 +135,7 @@ angular.module('ionic-modal-select', [])
     return {
         restrict: 'A',
         require : 'ngModel',
-        scope: { initialOptions:"=options", optionGetter:"&", onSelect:"&", onReset:"&" },
+        scope: { initialOptions:"=options", optionGetter:"&", onSelect:"&", onReset:"&", selectedValues :"=" },
         link: function (scope, iElement, iAttrs, ngModelController, transclude) {
 
             var shortList = true;
@@ -148,7 +148,7 @@ angular.module('ionic-modal-select', [])
             //#todo: multiple is not working right now
             var multiple = iAttrs.multiple  ? true : false;
             if (multiple) {
-                scope.checkedItems = [];
+                var checkedItems = [];
             }
 
             scope.ui = {
@@ -281,15 +281,49 @@ angular.module('ionic-modal-select', [])
                         }
                     }
                 });
-
             };
+              scope.setOptions = function(option){
+                  var idx;
+                  var temparr = [];
+                  idx = checkedItems.indexOf(option);
+                  if (idx > -1) {
+                    checkedItems.splice(idx,1);
+                  } else {
+                    checkedItems.push(option);
+                  }
+              }
+            scope.returnSelectedList = function(){
+              if(checkedItems.length > 0){
+              ngModelController.$setViewValue("Selected");
+              ngModelController.$render();
+            }
+            else{
+              ngModelController.$setViewValue("Select Category");
+              ngModelController.$render();
+            }
 
+              scope.selectedValues = checkedItems;
+              scope.modal.hide().then(function(){
+                  scope.showList = false;
+                  if (scope.ui.hasSearch) {
+                     if(clearSearchOnSelect){
+                          scope.ui.searchValue = '';
+                      }
+                  }
+              });
+            }
             scope.unsetValue = function(){
                 $timeout(function(){
                     ngModelController.$setViewValue("");
+                    if (multiple) {
+                      ngModelController.$setViewValue(null);
+                        scope.selectedValues = [];
+
+                    }
                     ngModelController.$render();
                     scope.modal.hide();
                     scope.showList = false;
+
                     if (scope.onReset && angular.isFunction(scope.onReset)) {
                         scope.onReset();
                     }
