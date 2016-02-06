@@ -315,9 +315,15 @@ angular.module('ionic-modal-select', [])
             scope.unsetValue = function(){
                 $timeout(function(){
                     ngModelController.$setViewValue("");
+                    if (multiple) {
+                      ngModelController.$setViewValue(null);
+                        scope.selectedValues = [];
+
+                    }
                     ngModelController.$render();
                     scope.modal.hide();
                     scope.showList = false;
+
                     if (scope.onReset && angular.isFunction(scope.onReset)) {
                         scope.onReset();
                     }
