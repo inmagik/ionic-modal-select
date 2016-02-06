@@ -19,7 +19,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '    </div>\n' +
     '    <div ng-if="ui.shortList">\n' +
     '        <div class="list">\n' +
-    '            <div class="item item-checkbox" ng-repeat="option in options track by $index" ng-click="setOptions(option.categoryid)">\n' +
+    '            <div class="item item-checkbox" ng-repeat="option in options track by $index" ng-click="setOptions(option)">\n' +
     '                <label class="checkbox">\n' +
     '                    <input type="checkbox" ng-model="isChecked[$index]">\n' +
     '                </label>\n' +
