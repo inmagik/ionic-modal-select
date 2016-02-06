@@ -30,7 +30,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '    </ion-content>\n' +
     '    <ion-footer-bar ng-class="::ui.headerFooterClass">\n' +
     '        <button class="button button-stable" ng-click="closeModal()">{{ui.cancelButton}}</button>\n' +
-    '        <h2 class="title"><button class="button" ng-click="returnSelectedList()">OK</button></h2>\n' +
+    '        <h2 class="title" style="text-align: center;"><button class="button" ng-click="returnSelectedList()">OK</button></h2>\n' +
     '        <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>\n' +
     '    </ion-footer-bar>\n' +
     '</ion-modal-view>\n' +
@@ -287,15 +287,10 @@ angular.module('ionic-modal-select', [])
                   var temparr = [];
                   idx = checkedItems.indexOf(option);
                   if (idx > -1) {
-                    for(var i = checkedItems.length - 1; i >= 0; i--){
-                        if(checkedItems[i] == option){
-                          checkedItems.splice(i,1);
-                        }
-                      }
+                    checkedItems.splice(idx,1);
                   } else {
                     checkedItems.push(option);
                   }
-
               }
             scope.returnSelectedList = function(){
               if(checkedItems.length > 0){
