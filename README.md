@@ -88,6 +88,7 @@ option|meaning|accepted values|default
 `sub-header-class`|Class to be applied to the subheader containing the search bar (makes sense only if `has-search="true`) |string|'bar-stable'
 `cancel-search-button`|Text for the button for clearing search text (makes sense only if `has-search="true`) |string|'Clear'
 `clear-search-on-select`|Tells the directive to not clear the search bar content after user selection. Set to `false` to prevent clearing the search text.|boolean|true
+`search-properties`|Array of properties for the search. For example: In your controller `$scope.search_properties = ['propertie_1', 'propertie_2'];` and in template attributes `search-properties="search_properties"`|Array
 
 
 ### Passing in options
@@ -218,6 +219,20 @@ $scope.getOption = function(option){
 
 ```html
 <button class="button button-positive" modal-select ng-model="someModel" options="selectables" modal-title="Select a character" option-getter="getOption(option)">
+    Select it
+    <div class="option">
+        {{option.name}} ({{option.role}})
+    </div>
+</button>
+```
+
+##### 4. (Optional) Specify the properties for search
+Specify in the array the properties' name for search `$scope.search_properties = ['propertie_1', 'propertie_2', '...'];`:
+```javascript
+$scope.search_properties = ['name'];
+```
+```html
+<button class="button button-positive" modal-select ng-model="someModel" options="selectables" modal-title="Select a character" option-getter="getOption(option)" search-properties="search_properties">
     Select it
     <div class="option">
         {{option.name}} ({{option.role}})
