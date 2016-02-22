@@ -249,8 +249,8 @@ angular.module('ionic-modal-select', [])
             };
 
             var getSelectedValue = scope.getSelectedValue = function(option){
-                if (!option) {
-                    return null;
+                if (option === null || option === undefined) {
+                    return option;
                 }
                 if (onOptionSelect) {
                     var out = scope.optionGetter({option:option});
