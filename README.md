@@ -226,7 +226,7 @@ $scope.getOption = function(option){
 </button>
 ```
 
-##### 4. (Optional) Specify the properties for search
+##### 4. Specify the properties for search
 Specify in the array the properties' name for search `$scope.search_properties = ['propertie_1', 'propertie_2', '...'];`:
 ```javascript
 $scope.search_properties = ['name'];

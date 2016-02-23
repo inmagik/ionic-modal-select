@@ -236,13 +236,15 @@ angular.module('ionic-modal-select', [])
                         if (searchProperties){
                             if (typeof actual == 'object'){
                                 for (var i = 0; i < searchProperties.length; i++){
-                                    if (actual[searchProperties[i]] && actual[searchProperties[i]].toLowerCase().indexOf(expected) >= 0){
+                                    if (actual[searchProperties[i]] && actual[searchProperties[i]].toLowerCase().indexOf(expected.toLowerCase()) >= 0){
                                         return true;
                                     }
                                 }
                             }
-                        }else if(actual.toLowerCase().indexOf(expected) >= 0){
-                            return true;
+                        }else if (typeof actual == 'string'){
+                            if(actual.toLowerCase().indexOf(expected.toLowerCase()) >= 0){
+                                return true;
+                            }
                         }
                         return false;
                     });
