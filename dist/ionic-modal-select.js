@@ -47,7 +47,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '        <i class="icon ion-ios-search placeholder-icon"></i>\n' +
     '        <input type="search" placeholder="{{::ui.searchPlaceholder}}" ng-model="ui.searchValue">\n' +
     '      </label>\n' +
-    '      <button class="button button-clear" ng-click="clearSearch()">\n' +
+    '      <button type="button" class="button button-clear" ng-click="clearSearch()">\n' +
     '        {{ ui.cancelSearchButton }}\n' +
     '      </button>\n' +
     '    </div>\n' +
@@ -78,8 +78,8 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '    </ion-content>\n' +
     '\n' +
     '    <ion-footer-bar ng-class="::ui.headerFooterClass">\n' +
-    '        <button class="button button-stable modal-select-close-button" ng-click="closeModal()">{{ui.cancelButton}}</button>\n' +
-    '        <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>\n' +
+    '        <button type="button" class="button button-stable modal-select-close-button" ng-click="closeModal()">{{ui.cancelButton}}</button>\n' +
+    '        <button type="button" ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>\n' +
     '    </ion-footer-bar>\n' +
     '\n' +
     '</ion-modal-view>\n' +
