@@ -9,7 +9,7 @@
         <i class="icon ion-ios-search placeholder-icon"></i>
         <input type="search" placeholder="{{::ui.searchPlaceholder}}" ng-model="ui.searchValue">
       </label>
-      <button class="button button-clear" ng-click="clearSearch()">
+      <button type="button" class="button button-clear" ng-click="clearSearch()">
         {{ ui.cancelSearchButton }}
       </button>
     </div>
@@ -40,8 +40,8 @@
     </ion-content>
 
     <ion-footer-bar ng-class="::ui.headerFooterClass">
-        <button class="button button-stable modal-select-close-button" ng-click="closeModal()">{{ui.cancelButton}}</button>
-        <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>
+        <button type="button" class="button button-stable modal-select-close-button" ng-click="closeModal()">{{ui.cancelButton}}</button>
+        <button type="button" ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>
     </ion-footer-bar>
 
 </ion-modal-view>
