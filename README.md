@@ -88,7 +88,7 @@ option|meaning|accepted values|default
 `sub-header-class`|Class to be applied to the subheader containing the search bar (makes sense only if `has-search="true`) |string|'bar-stable'
 `cancel-search-button`|Text for the button for clearing search text (makes sense only if `has-search="true`) |string|'Clear'
 `clear-search-on-select`|Tells the directive to not clear the search bar content after user selection. Set to `false` to prevent clearing the search text.|boolean|true
-`search-properties`|Array of properties for the search. For example: In your controller `$scope.search_properties = ['propertie_1', 'propertie_2'];` and in template attributes `search-properties="search_properties"`|Array
+`search-properties`|Array of properties for the search. For example: In your controller `$scope.searchProperties = ['property1', 'property2'];` and in template attributes `search-properties="searchProperties"`|Array
 
 
 ### Passing in options
