@@ -135,7 +135,7 @@ angular.module('ionic-modal-select', [])
     return {
         restrict: 'A',
         require : 'ngModel',
-        scope: { initialOptions:"=options", optionGetter:"&", onSelect:"&", onReset:"&" },
+        scope: { initialOptions:"=options", optionGetter:"&", onSelect:"&", onReset:"&", searchProperties:'='  },
         link: function (scope, iElement, iAttrs, ngModelController, transclude) {
             
             var shortList = true;
@@ -143,7 +143,8 @@ angular.module('ionic-modal-select', [])
             var setFromProperty= iAttrs.optionProperty;
             var onOptionSelect = iAttrs.optionGetter;
             var clearSearchOnSelect = iAttrs.clearSearchOnSelect !== "false" ? true : false;
-
+            var searchProperties = scope.searchProperties  ? scope.searchProperties : false;
+            
             
             //#todo: multiple is not working right now
             var multiple = iAttrs.multiple  ? true : false;
@@ -333,7 +334,23 @@ angular.module('ionic-modal-select', [])
             //filter function
             if (scope.ui.hasSearch) {
                 scope.$watch('ui.searchValue', function(nv){
-                    scope.options = $filter('filter')(allOptions, nv);
+                    scope.options = $filter('filter')(allOptions, nv, function(actual, expected) { 
+                        if (searchProperties){
+                            if (typeof actual == 'object'){
+                                for (var i = 0; i < searchProperties.length; i++){
+                                    if (actual[searchProperties[i]] && actual[searchProperties[i]].toLowerCase().indexOf(expected.toLowerCase()) >= 0){
+                                        return true;
+                                    }
+                                }
+                            }
+                            return false;
+                        } else {
+                            if(actual.toString().toLowerCase().indexOf(expected.toLowerCase()) >= 0){
+                                return true;
+                            }
+                        }
+                        return false;
+                    });
                 });
                 scope.clearSearch = function(){
                     scope.ui.searchValue = '';

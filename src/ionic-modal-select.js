@@ -241,8 +241,9 @@ angular.module('ionic-modal-select', [])
                                     }
                                 }
                             }
-                        }else if (typeof actual == 'string'){
-                            if(actual.toLowerCase().indexOf(expected.toLowerCase()) >= 0){
+                            return false;
+                        } else {
+                            if(actual.toString().toLowerCase().indexOf(expected.toLowerCase()) >= 0){
                                 return true;
                             }
                         }
