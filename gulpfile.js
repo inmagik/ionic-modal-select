@@ -20,15 +20,15 @@ gulp.task('test', function(done) {
         configFile: __dirname + '/tests/my.conf.js',
         singleRun: true
     };
-    var server = new karma(config)
-    server.start()
+    var server = new karma(config);
+    server.start();
 });
 
 
 gulp.task('modal-select', function() {
     return  gulp.src( [
       './src/*.html',
-      
+
       ])
     .pipe(jsifyTemplates())
     .pipe(replace("htmlTemplates", 'modalSelectTemplates'))
@@ -64,4 +64,3 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['modal-select']);
-

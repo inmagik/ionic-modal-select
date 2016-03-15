@@ -19,7 +19,7 @@ angular.module('ionic-modal-select', [])
                 // NOTE: we only compile .childNodes so that
                 // we don't get into infinite loop compiling ourselves
                 $compile(iElement.contents())(scope);
-                
+
                 //deactivate watch if "compile-once" is set to "true"
                 if (iAttrs.compileOnce === 'true') {
                     x();
@@ -29,27 +29,37 @@ angular.module('ionic-modal-select', [])
     };
 }])
 
-.directive('modalSelect', ['$ionicModal','$timeout', '$filter', '$parse', function ($ionicModal, $timeout, $filter, $parse) {
+.directive('modalSelect', ['$ionicModal','$timeout', '$filter', '$parse', '$templateCache',
+		function ($ionicModal, $timeout, $filter, $parse, $templateCache ) {
+
     return {
         restrict: 'A',
         require : 'ngModel',
-        scope: { initialOptions:"=options", optionGetter:"&", onSelect:"&", onReset:"&", searchProperties:'='  },
+        scope: {
+	        initialOptions:"=options",
+	        optionGetter:"&",
+	        searchFilters: "=searchFilters",
+            searchProperties:'=',
+	        onSelect:"&",
+	        onSearch: '&',
+	        onReset:"&"
+        },
         link: function (scope, iElement, iAttrs, ngModelController, transclude) {
-            
+
             var shortList = true;
             var shortListBreak = iAttrs.shortListBreak ? parseInt(iAttrs.shortListBreak) : 10;
             var setFromProperty= iAttrs.optionProperty;
             var onOptionSelect = iAttrs.optionGetter;
             var clearSearchOnSelect = iAttrs.clearSearchOnSelect !== "false" ? true : false;
             var searchProperties = scope.searchProperties  ? scope.searchProperties : false;
-            
-            
+
+
             //#todo: multiple is not working right now
             var multiple = iAttrs.multiple  ? true : false;
             if (multiple) {
                 scope.checkedItems = [];
             }
-            
+
             scope.ui = {
                 modalTitle : iAttrs.modalTitle || 'Select an option',
                 okButton : iAttrs.okButton || 'OK',
@@ -61,12 +71,15 @@ angular.module('ionic-modal-select', [])
                 headerFooterClass : iAttrs.headerFooterClass || 'bar-stable',
                 value  : null,
                 selectedClass : iAttrs.selectedClass || 'option-selected',
+	            itemClass: iAttrs.itemClass || 'item item-text-wrap',
+	            searchTemplate: iAttrs.searchTemplate || (multiple ? 'modal-template-multiple.html' : 'modal-template.html'),
+
                 //search stuff
                 hasSearch : iAttrs.hasSearch  !== "true" ? false : true,
                 searchValue : '',
                 searchPlaceholder : iAttrs.searchPlaceholder || 'Search',
                 subHeaderClass : iAttrs.subHeaderClass || 'bar-stable',
-                cancelSearchButton : iAttrs.cancelSearchButton || 'Clear',
+                cancelSearchButton : iAttrs.cancelSearchButton || 'Clear'
 
             };
 
@@ -84,17 +97,17 @@ angular.module('ionic-modal-select', [])
                 var listExpr = match[2];
                 var listGetter = $parse(listExpr);
                 var s = iElement.scope();
-                
+
                 scope.$watch(
                     function(){
-                        return listGetter(s);    
-                    }, 
+                        return listGetter(s);
+                    },
                     function(nv, ov){
                         allOptions = angular.copy(nv);
                         scope.options = angular.copy(nv);
-                        updateListMode();   
-                        
-                    }, 
+                        updateListMode();
+
+                    },
                     true
                 );
 
@@ -111,7 +124,7 @@ angular.module('ionic-modal-select', [])
             if (!opt) {
                 throw new Error({
                     name:'modalSelectError:noOptionTemplate',
-                    message:'When using modalSelect directive you must include an element with class "option" to provide a template for your select options.', 
+                    message:'When using modalSelect directive you must include an element with class "option" to provide a template for your select options.',
                     toString:function(){
                         return this.name + " " + this.message;
                     }
@@ -127,7 +140,13 @@ angular.module('ionic-modal-select', [])
             }
 
             angular.element(opt).remove();
-            
+
+	        var notFound = iElement[0].querySelector('.not-found');
+	        if(notFound) {
+		        scope.notFound = angular.element(notFound).html();
+		        angular.element(notFound).remove();
+	        }
+
             function updateListMode(){
                 //shortList controls wether using ng-repeat instead of collection-repeat
                 if (iAttrs.useCollectionRepeat === "true") {
@@ -138,27 +157,27 @@ angular.module('ionic-modal-select', [])
                     if (typeof(scope.options) !=="undefined"){
                       shortList = !!(scope.options.length < shortListBreak);
                     }
-                };
-                
-                scope.ui.shortList = shortList;   
+                }
+
+                scope.ui.shortList = shortList;
             }
-            
+
             ngModelController.$render = function(){
                 scope.ui.value = ngModelController.$viewValue;
             };
 
             var getSelectedValue = scope.getSelectedValue = function(option){
+	            var val = null;
                 if (option === null || option === undefined) {
                     return option;
                 }
                 if (onOptionSelect) {
-                    var out = scope.optionGetter({option:option});
-                    return out;
+                    return scope.optionGetter({option:option});
                 }
                 if (setFromProperty) {
-                    val = option[setFromProperty]
+                    val = option[setFromProperty];
                 } else {
-                    val = option;    
+                    val = option;
                 }
                 return val;
             };
@@ -166,22 +185,38 @@ angular.module('ionic-modal-select', [])
             scope.setOption = function(option){
                 var oldValue = ngModelController.$viewValue;
                 var val = getSelectedValue(option);
-                ngModelController.$setViewValue(val);    
+                ngModelController.$setViewValue(val);
                 ngModelController.$render();
-                
+
                 if (scope.onSelect) {
                     scope.onSelect({ newValue: val, oldValue: oldValue });
                 }
                 scope.modal.hide().then(function(){
-                    scope.showList = false;    
+                    scope.showList = false;
                     if (scope.ui.hasSearch) {
-                       if(clearSearchOnSelect){
+                       if(clearSearchOnSelect) {
                             scope.ui.searchValue = '';
-                        }
+                       }
                     }
                 });
-                
             };
+
+            // Filter object {id: <filterId>, active: <boolean>}
+            // Used as auxiliary query params when querying server for search results
+	        scope.setFilter = function(filterId) {
+		        angular.forEach(scope.searchFilters, function(filter) {
+			        if(filter.id == filterId) {
+				        filter.active = !filter.active;
+			        } else {
+				        filter.active = false;
+			        }
+		        });
+
+		        // Trigger another search if the search filter has been changed
+		        if(scope.onSearch) {
+			        scope.onSearch(scope.ui.searchValue);
+		        }
+	        };
 
             scope.unsetValue = function(){
                 $timeout(function(){
@@ -197,43 +232,53 @@ angular.module('ionic-modal-select', [])
 
             scope.closeModal = function(){
                 scope.modal.hide().then(function(){
-                    scope.showList = false;    
+                    scope.showList = false;
                 });
             };
 
             scope.compareValues = function(a, b){
                 return angular.equals(a, b);
             };
-            
+
             //loading the modal
-            var modalTpl = multiple ? 'modal-template-multiple.html' : 'modal-template.html';
-            scope.modal = $ionicModal.fromTemplate(
-                modalSelectTemplates[modalTpl],
-                { scope: scope }
-            );
+	        var modalTpl = null;
+	        if(iAttrs.searchTemplate) {
+		        scope.modal = $ionicModal.fromTemplate(
+			        $templateCache.get(iAttrs.searchTemplate),
+			        { scope: scope }
+		        );
+	        } else {
+		        modalTpl = multiple ? 'modal-template-multiple.html' : 'modal-template.html';
+		        scope.modal = $ionicModal.fromTemplate(
+			        modalSelectTemplates[modalTpl],
+			        { scope: scope }
+		        );
+	        }
 
             scope.$on('$destroy', function(){
-                scope.modal.remove();  
+                scope.modal.remove();
             });
 
             iElement.on('click', function(){
                 if (shortList) {
-                    scope.showList = true;    
+                    scope.showList = true;
                     scope.modal.show();
                 } else {
                     scope.modal.show()
                     .then(function(){
-                        scope.showList = true;  
-                        scope.ui.shortList = shortList;  
-                    });    
+                        scope.showList = true;
+                        scope.ui.shortList = shortList;
+                    });
                 }
             });
 
             //filter function
             if (scope.ui.hasSearch) {
                 scope.$watch('ui.searchValue', function(nv){
-                    scope.options = $filter('filter')(allOptions, nv, function(actual, expected) { 
-                        if (searchProperties){
+                    scope.options = $filter('filter')(allOptions, nv, function(actual, expected) {
+                        if(scope.onSearch) {
+    			            scope.onSearch({query: nv});
+    		            } else if (searchProperties){
                             if (typeof actual == 'object'){
                                 for (var i = 0; i < searchProperties.length; i++){
                                     if (actual[searchProperties[i]] && actual[searchProperties[i]].toLowerCase().indexOf(expected.toLowerCase()) >= 0){
@@ -254,12 +299,12 @@ angular.module('ionic-modal-select', [])
                     scope.ui.searchValue = '';
                 };
             }
-            
+
             //#TODO ?: WRAP INTO $timeout?
             ngModelController.$render();
 
         }
     };
-}])
+}]);
 
 })();

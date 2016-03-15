@@ -24,19 +24,24 @@
         <div ng-if="showList">
             <div ng-if="!ui.shortList">
                 <div class="list" ng-if="showList" class="animate-if">
-                    <div class="item item-text-wrap" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{'{{::ui.selectedClass}}': compareValues(getSelectedValue(option), ui.value) }"> 
+                    <div ng-class="ui.itemClass" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{'{{::ui.selectedClass}}': compareValues(getSelectedValue(option), ui.value) }">
                         <div compile="inner" compile-once="true"></div>
                     </div>
                 </div>
             </div>
             <div ng-if="ui.shortList">
                 <div class="list">
-                    <div class="item item-text-wrap" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{'{{::ui.selectedClass}}': compareValues(getSelectedValue(option), ui.value) }">
+                    <div ng-class="ui.itemClass" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{'{{::ui.selectedClass}}': compareValues(getSelectedValue(option), ui.value) }">
                         <div compile="inner" compile-once="true"></div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div ng-if="notFound && options.length == 0">
+            <div compile="notFound" compile-once="true" ng-click="closeModal()"></div>
+        </div>
+
     </ion-content>
 
     <ion-footer-bar ng-class="::ui.headerFooterClass">
