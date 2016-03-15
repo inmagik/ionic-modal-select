@@ -5,11 +5,6 @@
   "scripts": {},
   "author": "bianchimro@gmail.com",
   "license": "MIT",
-  "contributors": [
-    {
-      "email": "matteo@meanme.com"
-    }
-  ],
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-add-src": "^0.2.0",
