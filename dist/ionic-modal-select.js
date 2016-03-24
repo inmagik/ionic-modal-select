@@ -1,37 +1,55 @@
 var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['modal-template-multiple.html'] = ' <ion-modal-view class="ionic-select-modal" ng-class="::ui.modalClass">\n' +
+    '    \n' +
     '    <ion-header-bar ng-class="::ui.headerFooterClass">\n' +
     '      <h1 class="title">{{::ui.modalTitle}} MULTIPLE</h1>\n' +
     '    </ion-header-bar>\n' +
-    '    <ion-content>\n' +
     '\n' +
-    '    <div ng-if="!ui.shortList">\n' +
-    '        <div class="text-center" ng-if="!showList" style="padding-top:40px;">\n' +
-    '            <h4 class="muted">{{::ui.loadListMessage}}</h4>\n' +
-    '            <p>\n' +
-    '                <ion-spinner></ion-spinner>\n' +
-    '            </p>\n' +
-    '        </div>\n' +
-    '        <div class="list" ng-if="showList" class="animate-if">\n' +
-    '            <div class="item item-text-wrap" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': getSelectedValue(option) == ui.value}"> \n' +
-    '                <div compile="inner" compile-once="true"></div>\n' +
+    '    <div class="bar bar-subheader item-input-inset" ng-class="::ui.subHeaderClass" ng-if="ui.hasSearch">\n' +
+    '      <label class="item-input-wrapper">\n' +
+    '        <i class="icon ion-ios-search placeholder-icon"></i>\n' +
+    '        <input type="search" placeholder="{{::ui.searchPlaceholder}}" ng-model="ui.searchValue">\n' +
+    '      </label>\n' +
+    '      <button type="button" class="button button-clear" ng-click="clearSearch()">\n' +
+    '        {{ ui.cancelSearchButton }}\n' +
+    '      </button>\n' +
+    '    </div>\n' +
+    '    \n' +
+    '    <ion-content class="has-header" ng-class="{\'has-subheader\':ui.hasSearch}">\n' +
+    '    <div class="text-center" ng-if="!ui.shortList && !showList" style="padding-top:40px;">\n' +
+    '        <h4 class="muted">{{::ui.loadListMessage}}</h4>\n' +
+    '        <p>\n' +
+    '            <ion-spinner></ion-spinner>\n' +
+    '        </p>\n' +
+    '    </div>\n' +
+    '    <div ng-if="showList">\n' +
+    '        <div ng-if="!ui.shortList">\n' +
+    '            <div class="list" class="animate-if" ng-if="showList" >\n' +
+    '                <div class="item item-checkbox" collection-repeat="optionm in options track by optionm[0]">\n' +
+    '                    <label class="checkbox">\n' +
+    '                        <input type="checkbox" ng-model="isChecked[optionm[0]]">\n' +
+    '                    </label>    \n' +
+    '                    <div compile="inner" compile-map="{\'option\':optionm[1]}" compile-once="true"></div>\n' +
+    '                </div>\n' +
     '            </div>\n' +
     '        </div>\n' +
-    '    </div>\n' +
-    '    <div ng-if="ui.shortList">\n' +
-    '        <div class="list">\n' +
-    '            <div class="item item-checkbox" ng-repeat="option in options track by $index">\n' +
-    '                <label class="checkbox">\n' +
-    '                    <input type="checkbox" ng-model="isChecked[$index]">\n' +
-    '                </label>\n' +
-    '                <div compile="inner" compile-once="true"></div>\n' +
+    '        <div ng-if="ui.shortList">\n' +
+    '            <div class="list">\n' +
+    '                <div class="item item-checkbox" ng-repeat="optionm in options track by optionm[1]">\n' +
+    '                    <label class="checkbox">\n' +
+    '                        <input type="checkbox" ng-model="isChecked[optionm[0]]">\n' +
+    '                    </label>\n' +
+    '                    <div ng-init="option=optionm[1]" compile="inner" compile-once="true"></div>\n' +
+    '                </div>\n' +
     '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
     '    </ion-content>\n' +
     '    <ion-footer-bar ng-class="::ui.headerFooterClass">\n' +
     '        <button class="button button-stable" ng-click="closeModal()">{{ui.cancelButton}}</button>\n' +
-    '        <h2 class="title"><button class="button">OK</button></h2>\n' +
-    '        <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValue()">{{ui.resetButton}}</button>\n' +
+    '        <div class="title" style="padding-top:6px">\n' +
+    '            <button class="button button-navbar" ng-click="setValues()">OK</button>\n' +
+    '        </div>\n' +
+    '        <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValues()">{{ui.resetButton}}</button>\n' +
     '    </ion-footer-bar>\n' +
     '</ion-modal-view>\n' +
     '';
@@ -115,12 +133,20 @@ angular.module('ionic-modal-select', [])
                 // when the 'compile' expression changes
                 // assign it into the current DOM
                 iElement.html(value);
-
                 // compile the new DOM and link it to the current
                 // scope.
                 // NOTE: we only compile .childNodes so that
                 // we don't get into infinite loop compiling ourselves
-                $compile(iElement.contents())(scope);
+                if(iAttrs.compileMap){
+                    var mapped = scope.$eval(iAttrs.compileMap);
+                    angular.extend(scope, mapped);
+                    $compile(iElement.contents())(scope);    
+                } else {
+                    $compile(iElement.contents())(scope);    
+                }
+
+                
+                
                 
                 //deactivate watch if "compile-once" is set to "true"
                 if (iAttrs.compileOnce === 'true') {
@@ -146,11 +172,12 @@ angular.module('ionic-modal-select', [])
             var searchProperties = scope.searchProperties  ? scope.searchProperties : false;
             
             
-            //#todo: multiple is not working right now
+            //multiple values settings.
             var multiple = iAttrs.multiple  ? true : false;
             if (multiple) {
-                scope.checkedItems = [];
+                scope.isChecked = {};
             }
+            var multipleNullValue = iAttrs.multipleNullValue ? scope.$eval(iAttrs.multipleNullValue) : [];
             
             scope.ui = {
                 modalTitle : iAttrs.modalTitle || 'Select an option',
@@ -192,20 +219,31 @@ angular.module('ionic-modal-select', [])
                         return listGetter(s);    
                     }, 
                     function(nv, ov){
-                        allOptions = angular.copy(nv);
-                        scope.options = angular.copy(nv);
+                        initialOptionsSetup(nv);
                         updateListMode();   
-                        
                     }, 
                     true
                 );
 
             } else {
                 scope.$watch('initialOptions', function(nv){
-                    allOptions = angular.copy(nv);
-                    scope.options = angular.copy(nv);
+                    initialOptionsSetup(nv);
                     updateListMode();
                 });
+            }
+
+            //#TODO: this is due to different single vs multiple template
+            //but adds lots of complexity here and in search
+            function initialOptionsSetup(nv){
+                if ( !multiple ) { 
+                    allOptions = angular.copy(nv);
+                    scope.options = angular.copy(nv);
+                } else {
+                    allOptions = nv.map(function(item, idx){
+                        return [idx, angular.copy(item)]
+                    });
+                    scope.options = angular.copy(allOptions);
+                }
             }
 
             // getting options template
@@ -297,6 +335,48 @@ angular.module('ionic-modal-select', [])
                 });
             };
 
+
+            scope.setValues = function(){
+                var checkedItems = [];
+                angular.forEach(scope.isChecked, function(v, k){
+                    if(v){
+                        checkedItems.push(scope.options[k][1])    
+                    }
+                    
+                })
+                var oldValues = ngModelController.$viewValue;
+                var vals = checkedItems.map(function(item){
+                    return getSelectedValue(item);
+                })
+                ngModelController.$setViewValue(vals);    
+                ngModelController.$render();
+                
+                if (scope.onSelect) {
+                    scope.onSelect({ newValue: vals, oldValue: oldValues });
+                }
+                scope.modal.hide().then(function(){
+                    scope.showList = false;    
+                    if (scope.ui.hasSearch) {
+                       if(clearSearchOnSelect){
+                            scope.ui.searchValue = '';
+                        }
+                    }
+                });
+                
+            };
+
+            scope.unsetValues = function(){
+                $timeout(function(){
+                    ngModelController.$setViewValue(multipleNullValue);
+                    ngModelController.$render();
+                    scope.modal.hide();
+                    scope.showList = false;
+                    if (scope.onReset && angular.isFunction(scope.onReset)) {
+                        scope.onReset();
+                    }
+                });
+            };
+
             scope.closeModal = function(){
                 scope.modal.hide().then(function(){
                     scope.showList = false;    
@@ -333,8 +413,18 @@ angular.module('ionic-modal-select', [])
 
             //filter function
             if (scope.ui.hasSearch) {
+                //#TODO : this might be slow and inefficent for very long lists
+                //probably the whole search pattern should be refactored
                 scope.$watch('ui.searchValue', function(nv){
-                    scope.options = $filter('filter')(allOptions, nv, function(actual, expected) { 
+                    var whatToSearch;
+                    if ( !multiple  ) {
+                        whatToSearch = allOptions;
+                    } else {
+                        whatToSearch = allOptions.map(function(item){
+                            return item[1];
+                        });
+                    }
+                    var filteredOpts = $filter('filter')(whatToSearch, nv, function(actual, expected) { 
                         if (searchProperties){
                             if (typeof actual == 'object'){
                                 for (var i = 0; i < searchProperties.length; i++){
@@ -351,7 +441,25 @@ angular.module('ionic-modal-select', [])
                         }
                         return false;
                     });
+                    if ( !multiple ){
+                        scope.options = filteredOpts;    
+                    } else {
+                        //#TODO: lots of loops here!
+                        var newOpts = [];
+                        angular.forEach(filteredOpts, function(item){
+                            var originalItem = allOptions.find(function(it){
+                                return it[1] == item;
+                            })
+                            if( originalItem ){
+                                newOpts.push(originalItem);
+                            }
+                        })
+                        scope.options = newOpts;    
+                        
+                    }
+                    
                 });
+
                 scope.clearSearch = function(){
                     scope.ui.searchValue = '';
                 };
