@@ -246,7 +246,7 @@
                             var checkedItems = [];
                             angular.forEach(scope.isChecked, function(v, k){
                                 if(v){
-                                    checkedItems.push(scope.options[k][1])    
+                                    checkedItems.push(allOptions[k][1])    
                                 }
                                 
                             })
