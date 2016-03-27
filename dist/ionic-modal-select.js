@@ -40,7 +40,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '        <!-- ng-repeat mode -->\n' +
     '        <div ng-if="ui.shortList || true">\n' +
     '            <div class="list">\n' +
-    '                <div class="item item-checkbox" ng-class="ui.itemClass" ng-repeat="optionm in options track by optionm[1]">\n' +
+    '                <div class="item item-checkbox" ng-class="ui.itemClass" ng-repeat="optionm in options track by $index">\n' +
     '                    <label class="checkbox">\n' +
     '                        <input type="checkbox" ng-model="isChecked[optionm[0]]">\n' +
     '                    </label>\n' +

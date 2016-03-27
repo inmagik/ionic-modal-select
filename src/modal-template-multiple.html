@@ -40,7 +40,7 @@
         <!-- ng-repeat mode -->
         <div ng-if="ui.shortList || true">
             <div class="list">
-                <div class="item item-checkbox" ng-class="ui.itemClass" ng-repeat="optionm in options track by optionm[1]">
+                <div class="item item-checkbox" ng-class="ui.itemClass" ng-repeat="optionm in options track by $index">
                     <label class="checkbox">
                         <input type="checkbox" ng-model="isChecked[optionm[0]]">
                     </label>
