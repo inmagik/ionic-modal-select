@@ -490,8 +490,11 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
 										}
 										return false;
 									});
+
+                                    var oldLen = scope.options.length;
                                     if ( !multiple ){
                                         scope.options = filteredOpts;    
+
                                     } else {
                                         //#TODO: lots of loops here!
                                         var newOpts = [];
@@ -504,6 +507,9 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
                                             }
                                         })
                                         scope.options = newOpts; 
+                                    }
+                                    if(oldLen != scope.options.length){
+                                        //#todo: should resize scroll or scroll up here
                                     }
 								}
 							});
