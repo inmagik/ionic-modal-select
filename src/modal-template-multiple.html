@@ -21,20 +21,26 @@
             <ion-spinner></ion-spinner>
         </p>
     </div>
+
     <div ng-if="showList">
+        <!--collection-repeat mode -->
+        <!-- not working right now -->
+        <!--
         <div ng-if="!ui.shortList">
-            <div class="list" class="animate-if" ng-if="showList" >
-                <div class="item item-checkbox" collection-repeat="optionm in options track by optionm[0]">
+            <div class="list" class="animate-if" >
+                <div class="item item-checkbox" ng-class="ui.itemClass" xng-if="showList" collection-repeat="optionm in options track by optionm[0]">
                     <label class="checkbox">
                         <input type="checkbox" ng-model="isChecked[optionm[0]]">
                     </label>    
-                    <div compile="inner" compile-map="{'option':optionm[1]}" compile-once="true"></div>
+                    <div compile="inner" ng-init="option=optionm[1]" compile-once="true"></div>
                 </div>
             </div>
         </div>
-        <div ng-if="ui.shortList">
+        -->
+        <!-- ng-repeat mode -->
+        <div ng-if="ui.shortList || true">
             <div class="list">
-                <div class="item item-checkbox" ng-repeat="optionm in options track by optionm[1]">
+                <div class="item item-checkbox" ng-class="ui.itemClass" ng-repeat="optionm in options track by optionm[1]">
                     <label class="checkbox">
                         <input type="checkbox" ng-model="isChecked[optionm[0]]">
                     </label>

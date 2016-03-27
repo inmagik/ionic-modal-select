@@ -21,20 +21,26 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '            <ion-spinner></ion-spinner>\n' +
     '        </p>\n' +
     '    </div>\n' +
+    '\n' +
     '    <div ng-if="showList">\n' +
+    '        <!--collection-repeat mode -->\n' +
+    '        <!-- not working right now -->\n' +
+    '        <!--\n' +
     '        <div ng-if="!ui.shortList">\n' +
-    '            <div class="list" class="animate-if" ng-if="showList" >\n' +
-    '                <div class="item item-checkbox" collection-repeat="optionm in options track by optionm[0]">\n' +
+    '            <div class="list" class="animate-if" >\n' +
+    '                <div class="item item-checkbox" ng-class="ui.itemClass" xng-if="showList" collection-repeat="optionm in options track by optionm[0]">\n' +
     '                    <label class="checkbox">\n' +
     '                        <input type="checkbox" ng-model="isChecked[optionm[0]]">\n' +
     '                    </label>    \n' +
-    '                    <div compile="inner" compile-map="{\'option\':optionm[1]}" compile-once="true"></div>\n' +
+    '                    <div compile="inner" ng-init="option=optionm[1]" compile-once="true"></div>\n' +
     '                </div>\n' +
     '            </div>\n' +
     '        </div>\n' +
-    '        <div ng-if="ui.shortList">\n' +
+    '        -->\n' +
+    '        <!-- ng-repeat mode -->\n' +
+    '        <div ng-if="ui.shortList || true">\n' +
     '            <div class="list">\n' +
-    '                <div class="item item-checkbox" ng-repeat="optionm in options track by optionm[1]">\n' +
+    '                <div class="item item-checkbox" ng-class="ui.itemClass" ng-repeat="optionm in options track by optionm[1]">\n' +
     '                    <label class="checkbox">\n' +
     '                        <input type="checkbox" ng-model="isChecked[optionm[0]]">\n' +
     '                    </label>\n' +
@@ -80,14 +86,14 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '        <div ng-if="showList">\n' +
     '            <div ng-if="!ui.shortList">\n' +
     '                <div class="list" ng-if="showList" class="animate-if">\n' +
-    '                    <div ng-class="ui.itemClass" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }">\n' +
+    '                    <div ng-class="{ \'{{::ui.itemClass}}\' : true, \'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }" collection-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }">\n' +
     '                        <div compile="inner" compile-once="true"></div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
     '            </div>\n' +
     '            <div ng-if="ui.shortList">\n' +
     '                <div class="list">\n' +
-    '                    <div ng-class="ui.itemClass" ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{\'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }">\n' +
+    '                    <div ng-repeat="option in options track by $index" ng-click="setOption(option)" ng-class="{ \'{{::ui.itemClass}}\' : true, \'{{::ui.selectedClass}}\': compareValues(getSelectedValue(option), ui.value) }">\n' +
     '                        <div compile="inner" compile-once="true"></div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
