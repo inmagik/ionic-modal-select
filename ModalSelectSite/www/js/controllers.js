@@ -71,6 +71,8 @@ angular.module('starter.controllers', [])
     alert("value was reset!");
   };
 
+  $scope.searchPropertiesSearchModel = null;
+
 
   $ionicScrollDelegate.scrollTop();
 

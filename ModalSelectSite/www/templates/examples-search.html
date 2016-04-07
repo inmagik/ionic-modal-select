@@ -171,7 +171,51 @@ $scope.numbers = [1,2,3,4,5,6,7,8];
         </h3>
 
       </div>
-      <!-- end of example 3 -->
+      <!-- end of example 4 -->
+
+      <!-- example 5 -->
+      <div class="item item-divider" id="search-properties-">
+          Search properties
+      </div>
+      <div class="item item-text-wrap">
+        <p>You limit attributes searched by setting <span class="positive">search-properties</span> attribute.</p>
+
+      </div>
+      <div class="item item-body">
+        <h3>Controller:</h3>
+        <div example-render mode="javascript" class="">
+$scope.selectableNames =  [
+    { name : "Mauro", role : "juggler"}, 
+    { name : "Silvia", role : "chef"},
+    { name : "Merlino", role : "little canaglia"},
+  ];
+        </div>
+        <h3>Template:</h3>
+        <div example-render>  
+<button class="button button-positive" modal-select ng-model="searchPropertiesSearchModel" options="selectableNames" has-search="true" search-properties="['name']">
+  Select it
+  <div class="option">
+    {{option}}
+  </div>
+</button>
+<h3>
+  Selected value: {{searchPropertiesSearchModel}} 
+</h3>
+        </div>
+      
+        <h3>Result:</h3>
+        <button class="button button-positive" modal-select ng-model="searchPropertiesSearchModel" options="selectableNames" has-search="true" search-properties="['name']">
+          Select it
+          <div class="option">
+            {{option}}
+          </div>
+        </button>
+        <h3>
+          Selected value: {{searchPropertiesSearchModel}} 
+        </h3>
+
+      </div>
+      <!-- end of example 5 -->
 
 
     </div><!--end of card -->
