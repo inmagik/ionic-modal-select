@@ -111,7 +111,7 @@
                             );
 
                         } else {
-                            scope.$watch('initialOptions', function(nv){
+                            scope.$watchCollection('initialOptions', function(nv){
                                 initialOptionsSetup(nv);
                                 updateListMode();
                             });
