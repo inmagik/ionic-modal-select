@@ -28,7 +28,7 @@ Include `ionic-modal-select.js` or its minified version in your index.html:
 
 ```html
 
-<script src="lib/ionic-modal-select/ionic-modal-select.js"></script>
+<script src="lib/ionic-modal-select/dist/ionic-modal-select.js"></script>
 
 ```
 
