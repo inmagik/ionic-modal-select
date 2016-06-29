@@ -98,15 +98,15 @@
                             var listExpr = match[2];
                             var listGetter = $parse(listExpr);
                             var s = iElement.scope();
-                            
+
                             scope.$watch(
                                 function(){
-                                    return listGetter(s);    
-                                }, 
+                                    return listGetter(s);
+                                },
                                 function(nv, ov){
                                     initialOptionsSetup(nv);
-                                    updateListMode();   
-                                }, 
+                                    updateListMode();
+                                },
                                 true
                             );
 
@@ -120,7 +120,8 @@
                         //#TODO: this is due to different single vs multiple template
                         //but adds lots of complexity here and in search
                         function initialOptionsSetup(nv){
-                            if ( !multiple ) { 
+														nv = nv || [];
+                            if ( !multiple ) {
                                 allOptions = angular.copy(nv);
                                 scope.options = angular.copy(nv);
                             } else {
@@ -246,29 +247,29 @@
                             var checkedItems = [];
                             angular.forEach(scope.isChecked, function(v, k){
                                 if(v){
-                                    checkedItems.push(allOptions[k][1])    
+                                    checkedItems.push(allOptions[k][1])
                                 }
-                                
+
                             })
                             var oldValues = ngModelController.$viewValue;
                             var vals = checkedItems.map(function(item){
                                 return getSelectedValue(item);
                             })
-                            ngModelController.$setViewValue(vals);    
+                            ngModelController.$setViewValue(vals);
                             ngModelController.$render();
-                            
+
                             if (scope.onSelect) {
                                 scope.onSelect({ newValue: vals, oldValue: oldValues });
                             }
                             scope.modal.hide().then(function(){
-                                scope.showList = false;    
+                                scope.showList = false;
                                 if (scope.ui.hasSearch) {
                                    if(clearSearchOnSelect){
                                         scope.ui.searchValue = '';
                                     }
                                 }
                             });
-                            
+
                         };
 
                         scope.unsetValues = function(){
@@ -326,7 +327,7 @@
 							}
 						});
 
-                        
+
                         //filter function
 						if (scope.ui.hasSearch) {
 							scope.$watch('ui.searchValue', function(nv){
@@ -362,7 +363,7 @@
 
                                     var oldLen = scope.options.length;
                                     if ( !multiple ){
-                                        scope.options = filteredOpts;    
+                                        scope.options = filteredOpts;
 
                                     } else {
                                         //#TODO: lots of loops here!
@@ -375,7 +376,7 @@
                                                 newOpts.push(originalItem);
                                             }
                                         })
-                                        scope.options = newOpts; 
+                                        scope.options = newOpts;
                                     }
                                     if(oldLen != scope.options.length){
                                         //#todo: should resize scroll or scroll up here
