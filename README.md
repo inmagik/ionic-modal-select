@@ -8,6 +8,14 @@ We also have a simple [Codepen demo](http://codepen.io/bianchimro/pen/epYYQO?edi
 
 ![animated example](https://dl.dropboxusercontent.com/u/6178230/screenshots/ionic-modal-picker.gif)
 
+## IMPORTANT NOTICE
+
+**In order to survive, this project needs**:
+* proper testing: see [issue #26](https://github.com/inmagik/ionic-modal-select/issues/26)  
+* co-maintainers: see [issue #54](https://github.com/inmagik/ionic-modal-select/issues/54)
+
+Any help on this is greatly appreciated.
+
 ## Features
 
 * supports long list of object via collection-repeat
