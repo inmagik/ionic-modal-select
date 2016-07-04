@@ -14,7 +14,7 @@ We also have a simple [Codepen demo](http://codepen.io/bianchimro/pen/epYYQO?edi
 * proper testing: see [issue #26](https://github.com/inmagik/ionic-modal-select/issues/26)  
 * co-maintainers: see [issue #54](https://github.com/inmagik/ionic-modal-select/issues/54)
 
-Any help on this is greatly appreciated.
+Any help on this is greatly appreciated. Comment directly those issues or contact me directly at mauro.bianchi at inmagik.com if you are interested in helping with this.
 
 ## Features
 
