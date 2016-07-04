@@ -250,11 +250,11 @@
                                     checkedItems.push(allOptions[k][1])
                                 }
 
-                            })
+                            });
                             var oldValues = ngModelController.$viewValue;
                             var vals = checkedItems.map(function(item){
                                 return getSelectedValue(item);
-                            })
+                            });
                             ngModelController.$setViewValue(vals);
                             ngModelController.$render();
 
@@ -371,11 +371,11 @@
                                         angular.forEach(filteredOpts, function(item){
                                             var originalItem = allOptions.find(function(it){
                                                 return it[1] == item;
-                                            })
+                                            });
                                             if( originalItem ){
                                                 newOpts.push(originalItem);
                                             }
-                                        })
+                                        });
                                         scope.options = newOpts;
                                     }
                                     if(oldLen != scope.options.length){
