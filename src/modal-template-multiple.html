@@ -1,7 +1,7 @@
  <ion-modal-view class="ionic-select-modal" ng-class="::ui.modalClass">
-    
+
     <ion-header-bar ng-class="::ui.headerFooterClass">
-      <h1 class="title">{{::ui.modalTitle}} MULTIPLE</h1>
+      <h1 class="title">{{::ui.modalTitle}}</h1>
     </ion-header-bar>
 
     <div class="bar bar-subheader item-input-inset" ng-class="::ui.subHeaderClass" ng-if="ui.hasSearch">
@@ -13,7 +13,7 @@
         {{ ui.cancelSearchButton }}
       </button>
     </div>
-    
+
     <ion-content class="has-header" ng-class="{'has-subheader':ui.hasSearch}">
     <div class="text-center" ng-if="!ui.shortList && !showList" style="padding-top:40px;">
         <h4 class="muted">{{::ui.loadListMessage}}</h4>
@@ -31,7 +31,7 @@
                 <div class="item item-checkbox" ng-class="ui.itemClass" xng-if="showList" collection-repeat="optionm in options track by optionm[0]">
                     <label class="checkbox">
                         <input type="checkbox" ng-model="isChecked[optionm[0]]">
-                    </label>    
+                    </label>
                     <div compile="inner" ng-init="option=optionm[1]" compile-once="true"></div>
                 </div>
             </div>
