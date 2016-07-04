@@ -127,7 +127,7 @@ Will be rendered in the modal as :
 ## Search bar
 From version 1.1.0 you can include a search bar into the modal for filtering options by simply adding the attribute `has-search="true"` to your `modal-select` element.
 
-Filtering is implemented with the angular `filter` filter, which searches recursively in all properties of the objects passed in as options. This means that you cannot search on "computed properties" right now. For example if you are using a custom setter you will be only able to search the original properties of the options. 
+Filtering is implemented with the angular `filter` filter, which searches recursively in all properties of the objects passed in as options. This means that you cannot search on "computed properties" right now. For example if you are using a custom setter you will be only able to search the original properties of the options.
 
 
 ### Examples
@@ -209,7 +209,7 @@ If `option-property` attribute is set to a string, the bound model assigned that
 ```
 
 ##### 3. Custom setter
-If a function call is passed via `option-getter` attribute, the bound model assignment is done by calling this function with the selected option as the only argument (named 'option'). For example if we do this in our controller: 
+If a function call is passed via `option-getter` attribute, the bound model assignment is done by calling this function with the selected option as the only argument (named 'option'). For example if we do this in our controller:
 
 ```javascript
 $scope.getOption = function(option){
