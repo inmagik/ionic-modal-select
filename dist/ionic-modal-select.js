@@ -1,7 +1,7 @@
 var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['modal-template-multiple.html'] = ' <ion-modal-view class="ionic-select-modal" ng-class="::ui.modalClass">\n' +
-    '    \n' +
+    '\n' +
     '    <ion-header-bar ng-class="::ui.headerFooterClass">\n' +
-    '      <h1 class="title">{{::ui.modalTitle}} MULTIPLE</h1>\n' +
+    '      <h1 class="title">{{::ui.modalTitle}}</h1>\n' +
     '    </ion-header-bar>\n' +
     '\n' +
     '    <div class="bar bar-subheader item-input-inset" ng-class="::ui.subHeaderClass" ng-if="ui.hasSearch">\n' +
@@ -13,7 +13,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '        {{ ui.cancelSearchButton }}\n' +
     '      </button>\n' +
     '    </div>\n' +
-    '    \n' +
+    '\n' +
     '    <ion-content class="has-header" ng-class="{\'has-subheader\':ui.hasSearch}">\n' +
     '    <div class="text-center" ng-if="!ui.shortList && !showList" style="padding-top:40px;">\n' +
     '        <h4 class="muted">{{::ui.loadListMessage}}</h4>\n' +
@@ -31,7 +31,7 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
     '                <div class="item item-checkbox" ng-class="ui.itemClass" xng-if="showList" collection-repeat="optionm in options track by optionm[0]">\n' +
     '                    <label class="checkbox">\n' +
     '                        <input type="checkbox" ng-model="isChecked[optionm[0]]">\n' +
-    '                    </label>    \n' +
+    '                    </label>\n' +
     '                    <div compile="inner" ng-init="option=optionm[1]" compile-once="true"></div>\n' +
     '                </div>\n' +
     '            </div>\n' +
@@ -381,11 +381,11 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
                                     checkedItems.push(allOptions[k][1])
                                 }
 
-                            })
+                            });
                             var oldValues = ngModelController.$viewValue;
                             var vals = checkedItems.map(function(item){
                                 return getSelectedValue(item);
-                            })
+                            });
                             ngModelController.$setViewValue(vals);
                             ngModelController.$render();
 
@@ -475,6 +475,10 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
                                     scope.onSearch({query: nv});
 								} else {
                                     var filteredOpts = $filter('filter')(whatToSearch, nv, function(actual, expected) {
+										if(!actual){
+											// if actual is an empty string,empty object,null,or undefined
+											return false;
+										}
 										if (searchProperties){
 											if (typeof actual == 'object'){
 												for (var i = 0; i < searchProperties.length; i++){
@@ -502,11 +506,11 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
                                         angular.forEach(filteredOpts, function(item){
                                             var originalItem = allOptions.find(function(it){
                                                 return it[1] == item;
-                                            })
+                                            });
                                             if( originalItem ){
                                                 newOpts.push(originalItem);
                                             }
-                                        })
+                                        });
                                         scope.options = newOpts;
                                     }
                                     if(oldLen != scope.options.length){
