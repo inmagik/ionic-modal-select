@@ -344,6 +344,10 @@
                                     scope.onSearch({query: nv});
 								} else {
                                     var filteredOpts = $filter('filter')(whatToSearch, nv, function(actual, expected) {
+										if(!actual){
+											// if actual is an empty string,empty object,null,or undefined
+											return false;
+										}
 										if (searchProperties){
 											if (typeof actual == 'object'){
 												for (var i = 0; i < searchProperties.length; i++){
