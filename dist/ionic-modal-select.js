@@ -173,7 +173,8 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
 						searchProperties:'=',
 						onSelect: "&",
 						onSearch: "&",
-						onReset: "&"
+						onReset: "&",
+						onClose: "&",
 					},
 					link: function (scope, iElement, iAttrs, ngModelController, transclude) {
 
@@ -184,13 +185,12 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
 						var clearSearchOnSelect = iAttrs.clearSearchOnSelect !== "false" ? true : false;
 						var searchProperties = scope.searchProperties  ? scope.searchProperties : false;
 
-
 						//multiple values settings.
-                        var multiple = iAttrs.multiple  ? true : false;
-                        if (multiple) {
-                            scope.isChecked = {};
-                        }
-                        var multipleNullValue = iAttrs.multipleNullValue ? scope.$eval(iAttrs.multipleNullValue) : [];
+            var multiple = iAttrs.multiple  ? true : false;
+            if (multiple) {
+                scope.isChecked = {};
+            }
+            var multipleNullValue = iAttrs.multipleNullValue ? scope.$eval(iAttrs.multipleNullValue) : [];
 
 						scope.ui = {
 							modalTitle : iAttrs.modalTitle || 'Select an option',
@@ -218,50 +218,50 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
 						var allOptions = [];
 						scope.options = [];
 
-                        if (iAttrs.optionsExpression) {
-                            var optionsExpression = iAttrs.optionsExpression;
-                            var match = optionsExpression.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
-                            if (!match) {
-                                throw new Error("collection-repeat expected expression in form of '_item_ in " +
-                                                  "_collection_[ track by _id_]' but got '" + iAttrs.optionsExpression + "'.");
-                            }
-                            var keyExpr = match[1];
-                            var listExpr = match[2];
-                            var listGetter = $parse(listExpr);
-                            var s = iElement.scope();
+            if (iAttrs.optionsExpression) {
+                var optionsExpression = iAttrs.optionsExpression;
+                var match = optionsExpression.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
+                if (!match) {
+                    throw new Error("collection-repeat expected expression in form of '_item_ in " +
+                                      "_collection_[ track by _id_]' but got '" + iAttrs.optionsExpression + "'.");
+                }
+                var keyExpr = match[1];
+                var listExpr = match[2];
+                var listGetter = $parse(listExpr);
+                var s = iElement.scope();
 
-                            scope.$watch(
-                                function(){
-                                    return listGetter(s);
-                                },
-                                function(nv, ov){
-                                    initialOptionsSetup(nv);
-                                    updateListMode();
-                                },
-                                true
-                            );
+                scope.$watch(
+                    function(){
+                        return listGetter(s);
+                    },
+                    function(nv, ov){
+                        initialOptionsSetup(nv);
+                        updateListMode();
+                    },
+                    true
+                );
 
-                        } else {
-                            scope.$watchCollection('initialOptions', function(nv){
-                                initialOptionsSetup(nv);
-                                updateListMode();
-                            });
-                        }
+            } else {
+                scope.$watchCollection('initialOptions', function(nv){
+                    initialOptionsSetup(nv);
+                    updateListMode();
+                });
+            }
 
-                        //#TODO: this is due to different single vs multiple template
-                        //but adds lots of complexity here and in search
-                        function initialOptionsSetup(nv){
-														nv = nv || [];
-                            if ( !multiple ) {
-                                allOptions = angular.copy(nv);
-                                scope.options = angular.copy(nv);
-                            } else {
-                                allOptions = nv.map(function(item, idx){
-                                    return [idx, angular.copy(item)]
-                                });
-                                scope.options = angular.copy(allOptions);
-                            }
-                        }
+            //#TODO: this is due to different single vs multiple template
+            //but adds lots of complexity here and in search
+            function initialOptionsSetup(nv){
+								nv = nv || [];
+                if ( !multiple ) {
+                    allOptions = angular.copy(nv);
+                    scope.options = angular.copy(nv);
+                } else {
+                    allOptions = nv.map(function(item, idx){
+                        return [idx, angular.copy(item)]
+                    });
+                    scope.options = angular.copy(allOptions);
+                }
+            }
 
 						// getting options template
 						var opt = iElement[0].querySelector('.option');
@@ -374,46 +374,46 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
 							});
 						};
 
-                        scope.setValues = function(){
-                            var checkedItems = [];
-                            angular.forEach(scope.isChecked, function(v, k){
-                                if(v){
-                                    checkedItems.push(allOptions[k][1])
-                                }
+            scope.setValues = function(){
+                var checkedItems = [];
+                angular.forEach(scope.isChecked, function(v, k){
+                    if(v){
+                        checkedItems.push(allOptions[k][1])
+                    }
 
-                            });
-                            var oldValues = ngModelController.$viewValue;
-                            var vals = checkedItems.map(function(item){
-                                return getSelectedValue(item);
-                            });
-                            ngModelController.$setViewValue(vals);
-                            ngModelController.$render();
+                });
+                var oldValues = ngModelController.$viewValue;
+                var vals = checkedItems.map(function(item){
+                    return getSelectedValue(item);
+                });
+                ngModelController.$setViewValue(vals);
+                ngModelController.$render();
 
-                            if (scope.onSelect) {
-                                scope.onSelect({ newValue: vals, oldValue: oldValues });
-                            }
-                            scope.modal.hide().then(function(){
-                                scope.showList = false;
-                                if (scope.ui.hasSearch) {
-                                   if(clearSearchOnSelect){
-                                        scope.ui.searchValue = '';
-                                    }
-                                }
-                            });
+                if (scope.onSelect) {
+                    scope.onSelect({ newValue: vals, oldValue: oldValues });
+                }
+                scope.modal.hide().then(function(){
+                    scope.showList = false;
+                    if (scope.ui.hasSearch) {
+                       if(clearSearchOnSelect){
+                            scope.ui.searchValue = '';
+                        }
+                    }
+                });
 
-                        };
+            };
 
-                        scope.unsetValues = function(){
-                            $timeout(function(){
-                                ngModelController.$setViewValue(multipleNullValue);
-                                ngModelController.$render();
-                                scope.modal.hide();
-                                scope.showList = false;
-                                if (scope.onReset && angular.isFunction(scope.onReset)) {
-                                    scope.onReset();
-                                }
-                            });
-                        };
+            scope.unsetValues = function(){
+                $timeout(function(){
+                    ngModelController.$setViewValue(multipleNullValue);
+                    ngModelController.$render();
+                    scope.modal.hide();
+                    scope.showList = false;
+                    if (scope.onReset && angular.isFunction(scope.onReset)) {
+                        scope.onReset();
+                    }
+                });
+            };
 
 						scope.closeModal = function(){
 							scope.modal.hide().then(function(){
@@ -445,6 +445,12 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
 							scope.modal.remove();
 						});
 
+						scope.$on('modal.hidden', function(){
+							if (scope.onClose && angular.isFunction(scope.onClose)) {
+								scope.onClose();
+							}
+						});
+
 						iElement.on('click', function(){
 							if (shortList) {
 								scope.showList = true;
@@ -462,19 +468,19 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
                         //filter function
 						if (scope.ui.hasSearch) {
 							scope.$watch('ui.searchValue', function(nv){
-                                var whatToSearch;
-                                if ( !multiple  ) {
-                                    whatToSearch = allOptions;
-                                } else {
-                                    whatToSearch = allOptions.map(function(item){
-                                        return item[1];
-                                    });
-                                }
+	              var whatToSearch;
+	              if ( !multiple  ) {
+	                  whatToSearch = allOptions;
+	              } else {
+	                  whatToSearch = allOptions.map(function(item){
+	                      return item[1];
+	                  });
+	              }
 
 								if(iAttrs.onSearch) {
-                                    scope.onSearch({query: nv});
+                    scope.onSearch({query: nv});
 								} else {
-                                    var filteredOpts = $filter('filter')(whatToSearch, nv, function(actual, expected) {
+                    var filteredOpts = $filter('filter')(whatToSearch, nv, function(actual, expected) {
 										if(!actual){
 											// if actual is an empty string,empty object,null,or undefined
 											return false;
@@ -496,26 +502,26 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
 										return false;
 									});
 
-                                    var oldLen = scope.options.length;
-                                    if ( !multiple ){
-                                        scope.options = filteredOpts;
+                  var oldLen = scope.options.length;
+                  if ( !multiple ){
+                      scope.options = filteredOpts;
 
-                                    } else {
-                                        //#TODO: lots of loops here!
-                                        var newOpts = [];
-                                        angular.forEach(filteredOpts, function(item){
-                                            var originalItem = allOptions.find(function(it){
-                                                return it[1] == item;
-                                            });
-                                            if( originalItem ){
-                                                newOpts.push(originalItem);
-                                            }
-                                        });
-                                        scope.options = newOpts;
-                                    }
-                                    if(oldLen != scope.options.length){
-                                        //#todo: should resize scroll or scroll up here
-                                    }
+                  } else {
+                      //#TODO: lots of loops here!
+                      var newOpts = [];
+                      angular.forEach(filteredOpts, function(item){
+                          var originalItem = allOptions.find(function(it){
+                              return it[1] == item;
+                          });
+                          if( originalItem ){
+                              newOpts.push(originalItem);
+                          }
+                      });
+                      scope.options = newOpts;
+                  }
+                  if(oldLen != scope.options.length){
+                    //#todo: should resize scroll or scroll up here
+                  }
 								}
 							});
 							scope.clearSearch = function(){
