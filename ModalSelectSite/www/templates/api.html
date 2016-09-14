@@ -45,7 +45,7 @@
     <div class="option">
         {{option}}
     </div>
-</button>            
+</button>
           </div>
         </div>
 
@@ -63,9 +63,9 @@
           For rendering very long lists of options, the directive may use Ionic <code>collection-repeat</code>. <br>
           See <a class="positive pointer" ng-click="toAnchor('rendering-options')">rendering options</a> below and related examples for how to control this behavior.
         </p>
-          
+
       </div>
-      
+
       <div class="item item-body">
           <h1 class="">Directive options</h1>
           <p>
@@ -82,7 +82,7 @@
               attribute-type="expression" attribute-default="undefined">
               The expression indicating how to enumerate a the options collection, of the format variable in expression – where variable is the user defined loop variable and expression is a scope expression giving the collection to enumerate. For example: <code>album in artist.albums</code> or <code>album in artist.albums | orderBy:'name'</code>.
                </div>
-              
+
             <div class="card">
             <div class="item item-text-wrap energized-bg">
                 <b class=""><i class="icon ion-alert-circled"></i> Please note</b>
@@ -99,7 +99,7 @@
               attribute-type="string" attribute-default="undefined">
               Optional property name to get as model value from the chosen item.
             </div>
-            
+
             <div class="item calm-bg white-text">
                 UI and modal
             </div>
@@ -152,6 +152,11 @@
               Callback triggered when value is resetted using the relevant ui interface. Takes no arguments.
             </div>
 
+            <div attribute-doc="on-close"
+              attribute-type="function call" attribute-default="undefined">
+              allback triggered when modal is closed (in any way, uses 'modal.hidden' ionic event). Takes no arguments
+            </div>
+
             <div class="item calm-bg white-text" id="rendering-options">
                 Rendering
             </div>
@@ -201,13 +206,13 @@
       </div>
   </div>
 
-  
-  
+
+
 
   <p>
-      
+
   </p>
 
-    
+
   </ion-content>
 </ion-view>
