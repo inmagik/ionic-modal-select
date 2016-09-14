@@ -8,6 +8,14 @@ We also have a simple [Codepen demo](http://codepen.io/bianchimro/pen/epYYQO?edi
 
 ![animated example](https://dl.dropboxusercontent.com/u/6178230/screenshots/ionic-modal-picker.gif)
 
+## IMPORTANT NOTICE
+
+**In order to survive, this project needs**:
+* proper testing: see [issue #26](https://github.com/inmagik/ionic-modal-select/issues/26)  
+* co-maintainers: see [issue #54](https://github.com/inmagik/ionic-modal-select/issues/54)
+
+Any help on this is greatly appreciated. Comment directly those issues or contact me directly at mauro.bianchi at inmagik.com if you are interested in helping with this.
+
 ## Features
 
 * supports long list of object via collection-repeat
@@ -75,6 +83,7 @@ option|meaning|accepted values|default
 `selected-class`|The class applied to the currently selected option (if any) in the modal list|string|'option-selected'
 `on-select`|Callback triggered on object select. Takes two arguments, `newValue` and `oldValue` with obvious meaning.|function call with arguments `newValue` and `oldValue`|not set
 `on-reset`|Callback triggered when value is resetted using the relevant ui interface. Takes no arguments.|function call|not set
+`on-close`|Callback triggered when modal is closed (in any way, uses 'modal.hidden' ionic event). Takes no arguments.|function call|not set
 `modal-title`|The title shown on the modal header|string|'Select an option'
 `header-footer-class`|The class for header and footer of the modal|string|'bar-stable'
 `cancel-button`|Text of the button for closing the modal without changing the value|string|'Cancel'
@@ -127,7 +136,7 @@ Will be rendered in the modal as :
 ## Search bar
 From version 1.1.0 you can include a search bar into the modal for filtering options by simply adding the attribute `has-search="true"` to your `modal-select` element.
 
-Filtering is implemented with the angular `filter` filter, which searches recursively in all properties of the objects passed in as options. This means that you cannot search on "computed properties" right now. For example if you are using a custom setter you will be only able to search the original properties of the options. 
+Filtering is implemented with the angular `filter` filter, which searches recursively in all properties of the objects passed in as options. This means that you cannot search on "computed properties" right now. For example if you are using a custom setter you will be only able to search the original properties of the options.
 
 
 ### Examples
@@ -209,7 +218,7 @@ If `option-property` attribute is set to a string, the bound model assigned that
 ```
 
 ##### 3. Custom setter
-If a function call is passed via `option-getter` attribute, the bound model assignment is done by calling this function with the selected option as the only argument (named 'option'). For example if we do this in our controller: 
+If a function call is passed via `option-getter` attribute, the bound model assignment is done by calling this function with the selected option as the only argument (named 'option'). For example if we do this in our controller:
 
 ```javascript
 $scope.getOption = function(option){
