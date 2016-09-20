@@ -43,7 +43,7 @@
 						onSelect: "&",
 						onSearch: "&",
 						onReset: "&",
-						onClose: "&",
+						onClose: "=",
 					},
 					link: function (scope, iElement, iAttrs, ngModelController, transclude) {
 
