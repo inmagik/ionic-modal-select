@@ -4,12 +4,40 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var addsrc = require('gulp-add-src');
 var replace = require('gulp-replace');
-var jsifyTemplates = require('gulp-jsify-html-templates');
 var uglify = require('gulp-uglify');
 var order = require("gulp-order");
+var plumber = require("gulp-plumber");
 
+var webpackStream = require('webpack-stream');
+var webpack = require("webpack");
 // Import at the top of the file
 var karma = require('karma').Server;
+
+var paths = {
+  es6: ['./src/*.js'],
+  webpack: ['./src/main.js'],
+  templates : ['./src/*.html'],
+  output: './dist',
+};
+
+var webPackConfig = require('./webpack.config');
+var webPackConfigProduction = require('./webpack.config.production');
+
+
+// use webpack.config.js to build modules
+gulp.task('webpack', () => {
+  return gulp.src(paths.webpack)
+    .pipe(plumber())
+    .pipe(webpackStream(webPackConfig))
+    .pipe(gulp.dest(paths.output))
+});
+
+gulp.task('webpack-production', () => {
+  return gulp.src(paths.webpack)
+    .pipe(plumber())
+    .pipe(webpackStream(webPackConfigProduction))
+    .pipe(gulp.dest(paths.output))
+});
 
 
 /**
@@ -25,42 +53,8 @@ gulp.task('test', function(done) {
 });
 
 
-gulp.task('modal-select', function() {
-    return  gulp.src( [
-      './src/*.html',
-
-      ])
-    .pipe(jsifyTemplates())
-    .pipe(replace("htmlTemplates", 'modalSelectTemplates'))
-    .pipe(concat('templates.js'))
-    .pipe(addsrc('src/banner.js'))
-    .pipe(addsrc('src/ionic-modal-select.js'))
-    .pipe(order(['src/banner.js', 'templates.js', 'src/ionic-modal-select.js']))
-    .pipe(concat('ionic-modal-select.js'))
-    .pipe(gulp.dest('./dist/'))
-    .pipe(uglify({mangle:false}))
-    .pipe(rename({ extname: '.min.js' }))
-    .pipe(gulp.dest('./dist/'))
-
-});
-
-
-
-gulp.task('css-modal-select', function() {
-    return gulp.src( './src/ionic-modal-select.css')
-    .pipe(gulp.dest('./dist/'))
-    .pipe(minifyCss({
-      keepSpecialComments: 0
-    }))
-    .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./dist/'))
-
-});
-
-
 gulp.task('watch', function() {
-  gulp.watch(['./src/*.*'], ['modal-select']);
-
+  gulp.watch([paths.es6, paths.templates], ['webpack', 'webpack-production']);
 });
 
-gulp.task('default', ['modal-select']);
+gulp.task('default', ['webpack', 'webpack-production']);
