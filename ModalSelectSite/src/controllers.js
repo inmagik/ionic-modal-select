@@ -13,6 +13,7 @@ angular.module('starter.controllers', [])
 .controller('ExamplesCtrl', function($scope, $timeout, $ionicScrollDelegate) {
 
   $scope.someModel = null;
+  $scope.someModelMultiple = [];
   $scope.secondModel = null;
   $scope.selectables = [
     1, 2, 3
@@ -60,7 +61,7 @@ angular.module('starter.controllers', [])
     alert("value was reset!");
   };
 
-  $scope.shoutClose = function(){ alert("modal was closed!")}; 
+  $scope.shoutClose = function(){ alert("modal was closed!")};
 
   $scope.searchPropertiesSearchModel = null;
 

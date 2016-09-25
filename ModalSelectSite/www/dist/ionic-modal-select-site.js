@@ -69,6 +69,7 @@
 	}).controller('ExamplesCtrl', function ($scope, $timeout, $ionicScrollDelegate) {
 	
 	  $scope.someModel = null;
+	  $scope.someModelMultiple = [];
 	  $scope.secondModel = null;
 	  $scope.selectables = [1, 2, 3];
 	
@@ -175,6 +176,15 @@
 	    views: {
 	      'menuContent': {
 	        templateUrl: 'templates/examples-options.html',
+	        controller: 'ExamplesCtrl'
+	      }
+	    }
+	  }).state('app.examples-multiple', {
+	    url: '/examples-multiple',
+	    cache: false,
+	    views: {
+	      'menuContent': {
+	        templateUrl: 'templates/examples-multiple.html',
 	        controller: 'ExamplesCtrl'
 	      }
 	    }

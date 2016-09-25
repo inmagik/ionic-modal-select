@@ -67,6 +67,17 @@ angular.module('starter',
     }
   })
 
+  .state('app.examples-multiple', {
+    url: '/examples-multiple',
+    cache : false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/examples-multiple.html',
+        controller: 'ExamplesCtrl'
+      }
+    }
+  })
+
   .state('app.examples-rendering', {
     url: '/examples-rendering',
     cache : false,

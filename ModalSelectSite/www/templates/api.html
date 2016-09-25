@@ -32,6 +32,11 @@
                 </li>
             </ul>
         </p>
+        <p>
+          If using "multiple" selection mode, the user is allowed to select multiple options and
+          the bound ng-model will be a list containing the selected options, with the same logic
+          of getting the value.
+        </p>
 
         <h3 class="">Options template</h3>
         <p>
@@ -62,6 +67,14 @@
         <p>
           For rendering very long lists of options, the directive may use Ionic <code>collection-repeat</code>. <br>
           See <a class="positive pointer" ng-click="toAnchor('rendering-options')">rendering options</a> below and related examples for how to control this behavior.
+        </p>
+
+
+        <h3>Multiple selections</h3>
+        <p>
+          From version 1.3.2, setting `multiple="true"` will enable the multiple selection on the widget. In this case, the user is allowed
+          to select more than one option and options will be rendered with checkboxes in the selection modal.
+          <i>This feature is still experimental</i>.
         </p>
 
       </div>
@@ -99,6 +112,25 @@
               attribute-type="string" attribute-default="undefined">
               Optional property name to get as model value from the chosen item.
             </div>
+
+            <div class="item calm-bg white-text">
+                Multiple selections
+            </div>
+            <div attribute-doc="multiple"
+              attribute-type="string" attribute-default="not set">
+              If set (no matter which value) to will enable multiple selection mode.
+              This will allow the user to select more than one option and options will
+              be rendered as checkboxes in the selection modal.
+            </div>
+            <div class="card">
+            <div class="item item-text-wrap energized-bg">
+                <b class=""><i class="icon ion-alert-circled"></i> Please note</b>
+                <p><b>This feature is experimental.</b> The "use-collection-repeat" rendering mode
+                does not work in combination with "multiple", <span class="code">ng-repeat</span> mode
+                is used in the default template for multiple selection.</p>
+            </div>
+            </div>
+
 
             <div class="item calm-bg white-text">
                 UI and modal
