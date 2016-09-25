@@ -58,12 +58,18 @@
 	modalSelect.$inject = ["$ionicModal", "$timeout", "$filter", "$parse", "$templateCache"];
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
-	/*
-		ionic-modal-select
-		by Mauro Bianchi
-		bianchimro@gmail.com
-		www.inmagik.com
-	*/
+	/*!
+	 * Copyright 2015 Inmagik SRL.
+	 * http://www.inmagik.com/
+	 *
+	 * ionic-modal-select, v1.3.2
+	 * Modal select directive for Ionic framework.
+	 *
+	 * By @bianchimro
+	 *
+	 * Licensed under the MIT license. Please see LICENSE for more information.
+	 *
+	 */
 	
 	angular.module('ionic-modal-select', []).directive('compile', compile).directive('modalSelect', modalSelect);
 	
@@ -95,8 +101,6 @@
 	
 		var modalTemplateMultiple = __webpack_require__(2);
 		var modalTemplate = __webpack_require__(3);
-	
-		console.log(modalTemplateMultiple);
 	
 		return {
 			restrict: 'A',
@@ -159,7 +163,7 @@
 					if (!match) {
 						throw new Error("collection-repeat expected expression in form of '_item_ in " + "_collection_[ track by _id_]' but got '" + iAttrs.optionsExpression + "'.");
 					}
-					var keyExpr = match[1];
+					//var keyExpr = match[1];
 					var listExpr = match[2];
 					var listGetter = $parse(listExpr);
 					var s = iElement.scope();

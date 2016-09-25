@@ -1,10 +1,15 @@
-/*
-	ionic-modal-select
-	by Mauro Bianchi
-	bianchimro@gmail.com
-	www.inmagik.com
-*/
-
+/*!
+ * Copyright 2015 Inmagik SRL.
+ * http://www.inmagik.com/
+ *
+ * ionic-modal-select, v1.3.2
+ * Modal select directive for Ionic framework.
+ *
+ * By @bianchimro
+ *
+ * Licensed under the MIT license. Please see LICENSE for more information.
+ *
+ */
 
 angular.module('ionic-modal-select', [])
 .directive('compile', compile)
@@ -106,16 +111,16 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 								throw new Error("collection-repeat expected expression in form of '_item_ in " +
 																	"_collection_[ track by _id_]' but got '" + iAttrs.optionsExpression + "'.");
 						}
-						var keyExpr = match[1];
+						//var keyExpr = match[1];
 						var listExpr = match[2];
 						var listGetter = $parse(listExpr);
 						var s = iElement.scope();
 
 						scope.$watch(
-								function(){
+								() => {
 										return listGetter(s);
 								},
-								function(nv, ov){
+								(nv, ov) => {
 										initialOptionsSetup(nv);
 										updateListMode();
 								},
@@ -137,9 +142,7 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 								allOptions = angular.copy(nv);
 								scope.options = angular.copy(nv);
 						} else {
-								allOptions = nv.map(function(item, idx){
-										return [idx, angular.copy(item)]
-								});
+								allOptions = nv.map((item, idx) => [idx, angular.copy(item)] );
 								scope.options = angular.copy(allOptions);
 						}
 				}

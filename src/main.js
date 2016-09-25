@@ -1,1 +1,1 @@
-import "./ionic-modal-select.js"
+import "./ionic-modal-select.js";

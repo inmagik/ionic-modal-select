@@ -4,15 +4,14 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var addsrc = require('gulp-add-src');
 var replace = require('gulp-replace');
-var jsifyTemplates = require('gulp-jsify-html-templates');
 var uglify = require('gulp-uglify');
 var order = require("gulp-order");
 var plumber = require("gulp-plumber");
 
-var webpack = require('webpack-stream');
+var webpackStream = require('webpack-stream');
+var webpack = require("webpack");
 // Import at the top of the file
 var karma = require('karma').Server;
-
 
 var paths = {
   es6: ['./src/*.js'],
@@ -21,14 +20,25 @@ var paths = {
   output: './dist',
 };
 
+var webPackConfig = require('./webpack.config');
+var webPackConfigProduction = require('./webpack.config.production');
+
 
 // use webpack.config.js to build modules
 gulp.task('webpack', () => {
   return gulp.src(paths.webpack)
     .pipe(plumber())
-    .pipe(webpack(require('./webpack.config')))
-    .pipe(gulp.dest(paths.output));
+    .pipe(webpackStream(webPackConfig))
+    .pipe(gulp.dest(paths.output))
 });
+
+gulp.task('webpack-production', () => {
+  return gulp.src(paths.webpack)
+    .pipe(plumber())
+    .pipe(webpackStream(webPackConfigProduction))
+    .pipe(gulp.dest(paths.output))
+});
+
 
 /**
 * Test task, run test once and exit
@@ -43,22 +53,8 @@ gulp.task('test', function(done) {
 });
 
 
-
-gulp.task('css-modal-select', function() {
-    return gulp.src( './src/ionic-modal-select.css')
-    .pipe(gulp.dest('./dist/'))
-    .pipe(minifyCss({
-      keepSpecialComments: 0
-    }))
-    .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./dist/'))
-
-});
-
-
 gulp.task('watch', function() {
-  gulp.watch([paths.es6, paths.templates], ['webpack']);
-
+  gulp.watch([paths.es6, paths.templates], ['webpack', 'webpack-production']);
 });
 
-gulp.task('default', ['webpack']);
+gulp.task('default', ['webpack', 'webpack-production']);
