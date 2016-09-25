@@ -23,6 +23,7 @@ Any help on this is greatly appreciated. Comment directly those issues or contac
 * supports unsetting the chosen value (optional)
 * customizable modal classes, modal header and footer classes
 * customizable buttons text
+* multiple selectable options (experimental)
 
 ## Usage
 
@@ -71,6 +72,11 @@ The final value bound to your model will be determined as follow:
 * otherwise it will be set as the full object
 
 
+In case of "multiple" mode, the user is allowed to select multiple options and
+the bound ng-model will be a list containing the selected options, with the same logic
+of getting the value.
+
+
 #### Options
 
 option|meaning|accepted values|default
@@ -79,6 +85,7 @@ option|meaning|accepted values|default
 `options-expression`|The expression indicating how to enumerate a the options collection, of the format `variable in expression` – where variable is the user defined loop variable and expression is a scope expression giving the collection to enumerate. For example: `album in artist.albums or album in artist.albums | orderBy:'name'`.|expression||
 `option-getter`|Optional method to get the value from the chosen item|function|not set|
 `option-property`|Optional property name to get as model value from the chosen item|string|not set|
+`multiple`|Enable "multiple" mode that allows the user to select more than one option. *This feature is still experimental*. For each option, a checkbox will be rendered|boolean|false|
 `modal-class`|The class for the modal (set on `<ion-modal-view>`|string|''
 `selected-class`|The class applied to the currently selected option (if any) in the modal list|string|'option-selected'
 `on-select`|Callback triggered on object select. Takes two arguments, `newValue` and `oldValue` with obvious meaning.|function call with arguments `newValue` and `oldValue`|not set
@@ -132,6 +139,10 @@ Will be rendered in the modal as :
 </div>
 ```
 
+## Multiple mode
+From version 1.3.2, setting `multiple="true"` will enable the multiple selection on the widget. In this case, the user is allowed
+to select more than one option and options will be rendered with checkboxes in the selection modal.
+*This feature is still experimental*
 
 ## Search bar
 From version 1.1.0 you can include a search bar into the modal for filtering options by simply adding the attribute `has-search="true"` to your `modal-select` element.
@@ -170,7 +181,6 @@ To include a search bar in the previous example, just add `has-search="true"`:
     </div>
 </button>
 ```
-
 
 
 #### Objects as options
