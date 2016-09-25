@@ -26,21 +26,28 @@
         <!--collection-repeat mode -->
         <!-- not working right now -->
         <!--
-        <div ng-if="!ui.shortList">
+        <div ng-if="!ui.shortList" >
             <div class="list" class="animate-if" >
-                <div class="item item-checkbox" ng-class="ui.itemClass" xng-if="showList" collection-repeat="optionm in options track by optionm[0]">
+                <div
+                    class="item item-checkbox" ng-class="ui.itemClass"
+                     collection-repeat="optionm in options track by $index">
                     <label class="checkbox">
                         <input type="checkbox" ng-model="isChecked[optionm[0]]">
                     </label>
-                    <div compile="inner" ng-init="option=optionm[1]" compile-once="true"></div>
+
+                    <div compile="inner" ng-init="option=optionm[1]" compile-once="false"></div>
+
                 </div>
             </div>
         </div>
         -->
+
         <!-- ng-repeat mode -->
         <div ng-if="ui.shortList || true">
             <div class="list">
-                <div class="item item-checkbox" ng-class="ui.itemClass" ng-repeat="optionm in options track by $index">
+                <div
+                  class="item item-checkbox" ng-class="ui.itemClass"
+                  ng-repeat="optionm in options track by optionm[0]">
                     <label class="checkbox">
                         <input type="checkbox" ng-model="isChecked[optionm[0]]">
                     </label>

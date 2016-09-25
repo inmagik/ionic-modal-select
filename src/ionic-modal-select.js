@@ -152,7 +152,8 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 				if (!opt) {
 					throw new Error({
 						name:'modalSelectError:noOptionTemplate',
-						message:'When using modalSelect directive you must include an element with class "option" to provide a template for your select options.',
+						message:`When using modalSelect directive you must include an element with class "option"
+						 to provide a template for your select options.`,
 						toString:function(){
 							return this.name + " " + this.message;
 						}
@@ -264,7 +265,6 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 								if(v){
 										checkedItems.push(allOptions[k][1])
 								}
-
 						});
 						var oldValues = ngModelController.$viewValue;
 						var vals = checkedItems.map(function(item){
@@ -291,6 +291,7 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 						$timeout(function(){
 								ngModelController.$setViewValue(multipleNullValue);
 								ngModelController.$render();
+								scope.isChecked = {};
 								scope.modal.hide();
 								scope.showList = false;
 								if (scope.onReset && angular.isFunction(scope.onReset)) {
@@ -411,6 +412,10 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 					scope.clearSearch = function(){
 						scope.ui.searchValue = '';
 					};
+				}
+
+				scope.copyOpt = option => {
+					return angular.copy(option);
 				}
 
 				//#TODO ?: WRAP INTO $timeout?
