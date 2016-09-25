@@ -330,11 +330,11 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 					scope.modal.remove();
 				});
 
-				scope.$on('modal.hidden', function(){
-					if (scope.onClose && angular.isFunction(scope.onClose)) {
-						scope.onClose();
-					}
-				});
+				if (scope.onClose && angular.isFunction(scope.onClose)) {
+					scope.$on('modal.hidden', function(){
+							scope.onClose();
+					});
+				}
 
 				iElement.on('click', function(){
 					if (shortList) {
