@@ -366,12 +366,17 @@
 					scope.modal = $ionicModal.fromTemplate(modalTpl, { scope: scope });
 				}
 	
+				var hiddenCb = null;
 				scope.$on('$destroy', function () {
+					if (hiddenCb) {
+						hiddenCb();
+						hiddenCb = null;
+					}
 					scope.modal.remove();
 				});
 	
 				if (scope.onClose && angular.isFunction(scope.onClose)) {
-					scope.$on('modal.hidden', function () {
+					hiddenCb = scope.$on('modal.hidden', function () {
 						scope.onClose();
 					});
 				}
