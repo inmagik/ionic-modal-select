@@ -8,10 +8,10 @@ angular.module('starter')
             attributeType : "@",
             attributeDefault : "@"
         },
-        templateUrl : 'templates/attribute-doc.html',
+        template : require('raw!./attribute-doc.html'),
         replace : true,
         link: function (scope, iElement, iAttrs) {
-            
+
         }
     };
 }])

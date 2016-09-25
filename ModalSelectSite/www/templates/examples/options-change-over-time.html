@@ -1,0 +1,38 @@
+<div class="card list">
+  <div class="item item-divider">
+    Options can change over time
+  </div>
+  <div class="item item-body">
+    <p>If options are passed in via <span class="positive">options</span> attribute, the directive will watch the options array for changes and update the list presented to the user accordingly.
+      <br> In this example we change the set of options with a button, but you can use this feature to get options from a server, a json file or an asyncronous function in general.</p>
+    <h3>Controller:</h3>
+    <div example-render mode="javascript">
+      $scope.changingOptions = [1,2,3]; $scope.toggleChanging = function(){ if ($scope.changingOptions.length == 3){ $scope.changingOptions = [1,2,3,4,5,6,7,8,9,10]; } else { $scope.changingOptions = [1,2,3]; } };
+    </div>
+    <h3>Template:</h3>
+    <div example-render>
+      <button class="button button-positive" modal-select ng-model="model5" options="changingOptions">
+        Select it
+        <div class="option">
+          <h2 class="title">{{option}}</h2>
+        </div>
+      </button>
+      <button class="button button-energized" ng-click="toggleChanging()">Toggle option set</button>
+      <h3>
+  Selected value: {{model5}}
+  </h3>
+    </div>
+    <h3>Result:</h3>
+    <button class="button button-positive" modal-select ng-model="model5" options="changingOptions">
+      Select it
+      <div class="option">
+        <h2 class="title">{{option}}</h2>
+      </div>
+    </button>
+    <button class="button button-energized" ng-click="toggleChanging()">Switch options set</button>
+    <h3>
+      Selected value: {{model5}}
+    </h3>
+
+  </div>
+</div>

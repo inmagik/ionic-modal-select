@@ -1,17 +1,32 @@
 var gulp = require('gulp');
+var plumber = require("gulp-plumber");
 var gutil = require('gulp-util');
-var bower = require('bower');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
-var sh = require('shelljs');
+var webpackStream = require('webpack-stream');
+var webpack = require("webpack");
+var webPackConfig = require('./webpack.config');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  es6: ['./src/*.js'],
+  webpack: ['./src/main.js'],
+  templates : ['./www/templates/**/*.html'],
+  output: './www/dist',
 };
 
-gulp.task('default', ['sass']);
+// use webpack.config.js to build modules
+gulp.task('webpack', () => {
+  return gulp.src(paths.webpack)
+    .pipe(plumber())
+    .pipe(webpackStream(webPackConfig))
+    .pipe(gulp.dest(paths.output))
+});
+
+
+gulp.task('default', ['webpack', 'sass']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -28,6 +43,7 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch([paths.es6, paths.templates], ['sass']);
 });
 
 gulp.task('install', ['git-check'], function() {

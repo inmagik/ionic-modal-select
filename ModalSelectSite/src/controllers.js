@@ -2,24 +2,13 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $location, $ionicScrollDelegate) {
 
-  $scope.toAnchor  =   function(anchor) {
+  $scope.toAnchor = function(anchor) {
     $location.hash(anchor);
     $ionicScrollDelegate.anchorScroll(true);
   };
-
   
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
 
 .controller('ExamplesCtrl', function($scope, $timeout, $ionicScrollDelegate) {
 
@@ -35,7 +24,7 @@ angular.module('starter.controllers', [])
   }
 
   $scope.selectableNames =  [
-    { name : "Mauro", role : "juggler"}, 
+    { name : "Mauro", role : "juggler"},
     { name : "Silvia", role : "chef"},
     { name : "Merlino", role : "little canaglia"},
   ];
@@ -57,7 +46,7 @@ angular.module('starter.controllers', [])
     if ($scope.changingOptions.length == 3){
       $scope.changingOptions = [1,2,3,4,5,6,7,8,9,10];
     } else {
-      $scope.changingOptions = [1,2,3];    
+      $scope.changingOptions = [1,2,3];
     }
   };
 
