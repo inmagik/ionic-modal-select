@@ -140,7 +140,7 @@ Will be rendered in the modal as :
 ```
 
 ## Multiple selection mode
-From version 1.3.2, setting `multiple` attribute to any value other than "undefined" will enable the multiple selection on the widget. In this case, the user is allowed to select more than one option and options will be rendered with checkboxes in the selection modal. *This feature is still experimental*.
+From version 1.3.1, setting `multiple` attribute to any value other than "undefined" will enable the multiple selection on the widget. In this case, the user is allowed to select more than one option and options will be rendered with checkboxes in the selection modal. *This feature is still experimental*.
 
 ## Search bar
 From version 1.1.0 you can include a search bar into the modal for filtering options by simply adding the attribute `has-search="true"` to your `modal-select` element.
