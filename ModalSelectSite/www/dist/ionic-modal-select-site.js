@@ -110,6 +110,10 @@
 	    alert("value was reset!");
 	  };
 	
+	  $scope.shoutClose = function () {
+	    alert("modal was closed!");
+	  };
+	
 	  $scope.searchPropertiesSearchModel = null;
 	
 	  $ionicScrollDelegate.scrollTop();

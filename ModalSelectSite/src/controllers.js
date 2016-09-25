@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
     $location.hash(anchor);
     $ionicScrollDelegate.anchorScroll(true);
   };
-  
+
 })
 
 
@@ -59,6 +59,8 @@ angular.module('starter.controllers', [])
   $scope.shoutReset = function(){
     alert("value was reset!");
   };
+
+  $scope.shoutClose = function(){ alert("modal was closed!")}; 
 
   $scope.searchPropertiesSearchModel = null;
 
