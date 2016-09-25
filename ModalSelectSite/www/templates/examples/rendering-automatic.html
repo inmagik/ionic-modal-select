@@ -1,0 +1,53 @@
+<div class="item item-divider">
+  Automatic rendering mode
+</div>
+<div class="item item-text-wrap">
+  <p><span class="positive">modal-select</span> directive has two rendering modes: one based on <code>ng-repeat</code> that renders all the items and a smarter one based on ionic <code>collection-repeat</code> that is useful if you need to render long lists
+    of options.</p>
+  <p>The directive chooses automatically a rendering mode based on the number of available options. When the nummber of options is equal or greater than the value set by the <span class="positive">short-list-break</span> attribute (which defaults to <b>10</b>)
+    <code>collection-repeat</code> will be used.</p>
+  <p>In this example we show two selects on the same options and model, with two different breakpoints: 10 (default) and 5</p>
+</div>
+<div class="item item-body">
+
+  <h3>Controller:</h3>
+  <div example-render mode="javascript" class="">
+    $scope.numbers = [1,2,3,4,5,6,7,8];
+  </div>
+  <h3>Template:</h3>
+  <div example-render>
+    <button class="button button-positive" modal-select ng-model="autoRenderingModel" options="numbers">
+      Select it
+      <div class="option">
+        {{option}}
+      </div>
+    </button>
+    <button class="button button-positive" modal-select ng-model="autoRenderingModel" options="numbers" short-list-break="5">
+      Select it
+      <div class="option">
+        {{option}}
+      </div>
+    </button>
+    <h3>
+Selected value: {{autoRenderingModel}}
+</h3>
+  </div>
+
+  <h3>Result:</h3>
+  <button class="button button-positive" modal-select ng-model="autoRenderingModel" options="numbers">
+    Select it
+    <div class="option">
+      {{option}}
+    </div>
+  </button>
+  <button class="button button-positive" modal-select ng-model="autoRenderingModel" options="numbers" short-list-break="5">
+    Select it
+    <div class="option">
+      {{option}}
+    </div>
+  </button>
+  <h3>
+    Selected value: {{autoRenderingModel}}
+  </h3>
+
+</div>
