@@ -263,7 +263,6 @@ We get back the phrase "Mauro:navigator", "Silvia:chef" or "Merlino:canaglia" if
 
 ##### More examples [on the project site](http://inmagik.github.io/ionic-modal-select).
 
-## Support this project
 
-This software package is available for free with a MIT license, but
-if you find it useful and want support its development consider buying a copy on the [Ionic Marketplace](http://market.ionic.io/plugins/ionic-modal-select) for just a few bucks.
+## Maintenance and support
+This project is maintained by [INMAGIK](https://www.inmagik.com).
