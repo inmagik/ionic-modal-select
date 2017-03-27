@@ -423,8 +423,25 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 					return angular.copy(option);
 				}
 
+				// init ischecked for multiple mode to synch with scope
+				var initIsChecked = () =>{
+					if(multiple){
+						var values = ngModelController.$viewValue;
+						if(!values || values.length == 0 ) return;
+						scope.options.forEach((oVal,i)=>{
+							values.forEach((vVal,i)=>{
+								if(angular.equals(vVal,oVal[1])){
+									scope.isChecked[oVal[0]] = true;
+								}
+							})
+						})
+					}
+				}
 				//#TODO ?: WRAP INTO $timeout?
-				ngModelController.$render();
+				$timeout(()=>{
+					initIsChecked();
+					ngModelController.$render();
+				})
 
 			}
 		};
