@@ -60,7 +60,7 @@
     <ion-footer-bar ng-class="::ui.headerFooterClass">
         <button class="button button-stable" ng-click="closeModal()">{{ui.cancelButton}}</button>
         <div class="title" style="padding-top:6px">
-            <button class="button button-navbar" ng-click="setValues()">OK</button>
+            <button class="button button-navbar" ng-click="setValues()">{{ui.okButton}}</button>
         </div>
         <button ng-if="::!ui.hideReset" class="button button-stable" ng-click="unsetValues()">{{ui.resetButton}}</button>
     </ion-footer-bar>
