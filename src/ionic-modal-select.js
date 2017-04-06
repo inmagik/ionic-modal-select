@@ -61,6 +61,7 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 				onSearch: "&",
 				onReset: "&",
 				onClose: "&",
+				onOpen: "&"
 			},
 			link: function (scope, iElement, iAttrs, ngModelController, transclude) {
 
@@ -339,6 +340,12 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 					hiddenCb = scope.$on('modal.hidden', function(){
 						scope.onClose();
 					});
+				}
+				
+				if (scope.onOpen && angular.isFunction(scope.onOpen)) {
+				  	hiddenCb = scope.$on('modal.shown', function(){
+				    		scope.onOpen();
+				  	});
 				}
 
 				iElement.on('click', function(){
