@@ -2,15 +2,27 @@
 
     <ion-header-bar ng-class="::ui.headerFooterClass">
       <h1 class="title">{{::ui.modalTitle}}</h1>
+      <button class="button button-icon" 
+              ng-click="closeModal()"
+              ng-if="ui.hideFooter && !ui.hasSearch">
+              <i class="icon ion-ios-close-empty"></i>
+      </button>
     </ion-header-bar>
 
     <div class="bar bar-subheader item-input-inset" ng-class="::ui.subHeaderClass" ng-if="ui.hasSearch">
       <label class="item-input-wrapper">
         <i class="icon ion-ios-search placeholder-icon"></i>
         <input type="search" placeholder="{{::ui.searchPlaceholder}}" ng-model="ui.searchValue">
+
+        <!-- To clear text: show X in the right corner of the text box. Only show when ui.hideFooter is on -->
+        <a ng-if="ui.searchValue.length" ng-show="ui.hideFooter" on-tap="clearSearch()" class="input-button button-dark icon ion-android-close"></a>
       </label>
-      <button type="button" class="button button-clear" ng-click="clearSearch()">
+      <!-- When don't show footer, user can cancel from search bar button -->
+      <button ng-if="!ui.hideFooter" type="button" class="button button-clear" ng-click="clearSearch()">
         {{ ui.cancelSearchButton }}
+      </button>
+      <button ng-if="ui.hideFooter" type="button" class="button button-clear" ng-click="closeModal()">
+        {{ ui.cancelButton }}
       </button>
     </div>
 
@@ -57,7 +69,7 @@
         </div>
     </div>
     </ion-content>
-    <ion-footer-bar ng-class="::ui.headerFooterClass">
+    <ion-footer-bar ng-if="!ui.hideFooter" ng-class="::ui.headerFooterClass">
         <button class="button button-stable" ng-click="closeModal()">{{ui.cancelButton}}</button>
         <div class="title" style="padding-top:6px">
             <button class="button button-navbar" ng-click="setValues()">{{ui.okButton}}</button>
