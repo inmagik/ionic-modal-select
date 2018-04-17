@@ -91,6 +91,8 @@ function modalSelect($ionicModal, $timeout, $filter, $parse, $templateCache ) {
 					selectedClass : iAttrs.selectedClass || 'option-selected',
 					itemClass: iAttrs.itemClass || 'item item-text-wrap',
 					searchTemplate: iAttrs.searchTemplate || (multiple ? modalTemplateMultiple : modalTemplate),
+					itemWidth : iAttrs.itemWidth || '100%',
+					itemHeight : iAttrs.itemHeight || '55px',
 
 					//search stuff
 					hasSearch : iAttrs.hasSearch  !== "true" ? false : true,
