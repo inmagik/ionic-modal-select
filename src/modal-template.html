@@ -27,6 +27,8 @@
                     <div
                       ng-class="{ '{{::ui.itemClass}}' : true, '{{::ui.selectedClass}}': compareValues(getSelectedValue(option), ui.value) }"
                       collection-repeat="option in options track by $index"
+                      item-width="ui.itemWidth"
+                      item-height="ui.itemHeight"
                       ng-click="setOption(option)"
                       ng-class="{'{{::ui.selectedClass}}': compareValues(getSelectedValue(option), ui.value) }">
                         <div compile="inner" compile-once="true"></div>
